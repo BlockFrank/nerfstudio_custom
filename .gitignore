@@ -188,6 +188,31 @@ camera_paths/
 */**/.DS_Store
 */**/._.DS_Store
 
+#Requirements and test stuff:
+# Root-level exclusions
+/*.txt
+/*.pdf
+/*.yml
+/*.yaml
+
+# ✅ Exceptions: Include specific files in root dir
+!requirements_post_zipnerf.txt
+!requirements_post_zipnerf - Copia.txt
+!nerfstudio_stable_environment_post_zipnerf.yaml
+# External Submodules:
+NeRFtoGSandBack/
+glomap/
+instruct-gs2gs/
+opennerf/
+pytorch_scatter/
+splatfacto-w/
+src/igs2gs/
+src/nerfgs/
+src/splatfacto-w/
+src/zipnerf/
+tetra-nerf/
+zipnerf-pytorch/
+
 # pixi environments
 .pixi
 /third_party
