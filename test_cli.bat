@@ -2,6 +2,10 @@
 echo.
 echo ========== Nerfstudio CLI Validator ==========
 echo.
+@echo off
+REM Ensure UTF-8 output
+chcp 65001 > nul
+set PYTHONIOENCODING=utf-8
 
 REM Check if CLI works
 echo Running: ns-train --help

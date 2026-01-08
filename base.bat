@@ -3,8 +3,8 @@ setlocal enabledelayedexpansion
 
 REM ==== CONFIG ====
 set ENV_NAME=nerfstudio
-set YAML_FILE=nerfstudio_stable_environment_post_zipnerf.yaml
-set REQUIREMENTS=requirements_post_zipnerf.txt
+set YAML_FILE=requirements_conda.yaml
+set REQUIREMENTS=requirements_pip.txt
 set PYTHON_EXE=python
 
 echo.
