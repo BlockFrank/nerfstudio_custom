@@ -129,6 +129,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+.nerfstudio.code-workspace
 
 # Spyder project settings
 .spyderproject
@@ -196,9 +197,8 @@ camera_paths/
 /*.yaml
 
 # ✅ Exceptions: Include specific files in root dir
-!requirements_post_zipnerf.txt
-!requirements_post_zipnerf - Copia.txt
-!nerfstudio_stable_environment_post_zipnerf.yaml
+!requirements_pip.txt
+!requirements_conda.yaml
 # External Submodules:
 NeRFtoGSandBack/
 glomap/
