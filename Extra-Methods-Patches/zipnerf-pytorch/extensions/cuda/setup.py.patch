@@ -1,0 +1,12 @@
+diff --git "a/C:\\Users\\crist\\Documents\\nerfstudio_custom\\zipnerf-pytorch\\extensions\\cuda\\setup.py" "b/C:\\Users\\crist\\Documents\\nerfstudio_custom\\Extra-Methods-Patches\\zipnerf-pytorch\\extensions\\cuda\\setup.py"
+index a1c7b38c..75f78f3a 100644
+--- "a/C:\\Users\\crist\\Documents\\nerfstudio_custom\\zipnerf-pytorch\\extensions\\cuda\\setup.py"
++++ "b/C:\\Users\\crist\\Documents\\nerfstudio_custom\\Extra-Methods-Patches\\zipnerf-pytorch\\extensions\\cuda\\setup.py"
+@@ -16,6 +16,7 @@ if os.name == "nt":
+ 
+     def find_cl_path():
+         import glob
++
+         for edition in ["Enterprise", "Professional", "BuildTools", "Community"]:
+             paths = sorted(
+                 glob.glob(

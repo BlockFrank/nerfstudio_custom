@@ -126,6 +126,7 @@ docs = [
 
 [project.scripts]
 # Note, add entrypoint name to nerfstudio/scripts/completions/install.py to include CLI completion
+ns-install = "ns_installer.cli:main"
 ns-install-cli = "nerfstudio.scripts.completions.install:entrypoint"
 ns-process-data = "nerfstudio.scripts.process_data:entrypoint"
 ns-download-data = "nerfstudio.scripts.downloads.download_data:entrypoint"
@@ -138,7 +139,7 @@ ns-dev-test = "nerfstudio.scripts.github.run_actions:entrypoint"
 ns-dev-sync-viser-message-defs = "nerfstudio.scripts.viewer.sync_viser_message_defs:entrypoint"
 
 [tool.setuptools.packages.find]
-include = ["nerfstudio*"]
+include = ["nerfstudio*", "ns_installer*"]
 
 [tool.setuptools.package-data]
 "*" = ["*.cu", "*.json", "py.typed", "setup.bash", "setup.zsh"]
@@ -150,17 +151,16 @@ testpaths = [
 ]
 
 [tool.pyright]
-include = ["nerfstudio"]
-exclude = ["**/node_modules",
+include = ["nerfstudio", "ns_installer"]
+exclude = [
+    "**/node_modules",
     "**/__pycache__",
 ]
 defineConstant = { DEBUG = true }
-
 reportMissingImports = "warning"
 reportMissingTypeStubs = false
 reportPrivateImportUsage = false
-
-pythonPlatform = "Linux"
+typeCheckingMode = "basic"
 
 [tool.ruff]
 line-length = 120

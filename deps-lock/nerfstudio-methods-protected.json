@@ -1,0 +1,108 @@
+{
+  "protected_methods": {
+    "feature-splatting": {
+      "install_ref": "git+https://github.com/vuer-ai/feature-splatting",
+      "patch_rel": "feature-splatting",
+      "pip_names": [
+        "feature-splatting",
+        "feature_splatting"
+      ],
+      "category": "method",
+      "locked_requirement": "",
+      "present_in_lock": false
+    },
+    "igs2gs": {
+      "install_ref": "git+https://github.com/cvachha/instruct-gs2gs",
+      "patch_rel": "igs2gs",
+      "pip_names": [
+        "igs2gs"
+      ],
+      "category": "method",
+      "locked_requirement": "",
+      "present_in_lock": false
+    },
+    "lerf": {
+      "install_ref": "git+https://github.com/kerrj/lerf",
+      "patch_rel": "lerf",
+      "pip_names": [
+        "lerf"
+      ],
+      "category": "method",
+      "locked_requirement": "",
+      "present_in_lock": false
+    },
+    "livescene": {
+      "install_ref": "git+https://github.com/Tavish9/livescene",
+      "patch_rel": "livescene",
+      "pip_names": [
+        "livescene"
+      ],
+      "category": "method",
+      "locked_requirement": "",
+      "present_in_lock": false
+    },
+    "nerfplayer": {
+      "install_ref": "git+https://github.com/lsongx/nerfplayer-nerfstudio.git",
+      "patch_rel": "nerfplayer",
+      "pip_names": [
+        "nerfplayer"
+      ],
+      "category": "method",
+      "locked_requirement": "",
+      "present_in_lock": false
+    },
+    "opennerf": {
+      "install_ref": "git+https://github.com/opennerf/opennerf",
+      "patch_rel": "opennerf",
+      "pip_names": [
+        "opennerf"
+      ],
+      "category": "method",
+      "locked_requirement": "",
+      "present_in_lock": false
+    },
+    "pynerf": {
+      "install_ref": "git+https://github.com/hturki/pynerf",
+      "patch_rel": "pynerf",
+      "pip_names": [
+        "pynerf"
+      ],
+      "category": "method",
+      "locked_requirement": "",
+      "present_in_lock": false
+    },
+    "splatfacto-w": {
+      "install_ref": "git+https://github.com/KevinXu02/splatfacto-w",
+      "patch_rel": "splatfacto-w",
+      "pip_names": [
+        "splatfacto-w",
+        "splatfactow"
+      ],
+      "category": "method",
+      "locked_requirement": "",
+      "present_in_lock": false
+    },
+    "tetra-nerf": {
+      "install_ref": "git+https://github.com/jkulhanek/tetra-nerf",
+      "patch_rel": "tetra-nerf",
+      "pip_names": [
+        "tetra-nerf",
+        "tetra_nerf"
+      ],
+      "category": "method",
+      "locked_requirement": "",
+      "present_in_lock": false
+    },
+    "zipnerf-pytorch": {
+      "install_ref": "git+https://github.com/SuLvXiangXin/zipnerf-pytorch.git",
+      "patch_rel": "zipnerf-pytorch",
+      "pip_names": [
+        "zipnerf",
+        "zipnerf-pytorch"
+      ],
+      "category": "method",
+      "locked_requirement": "",
+      "present_in_lock": false
+    }
+  }
+}

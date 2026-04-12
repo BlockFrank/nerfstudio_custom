@@ -1,0 +1,640 @@
+@echo off
+setlocal EnableExtensions EnableDelayedExpansion
+cd /d "%~dp0"
+
+set "ROOT_DIR=%CD%"
+set "LOCK_DIR=%ROOT_DIR%\deps-lock"
+set "PY_SCRIPT=%ROOT_DIR%\deps_lock.py"
+set "ORIGINAL_INSTALLER=%ROOT_DIR%\install_windows_full.bat"
+set "PORTABLE_ENV_BAT=%ROOT_DIR%\portable_env.bat"
+set "EXTRAS_BAT=%ROOT_DIR%\extras_portable_manager.bat"
+set "DOCTOR_BAT=%ROOT_DIR%\doctor.bat"
+set "INSTALLER_SELECTION_JSON=%LOCK_DIR%\installer-selection.json"
+set "MSVC_TOOLSET_LIST_FILE=%LOCK_DIR%\msvc-toolsets.txt"
+set "MSVC_SELECTED_LOG_FILE=%LOCK_DIR%\msvc-selected.txt"
+if not exist "%LOCK_DIR%" mkdir "%LOCK_DIR%" 2>nul
+
+if not exist "%PY_SCRIPT%" (
+    echo [ERROR] Missing %PY_SCRIPT%
+    exit /b 1
+)
+
+call :select_conda_backend
+if errorlevel 1 exit /b %errorlevel%
+call :select_gpu_arch
+if errorlevel 1 exit /b %errorlevel%
+call :select_msvc_toolset
+if errorlevel 1 exit /b %errorlevel%
+call :write_installer_selection_json
+if errorlevel 1 exit /b %errorlevel%
+
+set "LOCK_MODE=no lock found yet"
+if exist "%LOCK_DIR%\pip-freeze-all.txt" set "LOCK_MODE=exact dependency re-apply enabled"
+
+set "HAS_LOCK=0"
+if exist "%LOCK_DIR%\pip-freeze-all.txt" set "HAS_LOCK=1"
+set "IF_CURRENT_ACTIVE="
+if defined CONDA_PREFIX set "IF_CURRENT_ACTIVE=/2"
+
+echo ======================================================
+echo   Nerfstudio Custom - smart pinned installer
+echo   Root dir: %ROOT_DIR%
+echo   Conda mode: %CONDA_MODE%
+echo   Lock mode: %LOCK_MODE%
+echo   GPU arch: %CUDA_ARCH%
+echo   Preferred MSVC: %PREFERRED_MSVC%
+echo ======================================================
+echo.
+echo Main actions:
+echo   1. Fresh setup / create or rebuild an env from deps-lock
+echo   2. Sync an existing env to the pinned stack
+echo   3. Freeze the current env into deps-lock
+echo   4. Install / patch extra Nerfstudio methods
+echo   5. Doctor ^(recommended for troubleshooting^)
+echo   6. Advanced / fallback
+set /p "CHOICE=Enter choice [1-6, default 1]: "
+if not defined CHOICE set "CHOICE=1"
+
+call :clear_rocm_env
+
+if "%CHOICE%"=="1" goto :mode_fresh_setup
+if "%CHOICE%"=="2" goto :mode_sync_existing
+if "%CHOICE%"=="3" goto :mode_export
+if "%CHOICE%"=="4" goto :mode_extras
+if "%CHOICE%"=="5" goto :mode_doctor
+if "%CHOICE%"=="6" goto :mode_advanced
+
+echo [ERROR] Invalid choice.
+exit /b 1
+
+:mode_fresh_setup
+if "%HAS_LOCK%"=="0" (
+    echo [WARN] No deps-lock found yet.
+    echo [INFO] A fresh setup needs an existing lock. Switching to freeze/export.
+    goto :mode_export
+)
+set "TARGET_CONDA_MODE=%CONDA_MODE%"
+set /p "TARGET_CONDA_MODE=Create env into which conda backend? [portable/system/current, default %CONDA_MODE%]: "
+if not defined TARGET_CONDA_MODE set "TARGET_CONDA_MODE=%CONDA_MODE%"
+call :resolve_named_conda_backend "%TARGET_CONDA_MODE%"
+if errorlevel 1 exit /b %errorlevel%
+set "CREATE_CONDA_EXE=%RESOLVED_CONDA_EXE%"
+set "CREATE_PYTHON_EXE=%RESOLVED_PYTHON_EXE%"
+set "ENV_NAME="
+set /p "ENV_NAME=Target env name [nerfstudio-portable]: "
+if not defined ENV_NAME set "ENV_NAME=nerfstudio-portable"
+set "REBUILD_CONFIRM="
+set /p "REBUILD_CONFIRM=If the env already exists, rebuild it from the lock? [Y/n]: "
+if /I not "%REBUILD_CONFIRM%"=="N" (
+    echo [INFO] Rebuilding/creating %ENV_NAME% from deps-lock...
+) else (
+    echo [INFO] Creating %ENV_NAME% from deps-lock if missing...
+)
+"%CREATE_PYTHON_EXE%" "%PY_SCRIPT%" --lock-dir "%LOCK_DIR%" --conda-exe "%CREATE_CONDA_EXE%" --msvc-mode "%PREFERRED_MSVC%" create --env-name "%ENV_NAME%"
+set "_RC=%errorlevel%"
+if not "%_RC%"=="0" exit /b %_RC%
+call :prompt_and_run_extras "%ENV_NAME%"
+if errorlevel 1 exit /b %errorlevel%
+call :prompt_and_run_doctor_in_env "%ENV_NAME%"
+exit /b %errorlevel%
+
+:mode_sync_existing
+if "%HAS_LOCK%"=="0" (
+    echo [ERROR] No deps-lock found. Freeze/export first.
+    exit /b 1
+)
+set "SYNC_KIND="
+echo.
+echo Sync target:
+echo   1. Named conda env
+if defined CONDA_PREFIX echo   2. Current active shell / Python
+set /p "SYNC_KIND=Choose sync target [1%IF_CURRENT_ACTIVE%, default 1]: "
+if not defined SYNC_KIND set "SYNC_KIND=1"
+if "%SYNC_KIND%"=="2" goto :mode_repin_current
+set "ENV_NAME="
+set /p "ENV_NAME=Existing conda env name to sync: "
+if not defined ENV_NAME (
+    echo [ERROR] No env name provided.
+    exit /b 1
+)
+call :run_in_conda_env "%ENV_NAME%" python "%PY_SCRIPT%" --lock-dir "%LOCK_DIR%" --conda-exe "%CONDA_EXE%" --msvc-mode "%PREFERRED_MSVC%" repin --skip-conda
+set "_RC=%errorlevel%"
+if not "%_RC%"=="0" exit /b %_RC%
+call :prompt_and_run_extras "%ENV_NAME%"
+if errorlevel 1 exit /b %errorlevel%
+call :prompt_and_run_doctor_in_env "%ENV_NAME%"
+exit /b %errorlevel%
+
+:mode_advanced
+echo.
+echo Advanced actions:
+echo   1. Check current env against lock
+echo   2. Force full conda + pip repin for a named env
+echo   3. Repin current shell / Python only
+echo   4. Fall back to original install_windows_full.bat
+echo   5. Cancel
+set /p "ADV_CHOICE=Enter advanced choice [1-5, default 5]: "
+if not defined ADV_CHOICE set "ADV_CHOICE=5"
+if "%ADV_CHOICE%"=="1" goto :mode_check
+if "%ADV_CHOICE%"=="2" goto :mode_repin_existing
+if "%ADV_CHOICE%"=="3" goto :mode_repin_current
+if "%ADV_CHOICE%"=="4" goto :mode_fallback
+exit /b 0
+
+:mode_export
+if "%CHOICE%"=="2" goto :mode_create
+if "%CHOICE%"=="3" goto :mode_repin_existing
+if "%CHOICE%"=="4" goto :mode_repin_current
+if "%CHOICE%"=="5" goto :mode_check
+if "%CHOICE%"=="6" goto :mode_extras
+if "%CHOICE%"=="7" goto :mode_doctor
+if "%CHOICE%"=="8" goto :mode_fallback
+
+echo [ERROR] Invalid choice.
+exit /b 1
+
+:mode_export
+call :prompt_and_run_doctor_in_env
+set "_DOC_ENV_NAME=%~1"
+if not exist "%DOCTOR_BAT%" exit /b 0
+set "RUN_DOC="
+set /p "RUN_DOC=Run doctor now for %_DOC_ENV_NAME%? [Y/n]: "
+if /I "%RUN_DOC%"=="N" exit /b 0
+call :run_in_conda_env "%_DOC_ENV_NAME%" call "%DOCTOR_BAT%"
+exit /b %errorlevel%
+
+:maybe_activate_env_for_export
+if errorlevel 1 exit /b %errorlevel%
+"%PYTHON_EXE%" "%PY_SCRIPT%" --lock-dir "%LOCK_DIR%" --conda-exe "%CONDA_EXE%" --msvc-mode "%PREFERRED_MSVC%" export
+exit /b %errorlevel%
+
+:mode_create
+set "TARGET_CONDA_MODE=%CONDA_MODE%"
+set /p "TARGET_CONDA_MODE=Create env into which conda backend? [portable/system/current, default %CONDA_MODE%]: "
+if not defined TARGET_CONDA_MODE set "TARGET_CONDA_MODE=%CONDA_MODE%"
+call :resolve_named_conda_backend "%TARGET_CONDA_MODE%"
+if errorlevel 1 exit /b %errorlevel%
+set "CREATE_CONDA_EXE=%RESOLVED_CONDA_EXE%"
+set "CREATE_PYTHON_EXE=%RESOLVED_PYTHON_EXE%"
+set "ENV_NAME="
+set /p "ENV_NAME=New conda env name [nerfstudio-portable]: "
+if not defined ENV_NAME set "ENV_NAME=nerfstudio-portable"
+"%CREATE_PYTHON_EXE%" "%PY_SCRIPT%" --lock-dir "%LOCK_DIR%" --conda-exe "%CREATE_CONDA_EXE%" --msvc-mode "%PREFERRED_MSVC%" create --env-name "%ENV_NAME%"
+set "_RC=%errorlevel%"
+if not "%_RC%"=="0" exit /b %_RC%
+call :prompt_and_run_extras "%ENV_NAME%"
+if errorlevel 1 exit /b %errorlevel%
+
+:mode_repin_existing
+set "ENV_NAME="
+set /p "ENV_NAME=Existing conda env name to repin: "
+if not defined ENV_NAME (
+    echo [ERROR] No env name provided.
+    exit /b 1
+)
+set "FORCE_CONDA="
+set /p "FORCE_CONDA=Also force full conda restore first? [y/N]: "
+if /I "%FORCE_CONDA%"=="Y" (
+    call :run_in_conda_env "%ENV_NAME%" python "%PY_SCRIPT%" --lock-dir "%LOCK_DIR%" --conda-exe "%CONDA_EXE%" --msvc-mode "%PREFERRED_MSVC%" repin --force-conda
+) else (
+    call :run_in_conda_env "%ENV_NAME%" python "%PY_SCRIPT%" --lock-dir "%LOCK_DIR%" --conda-exe "%CONDA_EXE%" --msvc-mode "%PREFERRED_MSVC%" repin --skip-conda
+)
+set "_RC=%errorlevel%"
+if not "%_RC%"=="0" exit /b %_RC%
+call :prompt_and_run_extras "%ENV_NAME%"
+if errorlevel 1 exit /b %errorlevel%
+
+:mode_repin_current
+call :clear_rocm_env
+"%PYTHON_EXE%" "%PY_SCRIPT%" --lock-dir "%LOCK_DIR%" --conda-exe "%CONDA_EXE%" --msvc-mode "%PREFERRED_MSVC%" repin --skip-conda
+exit /b %errorlevel%
+
+:mode_check
+"%PYTHON_EXE%" "%PY_SCRIPT%" --lock-dir "%LOCK_DIR%" --conda-exe "%CONDA_EXE%" --msvc-mode "%PREFERRED_MSVC%" check
+exit /b %errorlevel%
+
+:mode_extras
+if not exist "%EXTRAS_BAT%" (
+    echo [ERROR] Missing %EXTRAS_BAT%
+    exit /b 1
+)
+set "EXTRAS_ENV_NAME="
+set /p "EXTRAS_ENV_NAME=Extras target env name [leave blank = current shell / extras script default]: "
+if defined EXTRAS_ENV_NAME (
+    call "%EXTRAS_BAT%" "%EXTRAS_ENV_NAME%"
+) else (
+    call "%EXTRAS_BAT%"
+)
+exit /b %errorlevel%
+
+:mode_doctor
+if not exist "%DOCTOR_BAT%" (
+    echo [ERROR] Missing %DOCTOR_BAT%
+    exit /b 1
+)
+call "%DOCTOR_BAT%"
+exit /b %errorlevel%
+
+:mode_fallback
+if exist "%ORIGINAL_INSTALLER%" (
+    call "%ORIGINAL_INSTALLER%"
+    exit /b %errorlevel%
+)
+echo [ERROR] Original installer not found: %ORIGINAL_INSTALLER%
+exit /b 1
+
+:maybe_activate_env_for_export
+if defined CONDA_PREFIX (
+    echo [INFO] Current active conda env detected:
+    echo        %CONDA_PREFIX%
+    set "USE_ACTIVE="
+    set /p "USE_ACTIVE=Export current active env as-is? [Y/n]: "
+    if /I "!USE_ACTIVE!"=="N" goto :prompt_export_env_name
+    exit /b 0
+)
+:prompt_export_env_name
+set "EXPORT_ENV_NAME="
+set /p "EXPORT_ENV_NAME=Env name to activate before export (leave blank to export selected base): "
+if not defined EXPORT_ENV_NAME exit /b 0
+call "%CONDA_BAT%" activate "%EXPORT_ENV_NAME%"
+if errorlevel 1 exit /b %errorlevel%
+exit /b 0
+
+:select_conda_backend
+echo.
+echo Conda backend mode:
+echo   1. portable  ^(recommended reproducible project-local .conda^)
+echo   2. system    ^(existing Anaconda/Miniconda installed on the PC^)
+echo   3. current   ^(derive from current active CONDA_EXE / PATH^)
+set /p "CONDA_MODE_CHOICE=Choose conda backend [1-3, default 1]: "
+if not defined CONDA_MODE_CHOICE set "CONDA_MODE_CHOICE=1"
+if "%CONDA_MODE_CHOICE%"=="1" call :resolve_named_conda_backend portable
+if "%CONDA_MODE_CHOICE%"=="2" call :resolve_named_conda_backend system
+if "%CONDA_MODE_CHOICE%"=="3" call :resolve_named_conda_backend current
+if errorlevel 1 exit /b %errorlevel%
+if not defined RESOLVED_CONDA_MODE (
+    echo [ERROR] Invalid conda backend choice.
+    exit /b 1
+)
+set "CONDA_MODE=%RESOLVED_CONDA_MODE%"
+set "SELECTED_CONDA_ROOT=%RESOLVED_CONDA_ROOT%"
+set "CONDA_EXE=%RESOLVED_CONDA_EXE%"
+set "CONDA_BAT=%RESOLVED_CONDA_BAT%"
+set "PYTHON_EXE=%RESOLVED_PYTHON_EXE%"
+exit /b 0
+
+:resolve_named_conda_backend
+set "REQ_MODE=%~1"
+set "RESOLVED_CONDA_MODE="
+set "RESOLVED_CONDA_ROOT="
+set "RESOLVED_CONDA_EXE="
+set "RESOLVED_CONDA_BAT="
+set "RESOLVED_PYTHON_EXE="
+if /I "%REQ_MODE%"=="portable" goto :resolve_portable
+if /I "%REQ_MODE%"=="system" goto :resolve_system
+if /I "%REQ_MODE%"=="current" goto :resolve_current
+echo [ERROR] Unknown conda backend: %REQ_MODE%
+exit /b 1
+
+:resolve_portable
+if not exist "%PORTABLE_ENV_BAT%" (
+    echo [ERROR] Missing portable helper: %PORTABLE_ENV_BAT%
+    exit /b 1
+)
+call "%PORTABLE_ENV_BAT%"
+if errorlevel 1 exit /b %errorlevel%
+if not defined PORTABLE_CONDA_ROOT if exist "%ROOT_DIR%\.conda\Scripts\conda.exe" set "PORTABLE_CONDA_ROOT=%ROOT_DIR%\.conda"
+if not defined PORTABLE_CONDA_ROOT (
+    echo [ERROR] PORTABLE_CONDA_ROOT not exported by portable_env.bat
+    exit /b 1
+)
+set "RESOLVED_CONDA_MODE=portable"
+set "RESOLVED_CONDA_ROOT=%PORTABLE_CONDA_ROOT%"
+set "RESOLVED_CONDA_EXE=%PORTABLE_CONDA_ROOT%\Scripts\conda.exe"
+set "RESOLVED_CONDA_BAT=%PORTABLE_CONDA_ROOT%\condabin\conda.bat"
+set "RESOLVED_PYTHON_EXE=%PORTABLE_CONDA_ROOT%\python.exe"
+goto :validate_resolved_conda
+
+:resolve_system
+call :detect_system_conda_root
+if errorlevel 1 exit /b %errorlevel%
+set "RESOLVED_CONDA_MODE=system"
+set "RESOLVED_CONDA_ROOT=%SYSTEM_CONDA_ROOT%"
+set "RESOLVED_CONDA_EXE=%SYSTEM_CONDA_ROOT%\Scripts\conda.exe"
+set "RESOLVED_CONDA_BAT=%SYSTEM_CONDA_ROOT%\condabin\conda.bat"
+set "RESOLVED_PYTHON_EXE=%SYSTEM_CONDA_ROOT%\python.exe"
+goto :validate_resolved_conda
+
+:resolve_current
+set "CUR_CONDA_EXE="
+if defined CONDA_EXE (
+    set "CUR_CONDA_EXE=%CONDA_EXE%"
+) else (
+    for /f "delims=" %%I in ('where conda.exe 2^>nul') do if not defined CUR_CONDA_EXE set "CUR_CONDA_EXE=%%I"
+)
+if not defined CUR_CONDA_EXE (
+    echo [ERROR] Could not detect a current conda.exe from active shell or PATH.
+    exit /b 1
+)
+for %%I in ("!CUR_CONDA_EXE!") do set "CUR_CONDA_SCRIPTS=%%~dpI"
+for %%I in ("!CUR_CONDA_SCRIPTS!..") do set "CUR_CONDA_ROOT=%%~fI"
+set "RESOLVED_CONDA_MODE=current"
+set "RESOLVED_CONDA_ROOT=!CUR_CONDA_ROOT!"
+set "RESOLVED_CONDA_EXE=!CUR_CONDA_ROOT!\Scripts\conda.exe"
+set "RESOLVED_CONDA_BAT=!CUR_CONDA_ROOT!\condabin\conda.bat"
+set "RESOLVED_PYTHON_EXE=!CUR_CONDA_ROOT!\python.exe"
+goto :validate_resolved_conda
+
+:validate_resolved_conda
+if not exist "%RESOLVED_CONDA_EXE%" (
+    echo [ERROR] Conda executable not found: %RESOLVED_CONDA_EXE%
+    exit /b 1
+)
+if not exist "%RESOLVED_CONDA_BAT%" (
+    echo [ERROR] Conda activation script not found: %RESOLVED_CONDA_BAT%
+    exit /b 1
+)
+if not exist "%RESOLVED_PYTHON_EXE%" (
+    echo [ERROR] Python executable not found: %RESOLVED_PYTHON_EXE%
+    exit /b 1
+)
+exit /b 0
+
+:clear_rocm_env
+set "ROCM_HOME="
+set "ROCM_PATH="
+set "HIP_HOME="
+set "HIP_PATH="
+set "HCC_HOME="
+set "HIP_PATH_57="
+set "HIP_DEVICE_LIB_PATH="
+set "PYTORCH_ROCM_ARCH="
+exit /b 0
+
+:run_in_conda_env
+set "_NS_ENV_NAME=%~1"
+if not defined _NS_ENV_NAME (
+    echo [ERROR] Missing env name for activation.
+    exit /b 1
+)
+shift
+
+set "_NS_CMD="
+:run_in_conda_env_collect
+if "%~1"=="" goto :run_in_conda_env_exec
+set "_NS_CMD=!_NS_CMD! "%~1""
+shift
+goto :run_in_conda_env_collect
+
+:run_in_conda_env_exec
+if not defined _NS_CMD (
+    echo [ERROR] Missing command for activated conda env.
+    exit /b 1
+)
+
+call :clear_rocm_env
+call "%CONDA_BAT%" activate "%_NS_ENV_NAME%"
+if errorlevel 1 exit /b %errorlevel%
+
+call %_NS_CMD%
+set "_NS_RC=%errorlevel%"
+
+call conda deactivate >nul 2>nul
+exit /b %_NS_RC%
+
+:detect_system_conda_root
+set "SYSTEM_CONDA_ROOT="
+if defined CONDA_EXE (
+    echo %CONDA_EXE% | find /I "%ROOT_DIR%\.conda" >nul
+    if errorlevel 1 (
+        for %%I in ("%CONDA_EXE%") do set "_sys_scripts=%%~dpI"
+        for %%I in ("!_sys_scripts!..") do set "SYSTEM_CONDA_ROOT=%%~fI"
+    )
+)
+if not defined SYSTEM_CONDA_ROOT for /f "delims=" %%I in ('where conda.exe 2^>nul') do (
+    echo %%I | find /I "%ROOT_DIR%\.conda" >nul
+    if errorlevel 1 if not defined SYSTEM_CONDA_ROOT (
+        for %%J in ("%%I") do set "_sys_scripts=%%~dpJ"
+        for %%J in ("!_sys_scripts!..") do set "SYSTEM_CONDA_ROOT=%%~fJ"
+    )
+)
+if not defined SYSTEM_CONDA_ROOT if exist "%UserProfile%\miniconda3\Scripts\conda.exe" set "SYSTEM_CONDA_ROOT=%UserProfile%\miniconda3"
+if not defined SYSTEM_CONDA_ROOT if exist "%UserProfile%\anaconda3\Scripts\conda.exe" set "SYSTEM_CONDA_ROOT=%UserProfile%\anaconda3"
+if not defined SYSTEM_CONDA_ROOT (
+    echo [ERROR] Could not find a system conda installation.
+    exit /b 1
+)
+exit /b 0
+
+:select_gpu_arch
+set "GPU_NAME=unknown"
+set "CUDA_ARCH="
+set "TCNN_CUDA_ARCHITECTURES="
+echo.
+echo GPU arch mode:
+echo   1. Auto-detect from nvidia-smi
+echo   2. Manual entry
+echo   3. Use existing TCNN_CUDA_ARCHITECTURES if already set
+set /p "GPU_MODE=Choose GPU arch mode [1-3, default 1]: "
+if not defined GPU_MODE set "GPU_MODE=1"
+if "%GPU_MODE%"=="1" goto :gpu_auto
+if "%GPU_MODE%"=="2" goto :gpu_manual
+if "%GPU_MODE%"=="3" goto :gpu_existing
+echo [ERROR] Invalid GPU mode.
+exit /b 1
+:gpu_existing
+if defined TCNN_CUDA_ARCHITECTURES (
+    set "CUDA_ARCH=%TCNN_CUDA_ARCHITECTURES%"
+    set "GPU_NAME=env"
+    exit /b 0
+)
+echo [WARN] TCNN_CUDA_ARCHITECTURES was not already set. Falling back to auto-detect.
+goto :gpu_auto
+:gpu_auto
+for /f "usebackq delims=" %%G in (`nvidia-smi --query-gpu=name --format=csv,noheader 2^>nul`) do if /I "!GPU_NAME!"=="unknown" set "GPU_NAME=%%G"
+call :map_gpu_to_arch "%GPU_NAME%"
+if not defined CUDA_ARCH goto :gpu_manual_default
+set "TCNN_CUDA_ARCHITECTURES=%CUDA_ARCH%"
+exit /b 0
+:gpu_manual_default
+set "GPU_NAME=manual"
+set /p "CUDA_ARCH=Enter CUDA arch [default 86 for RTX 3090]: "
+if not defined CUDA_ARCH set "CUDA_ARCH=86"
+set "TCNN_CUDA_ARCHITECTURES=%CUDA_ARCH%"
+exit /b 0
+:gpu_manual
+set "GPU_NAME=manual"
+set /p "CUDA_ARCH=Enter CUDA arch (75, 80, 86, 89, 90, 120 ...): "
+if not defined CUDA_ARCH (
+    echo [ERROR] No CUDA arch provided.
+    exit /b 1
+)
+set "TCNN_CUDA_ARCHITECTURES=%CUDA_ARCH%"
+exit /b 0
+:map_gpu_to_arch
+set "GPU_LABEL=%~1"
+set "CUDA_ARCH="
+echo %GPU_LABEL% | find /I "3090" >nul && set "CUDA_ARCH=86"
+echo %GPU_LABEL% | find /I "3080" >nul && set "CUDA_ARCH=86"
+echo %GPU_LABEL% | find /I "3070" >nul && set "CUDA_ARCH=86"
+echo %GPU_LABEL% | find /I "3060" >nul && set "CUDA_ARCH=86"
+echo %GPU_LABEL% | find /I "4090" >nul && set "CUDA_ARCH=89"
+echo %GPU_LABEL% | find /I "4080" >nul && set "CUDA_ARCH=89"
+echo %GPU_LABEL% | find /I "4070" >nul && set "CUDA_ARCH=89"
+echo %GPU_LABEL% | find /I "A100" >nul && set "CUDA_ARCH=80"
+echo %GPU_LABEL% | find /I "H100" >nul && set "CUDA_ARCH=90"
+exit /b 0
+
+:select_msvc_toolset
+set "PREFERRED_MSVC="
+echo.
+echo Preferred MSVC toolset:
+echo   1. auto    ^(prefer 14.38 if found, else best compatible^)
+echo   2. 14.38   ^(force VS2022 v143 14.38 toolset if installed^)
+echo   3. 14      ^(any 14.x compatible MSVC^)
+echo   4. system  ^(do not force; use current/default MSVC on PATH^)
+set /p "MSVC_CHOICE=Choose preferred MSVC toolset [1-4, default 1]: "
+if not defined MSVC_CHOICE set "MSVC_CHOICE=1"
+
+if "%MSVC_CHOICE%"=="1" set "PREFERRED_MSVC=auto"
+if "%MSVC_CHOICE%"=="2" set "PREFERRED_MSVC=14.38"
+if "%MSVC_CHOICE%"=="3" set "PREFERRED_MSVC=14"
+if "%MSVC_CHOICE%"=="4" set "PREFERRED_MSVC=system"
+
+if not defined PREFERRED_MSVC (
+    echo [ERROR] Invalid MSVC choice.
+    exit /b 1
+)
+
+if not exist "%LOCK_DIR%" mkdir "%LOCK_DIR%" 2>nul
+
+> "%MSVC_TOOLSET_LIST_FILE%" echo Detected MSVC toolsets:
+for %%R in (
+    "%ProgramFiles%\Microsoft Visual Studio\2022\BuildTools"
+    "%ProgramFiles%\Microsoft Visual Studio\2022\Community"
+    "%ProgramFiles%\Microsoft Visual Studio\2022\Professional"
+    "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise"
+    "%ProgramFiles(x86)%\Microsoft Visual Studio\2022\BuildTools"
+    "%ProgramFiles(x86)%\Microsoft Visual Studio\2022\Community"
+    "%ProgramFiles(x86)%\Microsoft Visual Studio\2022\Professional"
+    "%ProgramFiles(x86)%\Microsoft Visual Studio\2022\Enterprise"
+) do (
+    if exist "%%~R\VC\Tools\MSVC" (
+        for /d %%T in ("%%~R\VC\Tools\MSVC\*") do (
+            >> "%MSVC_TOOLSET_LIST_FILE%" echo %%~nxT ^| %%~R
+        )
+    )
+)
+
+if exist "%MSVC_TOOLSET_LIST_FILE%" type "%MSVC_TOOLSET_LIST_FILE%"
+exit /b 0
+
+:write_installer_selection_json
+if not exist "%LOCK_DIR%" mkdir "%LOCK_DIR%" 2>nul
+if not exist "%LOCK_DIR%" (
+    echo [ERROR] Unable to create lock directory: %LOCK_DIR%
+    exit /b 1
+)
+
+set "MSVC_HINT="
+set "MSVC_INSTALL_HINT="
+set "FIRST_MSVC_HINT="
+set "FIRST_MSVC_INSTALL_HINT="
+
+if exist "%MSVC_TOOLSET_LIST_FILE%" (
+    for /f "usebackq tokens=1,* delims=|" %%A in ("%MSVC_TOOLSET_LIST_FILE%") do (
+        set "MSVC_VER=%%~A"
+        set "MSVC_LOC=%%~B"
+        call :trim_var MSVC_VER
+        call :trim_var MSVC_LOC
+
+        if defined MSVC_VER if defined MSVC_LOC (
+            if /I not "!MSVC_VER!"=="Detected MSVC toolsets:" (
+                if not defined FIRST_MSVC_HINT (
+                    set "FIRST_MSVC_HINT=!MSVC_VER!"
+                    set "FIRST_MSVC_INSTALL_HINT=!MSVC_LOC!"
+                )
+
+                if /I "%PREFERRED_MSVC%"=="14.38" (
+                    echo(!MSVC_VER!| findstr /b /c:"14.38" >nul
+                    if not errorlevel 1 if not defined MSVC_HINT (
+                        set "MSVC_HINT=!MSVC_VER!"
+                        set "MSVC_INSTALL_HINT=!MSVC_LOC!"
+                    )
+                )
+
+                if /I "%PREFERRED_MSVC%"=="14" (
+                    echo(!MSVC_VER!| findstr /b /c:"14." >nul
+                    if not errorlevel 1 if not defined MSVC_HINT (
+                        set "MSVC_HINT=!MSVC_VER!"
+                        set "MSVC_INSTALL_HINT=!MSVC_LOC!"
+                    )
+                )
+
+                if /I "%PREFERRED_MSVC%"=="auto" (
+                    echo(!MSVC_VER!| findstr /b /c:"14.38" >nul
+                    if not errorlevel 1 if not defined MSVC_HINT (
+                        set "MSVC_HINT=!MSVC_VER!"
+                        set "MSVC_INSTALL_HINT=!MSVC_LOC!"
+                    )
+                )
+            )
+        )
+    )
+)
+
+if /I "%PREFERRED_MSVC%"=="auto" (
+    if not defined MSVC_HINT (
+        set "MSVC_HINT=%FIRST_MSVC_HINT%"
+        set "MSVC_INSTALL_HINT=%FIRST_MSVC_INSTALL_HINT%"
+    )
+)
+
+if /I "%PREFERRED_MSVC%"=="system" (
+    set "MSVC_HINT=system"
+    set "MSVC_INSTALL_HINT="
+)
+
+if /I not "%PREFERRED_MSVC%"=="auto" if /I not "%PREFERRED_MSVC%"=="system" (
+    if not defined MSVC_HINT set "MSVC_HINT=%PREFERRED_MSVC%"
+)
+
+"%PYTHON_EXE%" -c "import json, pathlib; from datetime import datetime, timezone; p=pathlib.Path(r'%INSTALLER_SELECTION_JSON%'); p.parent.mkdir(parents=True, exist_ok=True); data={'cuda_arch': r'%CUDA_ARCH%','tcnn_cuda_architectures': r'%TCNN_CUDA_ARCHITECTURES%','gpu_name': r'%GPU_NAME%','preferred_msvc': r'%PREFERRED_MSVC%','preferred_msvc_mode': r'%PREFERRED_MSVC%','selected_msvc_toolset_hint': r'%MSVC_HINT%','selected_msvc_installation_hint': r'%MSVC_INSTALL_HINT%','conda_mode': r'%CONDA_MODE%','conda_root': r'%SELECTED_CONDA_ROOT%','written_utc': datetime.now(timezone.utc).isoformat()}; p.write_text(json.dumps(data, indent=2) + '\n', encoding='utf-8')"
+if errorlevel 1 (
+    echo [ERROR] Failed to write installer selection metadata.
+    exit /b 1
+)
+
+echo [OK] Wrote installer selection metadata: %INSTALLER_SELECTION_JSON%
+exit /b 0
+
+:prompt_and_run_extras
+set "_EXTRAS_ENV=%~1"
+if not defined _EXTRAS_ENV exit /b 0
+
+set "INSTALL_EXTRAS_NOW="
+set /p "INSTALL_EXTRAS_NOW=Install extra NeRF methods now? [y/N]: "
+call :trim_var INSTALL_EXTRAS_NOW
+
+if /I not "%INSTALL_EXTRAS_NOW%"=="Y" exit /b 0
+
+if not exist "%EXTRAS_BAT%" (
+    echo [ERROR] Missing %EXTRAS_BAT%
+    exit /b 1
+)
+
+echo [INFO] Launching extras installer for env: %_EXTRAS_ENV%
+call "%EXTRAS_BAT%" "%_EXTRAS_ENV%"
+exit /b %errorlevel%
+
+:trim_var
+setlocal EnableDelayedExpansion
+set "s=!%~1!"
+if not defined s (
+    endlocal & set "%~1=" & exit /b 0
+)
+for /f "tokens=* delims= " %%Z in ("!s!") do set "s=%%Z"
+:trim_var_r
+if "!s:~-1!"==" " set "s=!s:~0,-1!" & goto trim_var_r
+endlocal & set "%~1=%s%"
+exit /b 0

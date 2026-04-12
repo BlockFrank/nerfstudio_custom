@@ -30,6 +30,7 @@ if sys.version_info < (3, 10):
     from importlib_metadata import entry_points
 else:
     from importlib.metadata import entry_points
+
 CONSOLE = Console(width=120)
 
 
@@ -51,17 +52,33 @@ def discover_dataparsers() -> t.Tuple[t.Dict[str, DataParserConfig], t.Dict[str,
     """
     Discovers all dataparsers registered using the `nerfstudio.dataparser_configs` entrypoint.
     And also dataparsers in the NERFSTUDIO_DATAPARSER_CONFIGS environment variable.
+
+    Resilient patch:
+    - broken external dataparsers are skipped with a warning
+    - one bad plugin no longer kills startup
     """
     dataparsers = {}
     descriptions = {}
     discovered_entry_points = entry_points(group="nerfstudio.dataparser_configs")
+
     for name in discovered_entry_points.names:
-        spec = discovered_entry_points[name].load()
-        if not isinstance(spec, DataParserSpecification):
+        try:
+            spec = discovered_entry_points[name].load()
+        except Exception as exc:  # pylint: disable=broad-except
             CONSOLE.print(
-                f"[bold yellow]Warning: Could not entry point {spec} as it is not an instance of DataParserSpecification"
+                f"[bold yellow]Warning:[/bold yellow] Skipping external dataparser "
+                f"[cyan]{name}[/cyan] because it failed to import/load.\n"
+                f"  Entry point: {discovered_entry_points[name].value}\n"
+                f"  Error: {type(exc).__name__}: {exc}"
             )
             continue
+
+        if not isinstance(spec, DataParserSpecification):
+            CONSOLE.print(
+                f"[bold yellow]Warning: Could not load entry point {spec} as it is not an instance of DataParserSpecification"
+            )
+            continue
+
         spec = t.cast(DataParserSpecification, spec)
         dataparsers[name] = spec.config
         descriptions[name] = spec.description
@@ -77,15 +94,12 @@ def discover_dataparsers() -> t.Tuple[t.Dict[str, DataParserConfig], t.Dict[str,
                 module, config_name = path.split(":")
                 dataparser_config = getattr(importlib.import_module(module), config_name)
 
-                # method_config specified as function or class -> instance
                 if callable(dataparser_config):
                     dataparser_config = dataparser_config()
 
-                # check for valid instance type
                 if not isinstance(dataparser_config, DataParserSpecification):
                     raise TypeError("Method is not an instance of DataParserSpecification")
 
-                # save to methods
                 dataparsers[name] = dataparser_config.config
                 descriptions[name] = dataparser_config.description
         except Exception:  # pylint: disable=broad-except

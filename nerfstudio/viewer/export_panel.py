@@ -24,7 +24,22 @@ from nerfstudio.data.scene_box import OrientedBox
 from nerfstudio.models.base_model import Model
 from nerfstudio.models.splatfacto import SplatfactoModel
 from nerfstudio.viewer.control_panel import ControlPanel
+from nerfstudio.models.splatfacto import SplatfactoModel
+try:
+    from nerfstudio.models.splatfactow import SplatfactoWModel  # your custom model
+except:
+    SplatfactoWModel = None
+    
+def is_gsplat_model(model: Model) -> bool:
+    """Robust detection of gaussian splatting-like models."""
+    if isinstance(model, SplatfactoModel):
+        return True
 
+    if SplatfactoWModel is not None and isinstance(model, SplatfactoWModel):
+        return True
+
+    # Future-proof: capability-based fallback
+    return hasattr(model, "means") and hasattr(model, "opacities")
 
 def populate_export_tab(
     server: viser.ViserServer,
@@ -32,7 +47,7 @@ def populate_export_tab(
     config_path: Path,
     viewer_model: Model,
 ) -> None:
-    viewing_gsplat = isinstance(viewer_model, SplatfactoModel)
+    viewing_gsplat = is_gsplat_model(viewer_model)
     if not viewing_gsplat:
         crop_output = server.gui.add_checkbox("Use Crop", False)
 

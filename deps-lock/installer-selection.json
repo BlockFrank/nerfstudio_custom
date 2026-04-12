@@ -1,0 +1,12 @@
+{
+  "cuda_arch": "86",
+  "tcnn_cuda_architectures": "86",
+  "gpu_name": "manual",
+  "preferred_msvc": "14.38",
+  "preferred_msvc_mode": "14.38",
+  "selected_msvc_toolset_hint": "14.38.33130",
+  "selected_msvc_installation_hint": "C:\\PROGRA~1\\MICROS~1\\2022\\PROFES~1",
+  "conda_mode": "current",
+  "conda_root": "C:\\Users\\crist\\Documenti\\nerfstudio_custom\\.conda",
+  "written_utc": "2026-04-08T19:21:39.771925+00:00"
+}

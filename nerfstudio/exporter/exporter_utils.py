@@ -38,8 +38,6 @@ from nerfstudio.pipelines.base_pipeline import Pipeline, VanillaPipeline
 from nerfstudio.utils.rich_utils import CONSOLE, ItersPerSecColumn
 
 if TYPE_CHECKING:
-    # Importing open3d can take ~1 second, so only do it below if we actually
-    # need it.
     import open3d as o3d
 
 
@@ -80,6 +78,90 @@ def get_mesh_from_filename(filename: str, target_num_faces: Optional[int] = None
     return get_mesh_from_pymeshlab_mesh(mesh)
 
 
+def _safe_get_train_dataset(pipeline: Pipeline) -> Optional[InputDataset]:
+    """Best-effort access to the train dataset for custom datamanagers."""
+    datamanager = getattr(pipeline, "datamanager", None)
+    if datamanager is None:
+        return None
+    dataset = getattr(datamanager, "train_dataset", None)
+    if isinstance(dataset, InputDataset):
+        return dataset
+    return None
+
+
+def _safe_get_train_raybundle_from_datamanager(pipeline: Pipeline) -> Optional[RayBundle]:
+    """Try the standard datamanager path first."""
+    datamanager = getattr(pipeline, "datamanager", None)
+    if datamanager is None or not hasattr(datamanager, "next_train"):
+        return None
+
+    try:
+        train_out = datamanager.next_train(0)
+    except Exception:
+        return None
+
+    ray_bundle: Any = None
+    if isinstance(train_out, tuple) and len(train_out) >= 1:
+        ray_bundle = train_out[0]
+    else:
+        ray_bundle = train_out
+
+    if isinstance(ray_bundle, RayBundle):
+        return ray_bundle
+    return None
+
+
+def _generate_raybundle_from_train_dataset(
+    pipeline: Pipeline,
+    camera_idx: int,
+) -> Optional[RayBundle]:
+    """Fallback path for custom datamanagers that do not return a RayBundle in next_train()."""
+    dataset = _safe_get_train_dataset(pipeline)
+    if dataset is None:
+        return None
+
+    cameras = getattr(dataset, "cameras", None)
+    if cameras is None or len(cameras) == 0:
+        return None
+
+    camera_idx = int(camera_idx % len(cameras))
+
+    try:
+        camera = cameras[camera_idx : camera_idx + 1]
+        ray_bundle = camera.generate_rays(camera_indices=0)
+        return ray_bundle.to(pipeline.device)
+    except Exception:
+        pass
+
+    try:
+        ray_bundle = cameras.generate_rays(camera_indices=camera_idx)
+        return ray_bundle.to(pipeline.device)
+    except Exception:
+        return None
+
+
+def _get_next_export_raybundle(
+    pipeline: Pipeline,
+    fallback_camera_idx: int,
+) -> RayBundle:
+    """Robustly obtain a RayBundle for exporters, including custom datamanagers."""
+    ray_bundle = _safe_get_train_raybundle_from_datamanager(pipeline)
+    if ray_bundle is not None:
+        return ray_bundle.to(pipeline.device)
+
+    ray_bundle = _generate_raybundle_from_train_dataset(pipeline, fallback_camera_idx)
+    if ray_bundle is not None:
+        return ray_bundle
+
+    datamanager_name = type(getattr(pipeline, "datamanager", None)).__name__
+    raise RuntimeError(
+        "Could not obtain a RayBundle for export. "
+        f"Datamanager type: {datamanager_name}. "
+        "This exporter supports standard Nerfstudio datamanagers and best-effort fallback via "
+        "train_dataset.cameras.generate_rays(...), but both paths failed."
+    )
+
+
 def generate_point_cloud(
     pipeline: Pipeline,
     num_points: int = 1000000,
@@ -116,31 +198,40 @@ def generate_point_cloud(
         TimeRemainingColumn(elapsed_when_finished=True, compact=True),
         console=CONSOLE,
     )
+
     points = []
     rgbs = []
     normals = []
     view_directions = []
+
+    fallback_camera_idx = 0
+
     with progress as progress_bar:
         task = progress_bar.add_task("Generating Point Cloud", total=num_points)
+
         while not progress_bar.finished:
             normal = None
 
             with torch.no_grad():
-                ray_bundle, _ = pipeline.datamanager.next_train(0)
-                assert isinstance(ray_bundle, RayBundle)
+                ray_bundle = _get_next_export_raybundle(pipeline, fallback_camera_idx)
+                fallback_camera_idx += 1
                 outputs = pipeline.model(ray_bundle)
+
             if rgb_output_name not in outputs:
                 CONSOLE.rule("Error", style="red")
                 CONSOLE.print(f"Could not find {rgb_output_name} in the model outputs", justify="center")
                 CONSOLE.print(f"Please set --rgb_output_name to one of: {outputs.keys()}", justify="center")
                 sys.exit(1)
+
             if depth_output_name not in outputs:
                 CONSOLE.rule("Error", style="red")
                 CONSOLE.print(f"Could not find {depth_output_name} in the model outputs", justify="center")
                 CONSOLE.print(f"Please set --depth_output_name to one of: {outputs.keys()}", justify="center")
                 sys.exit(1)
+
             rgba = pipeline.model.get_rgba_image(outputs, rgb_output_name)
             depth = outputs[depth_output_name]
+
             if normal_output_name is not None:
                 if normal_output_name not in outputs:
                     CONSOLE.rule("Error", style="red")
@@ -152,10 +243,10 @@ def generate_point_cloud(
                     "Normal values from method output must be in [0, 1]"
                 )
                 normal = (normal * 2.0) - 1.0
+
             point = ray_bundle.origins + ray_bundle.directions * depth
             view_direction = ray_bundle.directions
 
-            # Filter points with opacity lower than 0.5
             mask = rgba[..., -1] > 0.5
             point = point[mask]
             view_direction = view_direction[mask]
@@ -171,12 +262,20 @@ def generate_point_cloud(
                 if normal is not None:
                     normal = normal[mask]
 
+            if point.numel() == 0:
+                continue
+
             points.append(point)
             rgbs.append(rgb)
             view_directions.append(view_direction)
             if normal is not None:
                 normals.append(normal)
+
             progress.advance(task, point.shape[0])
+
+    if len(points) == 0:
+        raise RuntimeError("Point cloud export produced zero valid points.")
+
     points = torch.cat(points, dim=0)
     rgbs = torch.cat(rgbs, dim=0)
     view_directions = torch.cat(view_directions, dim=0).cpu()
@@ -196,7 +295,6 @@ def generate_point_cloud(
         if ind is not None:
             view_directions = view_directions[ind]
 
-    # either estimate_normals or normal_output_name, not both
     if estimate_normals:
         if normal_output_name is not None:
             CONSOLE.rule("Error", style="red")
@@ -209,11 +307,9 @@ def generate_point_cloud(
     elif normal_output_name is not None:
         normals = torch.cat(normals, dim=0)
         if ind is not None:
-            # mask out normals for points that were removed with remove_outliers
             normals = normals[ind]
         pcd.normals = o3d.utility.Vector3dVector(normals.double().cpu().numpy())
 
-    # re-orient the normals
     if reorient_normals:
         normals = torch.from_numpy(np.array(pcd.normals)).float()
         mask = torch.sum(view_directions * normals, dim=-1) > 0
@@ -304,13 +400,11 @@ def collect_camera_poses_for_dataset(
 
     frames: List[Dict[str, Any]] = []
 
-    # new cameras are in cameras, whereas image paths are stored in a private member of the dataset
     for idx in range(len(cameras)):
         image_filename = image_filenames[idx]
         if camera_optimizer is None:
             transform = cameras.camera_to_worlds[idx].tolist()
         else:
-            # print('exporting optimized camera pose for camera %d' % idx)
             camera = cameras[idx : idx + 1]
             assert camera.metadata is not None
             camera.metadata["cam_idx"] = idx
@@ -348,7 +442,6 @@ def collect_camera_poses(pipeline: VanillaPipeline) -> Tuple[List[Dict[str, Any]
         assert isinstance(camera_optimizer, CameraOptimizer)
 
     train_frames = collect_camera_poses_for_dataset(train_dataset, camera_optimizer)
-    # Note: returning original poses, even if --eval-mode=all
     eval_frames = collect_camera_poses_for_dataset(eval_dataset)
 
     return train_frames, eval_frames

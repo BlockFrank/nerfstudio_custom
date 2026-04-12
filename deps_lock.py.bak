@@ -1,0 +1,1883 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import platform
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Optional
+
+ROOT = Path(__file__).resolve().parent
+DEFAULT_LOCK_DIR = ROOT / "deps-lock"
+DEFAULT_NUMPY = "numpy==1.26.4"
+DEFAULT_TORCH = [
+    "torch==2.1.2+cu118",
+    "torchvision==0.16.2+cu118",
+]
+TORCH_INDEX = "https://download.pytorch.org/whl/cu118"
+PYG_INDEX_TEMPLATE = "https://data.pyg.org/whl/{torch_tag}.html"
+TCNN_GIT = "git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch"
+PIP_VERBOSE_ARGS = ["-v"]
+PYCOLMAP_GIT = "git+https://github.com/rmbrualla/pycolmap.git"
+
+PROTECTED_NAMES = {
+    "numpy",
+    "torch",
+    "torchvision",
+    "torchaudio",
+    "tinycudann",
+    "tiny-cuda-nn",
+    "torch-scatter",
+    "torch-sparse",
+    "torch-cluster",
+    "torch-spline-conv",
+    "nerfstudio",
+    "nerfacc",
+    "gsplat",
+    "viser",
+    "huggingface-hub",
+    "bitsandbytes",
+    "tyro",
+    "opencv-python",
+    "opencv-contrib-python",
+    "pycolmap",
+    "cuda-backend",
+    "protobuf",
+    "matplotlib",
+}
+
+PROTECTED_PACKAGES = {
+    "numpy",
+    "torch",
+    "torchvision",
+    "torchaudio",
+    "tinycudann",
+    "nerfstudio",
+    "nerfacc",
+    "gsplat",
+    "viser",
+    "huggingface-hub",
+    "huggingface_hub",
+    "bitsandbytes",
+    "tyro",
+    "protobuf",
+    "matplotlib",
+    "torch-scatter",
+    "torch_scatter",
+}
+
+PROTECTED_GIT_PACKAGES = {
+    "tinycudann": TCNN_GIT,
+    "tiny-cuda-nn": TCNN_GIT,
+    "pycolmap": PYCOLMAP_GIT,
+}
+
+BUILD_TOOL_PKGS = [
+    "pip",
+    "setuptools",
+    "wheel",
+    "Cython",
+    "pkgconfig",
+    "pybind11",
+]
+
+STRICT_ALIGNMENT_NAMES = [
+    "numpy",
+    "torch",
+    "torchvision",
+    "torchaudio",
+    "tinycudann",
+    "nerfstudio",
+    "nerfacc",
+    "gsplat",
+    "viser",
+    "huggingface-hub",
+    "bitsandbytes",
+    "tyro",
+    "pycolmap",
+    "protobuf",
+    "matplotlib",
+    "torch-scatter",
+]
+
+TORCH_LINE_RE = re.compile(r"^(torch|torchvision|torchaudio)==", re.I)
+PYG_LINE_RE = re.compile(r"^torch[-_](scatter|sparse|cluster|spline[-_]conv)==", re.I)
+AV_LINE_RE = re.compile(r"^av==", re.I)
+PYWIN32_BAD_RE = re.compile(r"^pywin32==305\.1$", re.I)
+TCNN_REQ_RE = re.compile(r"^(tinycudann|tiny-cuda-nn)(==|\s*@\s*)", re.I)
+
+SKIP_PATTERNS = [
+    re.compile(r"^-e\s+\.", re.I),
+    re.compile(r"^-e\s+.+nerfstudio", re.I),
+    re.compile(r"^\S+\s*@\s*file:///", re.I),
+    re.compile(r"^cuda_backend==", re.I),
+    re.compile(r"^av==", re.I),
+    re.compile(r"^torch==", re.I),
+    re.compile(r"^torchvision==", re.I),
+    re.compile(r"^torchaudio==", re.I),
+    re.compile(r"^torch[-_]scatter==", re.I),
+    re.compile(r"^torch[-_]sparse==", re.I),
+    re.compile(r"^torch[-_]cluster==", re.I),
+    re.compile(r"^torch[-_]spline[-_]conv==", re.I),
+    re.compile(r"^numpy(==|<|<=|>=|>|~=)", re.I),
+]
+DEFER_PATTERNS = [
+    re.compile(r"^tinycudann\s*@\s*git\+https://github.com/NVlabs/tiny-cuda-nn/", re.I),
+    re.compile(r"^tiny-cuda-nn\s*@\s*git\+https://github.com/NVlabs/tiny-cuda-nn/", re.I),
+    re.compile(r"^tinycudann==", re.I),
+    re.compile(r"^tiny-cuda-nn==", re.I),
+]
+
+
+def run(
+    cmd: list[str],
+    *,
+    check: bool = True,
+    capture: bool = True,
+    env: Optional[dict] = None,
+) -> subprocess.CompletedProcess:
+    return subprocess.run(
+        cmd,
+        check=check,
+        capture_output=capture,
+        text=True,
+        env=env,
+        encoding="utf-8",
+        errors="replace",
+    )
+
+
+def print_run(cmd: list[str], *, env: Optional[dict] = None) -> None:
+    print(f"[RUN] {' '.join(str(x) for x in cmd)}")
+    subprocess.run(cmd, check=True, env=env)
+
+
+def run_quiet(cmd: list[str], *, env: Optional[dict] = None) -> str:
+    try:
+        cp = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            env=env,
+            check=False,
+            encoding="utf-8",
+            errors="replace",
+        )
+        out = (cp.stdout or cp.stderr or "").strip()
+        return out[:4000]
+    except Exception as e:
+        return f"<error: {e}>"
+
+
+def which(name: str) -> Optional[str]:
+    return shutil.which(name)
+
+
+def ensure_dir(path: Path) -> None:
+    path.mkdir(parents=True, exist_ok=True)
+
+
+def write_text(path: Path, text: str) -> None:
+    ensure_dir(path.parent)
+    path.write_text(text, encoding="utf-8", newline="\n")
+
+
+def read_text(path: Path) -> str:
+    return path.read_text(encoding="utf-8-sig")
+
+
+def load_json(path: Path) -> dict:
+    if not path.exists():
+        return {}
+    try:
+        return json.loads(read_text(path))
+    except Exception:
+        return {}
+
+
+def current_platform_guess() -> str:
+    sysname = platform.system().lower()
+    machine = platform.machine().lower()
+    if sysname == "windows":
+        return "win-arm64" if machine in {"arm64", "aarch64"} else "win-64"
+    if sysname == "linux":
+        return "linux-aarch64" if machine in {"arm64", "aarch64"} else "linux-64"
+    if sysname == "darwin":
+        return "osx-arm64" if machine in {"arm64", "aarch64"} else "osx-64"
+    return f"{sysname}-{machine}"
+
+
+def conda_explicit_filename(lock_dir: Path, platform_tag: str) -> Path:
+    return lock_dir / f"conda-explicit-{platform_tag}.txt"
+
+
+def pip_lock_filename(lock_dir: Path) -> Path:
+    return lock_dir / "pip-freeze-all.txt"
+
+
+def replay_pip_filename(lock_dir: Path) -> Path:
+    return lock_dir / "pip-freeze-replay.txt"
+
+
+def build_plan_filename(lock_dir: Path) -> Path:
+    return lock_dir / "build-plan.json"
+
+
+def meta_filename(lock_dir: Path) -> Path:
+    return lock_dir / "lock-meta.json"
+
+
+def numpy_audit_filename(lock_dir: Path) -> Path:
+    return lock_dir / "numpy-compat-audit.txt"
+
+
+def msvc_log_filename(lock_dir: Path) -> Path:
+    return lock_dir / "msvc-toolsets.txt"
+
+
+def msvc_selected_filename(lock_dir: Path) -> Path:
+    return lock_dir / "msvc-selected.txt"
+
+
+def installer_selection_filename(lock_dir: Path) -> Path:
+    return lock_dir / "installer-selection.json"
+
+
+def load_build_plan(lock_dir: Path) -> dict:
+    return load_json(build_plan_filename(lock_dir))
+
+
+def load_installer_selection(lock_dir: Path) -> dict:
+    return load_json(installer_selection_filename(lock_dir))
+
+
+def write_msvc_selected_log(lock_dir: Path, text: str) -> None:
+    write_text(msvc_selected_filename(lock_dir), text.rstrip() + "\n")
+
+
+def normalize_lines(text: str, *, kind: str) -> list[str]:
+    out: list[str] = []
+    for raw in text.replace("\r\n", "\n").replace("\r", "\n").split("\n"):
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        if kind == "pip" and (line.startswith("-e ") or line.startswith("--editable")):
+            continue
+        out.append(line)
+    return out
+
+
+def normalize_pkg_line(line: str) -> str:
+    line = line.strip()
+    if PYWIN32_BAD_RE.match(line):
+        return "pywin32==305"
+    return line
+
+
+def parse_name(line: str) -> str:
+    if " @ " in line:
+        return line.split(" @ ", 1)[0].strip().lower().replace("_", "-")
+    for sep in ("==", "<=", ">=", "~=", "<", ">"):
+        if sep in line:
+            return line.split(sep, 1)[0].strip().lower().replace("_", "-")
+    return line.strip().lower().replace("_", "-")
+
+
+def torch_pyg_tag(torch_line: str) -> str:
+    return torch_line.replace("==", "-")
+
+
+def detect_tcnn_runtime() -> bool:
+    try:
+        cp = run([sys.executable, "-c", "import tinycudann as tcnn; print('OK')"], check=False)
+        return cp.returncode == 0
+    except Exception:
+        return False
+
+
+def normalized_current_pip_lines() -> list[str]:
+    try:
+        cp = run([sys.executable, "-m", "pip", "freeze", "--all"])
+    except subprocess.CalledProcessError:
+        cp = run([sys.executable, "-m", "pip", "freeze"])
+    return [normalize_pkg_line(x) for x in normalize_lines(cp.stdout, kind="pip")]
+
+def installed_pip_map() -> dict[str, str]:
+    return {parse_name(x): normalize_pkg_line(x) for x in normalized_current_pip_lines()}
+
+def installed_direct_url_map() -> dict[str, str]:
+    cp = subprocess.run(
+        [sys.executable, "-m", "pip", "freeze", "--all"],
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        check=False,
+    )
+    out: dict[str, str] = {}
+    for raw in normalize_lines(cp.stdout, kind="pip"):
+        line = normalize_pkg_line(raw)
+        if " @ " not in line:
+            continue
+        name = parse_name(line)
+        out[name] = line
+    return out
+
+
+def git_requirement_matches(installed_line: str, expected_git: str) -> bool:
+    a = (installed_line or "").strip().lower()
+    b = (expected_git or "").strip().lower()
+    return bool(a) and bool(b) and b in a
+
+def spec_is_exact_pin(spec: str) -> bool:
+    line = normalize_pkg_line(spec)
+    return "==" in line and " @ " not in line and not line.startswith(("-", "--"))
+
+
+def filter_already_installed_exact_specs(lines: list[str]) -> tuple[list[str], list[str]]:
+    installed = installed_pip_map()
+    pending: list[str] = []
+    skipped: list[str] = []
+    for raw in lines:
+        line = normalize_pkg_line(raw)
+        if spec_is_exact_pin(line):
+            name = parse_name(line)
+            if installed.get(name, "") == line:
+                skipped.append(line)
+                continue
+        pending.append(line)
+    return pending, skipped
+
+
+
+def find_conda_lock(lock_dir: Path) -> Optional[Path]:
+    matches = sorted(lock_dir.glob("conda-explicit-*.txt"))
+    if matches:
+        platform_tag = current_platform_guess()
+        platform_match = lock_dir / f"conda-explicit-{platform_tag}.txt"
+        if platform_match.exists():
+            return platform_match
+        return matches[0]
+    fallback = lock_dir / "conda-explicit.txt"
+    return fallback if fallback.exists() else None
+
+
+def parse_platform_from_explicit(explicit_text: str) -> str:
+    for line in explicit_text.splitlines():
+        m = re.match(r"\s*#\s*platform:\s*(\S+)", line)
+        if m:
+            return m.group(1)
+    return current_platform_guess()
+
+
+
+def _looks_like_windows_path(value: str) -> bool:
+    v = (value or "").strip()
+    return bool(re.match(r"^[A-Za-z]:\\", v) or re.match(r"^\\\\", v))
+
+
+def _strip_wrapping_quotes(value: str) -> str:
+    v = (value or "").strip()
+    while len(v) >= 2 and ((v[0] == '"' and v[-1] == '"') or (v[0] == "'" and v[-1] == "'")):
+        v = v[1:-1].strip()
+    return v
+
+
+def sanitize_windows_path(value: str) -> str:
+    v = (value or "").strip()
+    if not v:
+        return ""
+
+    # normalize slash style first, but do not aggressively collapse all backslashes
+    v = v.replace("/", "\\")
+    v = v.replace('\"', '"').replace("\'", "'")
+    v = _strip_wrapping_quotes(v)
+
+    # repair malformed values like:
+    #   C:\"C:\Program Files\...
+    #   C:\"C:\PROGRA~1\...
+    #   C:"C:\Program Files\...
+    m = re.match(r'^[A-Za-z]:(?:\\?["\']+)([A-Za-z]:\\.*)$', v)
+    if m:
+        v = m.group(1).strip()
+
+    # remove leading/trailing stray quotes around an actual drive path
+    if len(v) >= 2 and v[0] == '"' and _looks_like_windows_path(v[1:]):
+        v = v[1:]
+    if len(v) >= 2 and v[-1] == '"' and _looks_like_windows_path(v[:-1]):
+        v = v[:-1]
+
+    v = v.strip().strip('"').strip("'").strip()
+
+    # collapse accidental doubled backslashes after drive/share prefix normalization
+    if _looks_like_windows_path(v):
+        drive_m = re.match(r'^([A-Za-z]:\\)(.*)$', v)
+        unc_m = re.match(r'^(\\\\[^\\]+\\[^\\]+\\?)(.*)$', v)
+        if drive_m:
+            prefix, rest = drive_m.groups()
+            rest = re.sub(r'\\+', r'\\', rest)
+            v = prefix + rest
+        elif unc_m:
+            prefix, rest = unc_m.groups()
+            rest = re.sub(r'\\+', r'\\', rest)
+            v = prefix + rest
+
+    # keep directory paths as directories, but trim file-path trailing separators
+    if re.search(r'\.(exe|bat|cmd)$', v, re.I):
+        v = v.rstrip("\\/")
+
+    return os.path.normpath(v) if v else ""
+
+
+def to_short_path(path_value: str) -> str:
+    path_value = sanitize_windows_path(path_value)
+    if not path_value:
+        return ""
+
+    if platform.system().lower() != "windows":
+        return path_value
+
+    # Prefer the clean normalized long path. Use 8.3 only as a fallback.
+    try:
+        if Path(path_value).exists():
+            return os.path.normpath(path_value)
+    except Exception:
+        pass
+
+    try:
+        cp = subprocess.run(
+            ["cmd", "/d", "/s", "/c", f'for %I in ("{path_value}") do @echo %~sI'],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            check=False,
+        )
+        out = sanitize_windows_path((cp.stdout or "").strip())
+        if cp.returncode == 0 and out and _looks_like_windows_path(out):
+            return os.path.normpath(out)
+    except Exception:
+        pass
+
+    return os.path.normpath(path_value)
+
+
+def normalize_windows_path_list(value: str) -> str:
+    if platform.system().lower() != "windows":
+        return value or ""
+
+    parts: list[str] = []
+    seen: set[str] = set()
+
+    for raw in (value or "").split(os.pathsep):
+        item = sanitize_windows_path(raw)
+        if not item:
+            continue
+        key = os.path.normcase(os.path.normpath(item))
+        if key in seen:
+            continue
+        seen.add(key)
+        parts.append(os.path.normpath(item))
+
+    return os.pathsep.join(parts)
+def short_toolset_version(version: str) -> str:
+    version = (version or "").strip()
+    if not version:
+        return ""
+    parts = version.split(".")
+    if len(parts) >= 2:
+        return f"{parts[0]}.{parts[1]}"
+    return version
+
+
+def normalize_selected_toolset(selected: dict | None) -> dict | None:
+    if not selected:
+        return None
+    out = dict(selected)
+    full = (out.get("toolset_full") or out.get("toolset") or "").strip()
+    out["toolset_full"] = full
+    out["toolset_short"] = short_toolset_version(full)
+    out["toolset"] = full
+    return out
+
+
+def vswhere_path() -> Optional[str]:
+    candidates = [
+        os.path.join(os.environ.get("ProgramFiles(x86)", ""), "Microsoft Visual Studio", "Installer", "vswhere.exe"),
+        os.path.join(os.environ.get("ProgramFiles", ""), "Microsoft Visual Studio", "Installer", "vswhere.exe"),
+    ]
+    for c in candidates:
+        if c and os.path.exists(c):
+            return c
+    return None
+
+
+def list_msvc_toolsets() -> list[dict]:
+    if platform.system().lower() != "windows":
+        return []
+    out: list[dict] = []
+    seen: set[tuple[str, str]] = set()
+    installs: list[Path] = []
+    vswhere = vswhere_path()
+    if vswhere:
+        cp = run(
+            [
+                vswhere,
+                "-products",
+                "*",
+                "-requires",
+                "Microsoft.VisualStudio.Component.VC.Tools.x86.x64",
+                "-property",
+                "installationPath",
+            ],
+            check=False,
+        )
+        for line in cp.stdout.splitlines():
+            line = line.strip()
+            if line:
+                installs.append(Path(line))
+    for root in installs:
+        msvc_root = root / "VC" / "Tools" / "MSVC"
+        if not msvc_root.exists():
+            continue
+        for d in sorted(msvc_root.iterdir()):
+            if not d.is_dir():
+                continue
+            vcvarsall = root / "VC" / "Auxiliary" / "Build" / "vcvarsall.bat"
+            cl = d / "bin" / "Hostx64" / "x64" / "cl.exe"
+            if not (vcvarsall.exists() and cl.exists()):
+                continue
+            key = (str(root), d.name)
+            if key in seen:
+                continue
+            seen.add(key)
+            normalized = normalize_selected_toolset(
+                {
+                    "installation": _norm_win_path(str(root)),
+                    "toolset": d.name,
+                    "vcvarsall": _norm_win_path(str(vcvarsall)),
+                    "cl": _norm_win_path(str(cl)),
+                }
+            )
+            if normalized:
+                out.append(normalized)
+    out.sort(key=lambda x: x["toolset_full"], reverse=True)
+    return out
+
+def ensure_build_tooling_for_cpp(lock_dir: Path, msvc_mode: str) -> None:
+    print("[INFO] Repairing Python build tooling required by native extensions...")
+    print_run_bootstrapped(
+        lock_dir,
+        [
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            *PIP_VERBOSE_ARGS,
+            "--upgrade",
+            "--force-reinstall",
+            "pip",
+            "setuptools==75.1.0",
+            "wheel==0.44.0",
+            "Cython",
+            "pkgconfig",
+            "pybind11",
+        ],
+        msvc_mode,
+    )
+    
+def write_msvc_log(lock_dir: Path) -> list[dict]:
+    toolsets = list_msvc_toolsets()
+    lines: list[str] = []
+    if not toolsets:
+        lines.append("No MSVC toolsets detected.")
+    else:
+        lines.append("Detected MSVC toolsets:")
+        for t in toolsets:
+            lines.append(
+                f"{t['toolset_full']} | short={t['toolset_short']} | "
+                f"install={t['installation']} | cl={t['cl']} | vcvarsall={t['vcvarsall']}"
+            )
+    write_text(msvc_log_filename(lock_dir), "\n".join(lines) + "\n")
+    return toolsets
+
+
+def choose_msvc_toolset(lock_dir: Path, requested: str) -> Optional[dict]:
+    toolsets = write_msvc_log(lock_dir)
+    requested = (requested or "").strip().lower()
+    if not toolsets or requested in {"", "system"}:
+        return None
+    if requested == "auto":
+        for t in toolsets:
+            if t["toolset_short"] == "14.38" or t["toolset_full"].startswith("14.38"):
+                return t
+        return toolsets[0]
+    if requested == "14":
+        for t in toolsets:
+            if t["toolset_full"].startswith("14."):
+                return t
+        return None
+    for t in toolsets:
+        if t["toolset_short"] == requested or t["toolset_full"].startswith(requested):
+            return t
+    return None
+
+
+def detect_cuda_root() -> str:
+    candidates = [
+        os.environ.get("CUDA_PATH", ""),
+        os.environ.get("CUDA_HOME", ""),
+    ]
+    for cand in candidates:
+        cand = (cand or "").strip().strip('"')
+        if cand and Path(cand).exists():
+            return cand
+    nvcc = shutil.which("nvcc.exe") or shutil.which("nvcc")
+    if nvcc:
+        try:
+            return str(Path(nvcc).resolve().parent.parent)
+        except Exception:
+            pass
+    default_cuda = Path(os.environ.get("ProgramFiles", r"C:\Program Files")) / "NVIDIA GPU Computing Toolkit" / "CUDA" / "v11.8"
+    if default_cuda.exists():
+        return str(default_cuda)
+    return ""
+
+
+def detect_git_dirs() -> list[str]:
+    candidates: list[str] = []
+    seen: set[str] = set()
+
+    git_exe = shutil.which("git.exe") or shutil.which("git")
+    if git_exe:
+        gp = os.path.normpath(str(Path(git_exe).resolve().parent))
+        key = os.path.normcase(gp)
+        if key not in seen:
+            seen.add(key)
+            candidates.append(gp)
+
+    program_files = os.environ.get("ProgramFiles", r"C:\Program Files")
+    for p in (
+        Path(program_files) / "Git" / "cmd",
+        Path(program_files) / "Git" / "bin",
+    ):
+        if p.exists():
+            gp = os.path.normpath(str(p))
+            key = os.path.normcase(gp)
+            if key not in seen:
+                seen.add(key)
+                candidates.append(gp)
+
+    return candidates
+
+
+def get_runtime_path_entries() -> list[str]:
+    entries: list[str] = []
+
+    conda_prefix = os.environ.get("CONDA_PREFIX", "")
+    if conda_prefix:
+        prefix = Path(conda_prefix)
+        for p in (
+            prefix / "Scripts",
+            prefix,
+            prefix / "Library" / "bin",
+            prefix / "Library" / "usr" / "bin",
+            prefix / "bin",
+        ):
+            entries.append(str(p))
+
+    entries.append(str(Path(sys.executable).resolve().parent))
+    entries.extend(detect_git_dirs())
+
+    return entries
+
+def _norm_win_path(value: str) -> str:
+    clean = sanitize_windows_path(value)
+    if not clean:
+        return ""
+    return os.path.normpath(clean)
+
+def _norm_win_list(values: list[str]) -> list[str]:
+    out: list[str] = []
+    seen: set[str] = set()
+
+    for v in values:
+        nv = _norm_win_path(v)
+        if not nv:
+            continue
+        key = nv.lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(nv)
+
+    return out
+
+def parse_set_output_to_env(text: str) -> dict[str, str]:
+    parsed_env: dict[str, str] = {}
+
+    path_list_keys = {"PATH", "INCLUDE", "LIB", "LIBPATH"}
+    path_scalar_keys = {
+        "CC",
+        "CXX",
+        "CUDAHOSTCXX",
+        "CLCACHE_CL",
+        "CMAKE_CUDA_HOST_COMPILER",
+        "VCToolsInstallDir",
+        "VCINSTALLDIR",
+        "VSINSTALLDIR",
+        "CUDA_PATH",
+        "CUDA_HOME",
+        "CUDAToolkit_ROOT",
+    }
+
+    for line in (text or "").splitlines():
+        if "=" not in line:
+            continue
+
+        k, v = line.split("=", 1)
+        k = k.strip()
+        if not k:
+            continue
+
+        ku = k.upper()
+
+        if ku in path_list_keys:
+            parsed_env[k] = normalize_windows_path_list(v)
+        elif ku in path_scalar_keys:
+            parsed_env[k] = _norm_win_path(v)
+        else:
+            parsed_env[k] = v.strip().replace('\\"', '"').replace('""', '"')
+
+    return parsed_env
+
+def build_bootstrap_context(lock_dir: Path, requested: str) -> dict:
+    requested = (requested or "").strip()
+    installer = load_installer_selection(lock_dir)
+
+    effective = str(
+        installer.get("preferred_msvc")
+        or requested
+        or os.environ.get("PREFERRED_MSVC")
+        or ""
+    ).strip()
+
+    selected = None
+    cuda_root = ""
+    git_dirs: list[str] = []
+    runtime_entries: list[str] = []
+
+    if platform.system().lower() == "windows":
+        selected = choose_msvc_toolset(lock_dir, effective)
+        selected = normalize_selected_toolset(selected)
+
+        if selected:
+            selected = {
+                **selected,
+                "installation": _norm_win_path(selected.get("installation", "")),
+                "vcvarsall": _norm_win_path(selected.get("vcvarsall", "")),
+                "cl": _norm_win_path(selected.get("cl", "")),
+            }
+
+        cuda_root = _norm_win_path(detect_cuda_root())
+        git_dirs = _norm_win_list(detect_git_dirs())
+        runtime_entries = _norm_win_list(get_runtime_path_entries())
+
+    ctx = {
+        "requested": effective,
+        "selected": selected,
+        "cuda_root": cuda_root,
+        "git_dirs": git_dirs,
+        "runtime_path_entries": runtime_entries,
+    }
+
+    lines = [
+        f"requested={effective or 'system'}",
+        f"cuda_root={cuda_root}",
+        f"git_dirs={';'.join(git_dirs)}",
+        f"runtime_path_entries={';'.join(runtime_entries)}",
+    ]
+
+    if selected:
+        lines.extend(
+            [
+                f"selected_toolset={selected['toolset_full']}",
+                f"selected_short={selected['toolset_short']}",
+                f"selected_install={selected['installation']}",
+                f"selected_cl={selected['cl']}",
+                f"selected_vcvarsall={selected['vcvarsall']}",
+                "mode=subprocess-shell-bootstrap",
+            ]
+        )
+    else:
+        lines.append("mode=system/no-forced-toolset")
+
+    write_msvc_selected_log(lock_dir, "\n".join(lines) + "\n")
+    return ctx
+
+def find_header_in_include(include_value: str, header_name: str) -> str:
+    header_name = (header_name or "").strip()
+    if not header_name:
+        return ""
+
+    for raw in normalize_windows_path_list(include_value).split(os.pathsep):
+        root = _norm_win_path(raw)
+        if not root:
+            continue
+        try:
+            p = Path(root) / header_name
+            if p.exists():
+                return str(p)
+        except Exception:
+            continue
+
+    return ""
+
+def validate_msvc_from_shell(lock_dir: Path, ctx: dict) -> tuple[bool, list[str]]:
+    if platform.system().lower() != "windows":
+        return True, []
+
+    selected = ctx.get("selected")
+    if not selected:
+        return True, []
+
+    vcvarsall = _norm_win_path(selected.get("vcvarsall", ""))
+    cl = _norm_win_path(selected.get("cl", ""))
+
+    errors: list[str] = []
+
+    if not vcvarsall or not Path(vcvarsall).exists():
+        errors.append(f"vcvarsall missing: {vcvarsall}")
+
+    if not cl or not Path(cl).exists():
+        errors.append(f"cl.exe missing: {cl}")
+
+    return len(errors) == 0, errors
+
+
+def _cmdline_from_args(args: list[str]) -> str:
+    return subprocess.list2cmdline([str(x) for x in args])
+
+
+def _make_bootstrap_batch(
+    lock_dir: Path,
+    command: list[str],
+    msvc_mode: str,
+    extra_env: Optional[dict] = None,
+) -> str:
+    ctx = build_bootstrap_context(lock_dir, msvc_mode)
+    ok, errors = validate_msvc_from_shell(lock_dir, ctx)
+    if not ok:
+        raise RuntimeError("MSVC bootstrap metadata invalid: " + "; ".join(errors))
+
+    selected = ctx.get("selected")
+    cuda_root = ctx.get("cuda_root", "")
+    runtime_entries = list(ctx.get("runtime_path_entries", []))
+    extra_env = extra_env or {}
+
+    lines: list[str] = [
+        "@echo off",
+        "setlocal EnableExtensions",
+    ]
+
+    if platform.system().lower() == "windows" and selected:
+        vcvarsall = _norm_win_path(selected["vcvarsall"])
+        short_ver = selected["toolset_short"]
+        full_ver = selected["toolset_full"]
+        cl = _norm_win_path(selected["cl"])
+        cl_dir = _norm_win_path(str(Path(cl).parent))
+
+        lines.extend(
+            [
+                f'call "{vcvarsall}" x64 -vcvars_ver={short_ver}',
+                f'if errorlevel 1 call "{vcvarsall}" x64 -vcvars_ver={full_ver}',
+                f'if errorlevel 1 call "{vcvarsall}" x64',
+                "if errorlevel 1 exit /b %errorlevel%",
+                f'set "NS_SELECTED_MSVC_TOOLSET={full_ver}"',
+                f'set "NS_SELECTED_MSVC_CL={cl}"',
+                f'set "CC={cl}"',
+                f'set "CXX={cl}"',
+                f'set "CUDAHOSTCXX={cl}"',
+                f'set "CLCACHE_CL={cl}"',
+                f'set "CMAKE_CUDA_HOST_COMPILER={cl}"',
+                f'set "CMAKE_GENERATOR_TOOLSET=v143,version={full_ver}"',
+                'set "DISTUTILS_USE_SDK=1"',
+                'set "MSSdk=1"',
+            ]
+        )
+
+    if cuda_root:
+        cuda_root = _norm_win_path(cuda_root)
+        cuda_bin = _norm_win_path(str(Path(cuda_root) / "bin"))
+
+        lines.extend(
+            [
+                f'set "CUDA_PATH={cuda_root}"',
+                f'set "CUDA_HOME={cuda_root}"',
+                f'set "CUDAToolkit_ROOT={cuda_root}"',
+            ]
+        )
+
+        if Path(cuda_bin).exists():
+            runtime_entries.insert(0, cuda_bin)
+
+    merged_runtime = normalize_windows_path_list(os.pathsep.join(runtime_entries))
+    if merged_runtime:
+        lines.append(f'set "PATH={merged_runtime};%PATH%"')
+
+    # tiny-cuda-nn / torch cpp_extension can incorrectly pivot into ROCm mode on
+    # Windows when ROCm-related environment variables leak into the build shell.
+    # Force a clean CUDA-only build context for Windows extension builds.
+    if platform.system().lower() == "windows":
+        lines.extend(
+            [
+                'set "ROCM_HOME="',
+                'set "ROCM_PATH="',
+                'set "HIP_HOME="',
+                'set "HIP_PATH="',
+                'set "HCC_HOME="',
+                'set "HIP_PATH_57="',
+                'set "HIP_DEVICE_LIB_PATH="',
+                'set "PYTORCH_ROCM_ARCH="',
+            ]
+        )
+
+    for k, v in extra_env.items():
+        if v is None:
+            continue
+        sval = str(v)
+        if sval == "":
+            lines.append(f'set "{k}="')
+            continue
+        lines.append(f'set "{k}={sval.strip()}"')
+
+    lines.append(_cmdline_from_args(command))
+    lines.append("exit /b %errorlevel%")
+    return "\n".join(lines) + "\n"
+
+
+def run_bootstrapped(
+    lock_dir: Path,
+    command: list[str],
+    msvc_mode: str,
+    *,
+    check: bool = True,
+    extra_env: Optional[dict] = None,
+) -> subprocess.CompletedProcess:
+    if platform.system().lower() != "windows":
+        return subprocess.run(command, check=check, capture_output=False, text=True)
+
+    script = _make_bootstrap_batch(lock_dir, command, msvc_mode, extra_env=extra_env)
+    with tempfile.NamedTemporaryFile("w", suffix=".cmd", delete=False, encoding="utf-8", newline="\r\n") as f:
+        f.write(script)
+        temp_cmd = f.name
+
+    try:
+        # Pass the temporary batch path as a raw argv element. Adding manual quotes here
+        # causes cmd.exe to receive an extra-quoted command like
+        # ""C:\path\tmp.cmd"", which then fails with
+        # "not recognized as an internal or external command".
+        return subprocess.run(["cmd", "/d", "/s", "/c", temp_cmd], check=check)
+    finally:
+        try:
+            os.unlink(temp_cmd)
+        except OSError:
+            pass
+
+
+def print_run_bootstrapped(
+    lock_dir: Path,
+    command: list[str],
+    msvc_mode: str,
+    *,
+    extra_env: Optional[dict] = None,
+) -> None:
+    print(f"[RUN] {' '.join(str(x) for x in command)}")
+    run_bootstrapped(lock_dir, command, msvc_mode, check=True, extra_env=extra_env)
+
+
+def detect_torch_lines(lines: list[str]) -> list[str]:
+    found = [normalize_pkg_line(line) for line in lines if TORCH_LINE_RE.match(line)]
+    if not found:
+        return DEFAULT_TORCH[:]
+    uniq: list[str] = []
+    for line in found:
+        if line not in uniq:
+            uniq.append(line)
+    return uniq
+
+
+def detect_pyg_lines(lines: list[str]) -> list[str]:
+    uniq: list[str] = []
+    for line in lines:
+        line = normalize_pkg_line(line)
+        if PYG_LINE_RE.match(line) and line not in uniq:
+            uniq.append(line)
+    return uniq
+
+
+def detect_numpy_baseline(lines: list[str]) -> str:
+    for line in lines:
+        if line.lower().startswith("numpy=="):
+            version = line.split("==", 1)[1].strip()
+            if version and not version.startswith("2"):
+                return f"numpy=={version}"
+    return DEFAULT_NUMPY
+
+
+def detect_tcnn_line(lines: list[str]) -> str:
+    for line in lines:
+        if TCNN_REQ_RE.match(line):
+            return normalize_pkg_line(line)
+    return TCNN_GIT
+
+
+def current_tcnn_arch() -> str:
+    return os.environ.get("TCNN_CUDA_ARCHITECTURES", "").strip()
+
+
+def torch_cuda_arch_list_value(value: str) -> str:
+    value = (value or "").strip()
+    if not value:
+        return ""
+    m = re.fullmatch(r"(\d)(\d)(?:\+PTX)?", value, re.I)
+    if m:
+        major, minor = m.group(1), m.group(2)
+        suffix = "+PTX" if value.upper().endswith("+PTX") else ""
+        return f"{major}.{minor}{suffix}"
+    return value
+
+
+def compute_replay_lines(lines: list[str]) -> list[str]:
+    replay: list[str] = []
+    for raw in lines:
+        line = normalize_pkg_line(raw)
+        if any(p.search(line) for p in SKIP_PATTERNS):
+            continue
+        if any(p.search(line) for p in DEFER_PATTERNS):
+            continue
+        replay.append(line)
+    return replay
+
+
+def export_numpy_audit(lock_dir: Path, lines: list[str], plan: dict) -> None:
+    rows = []
+    for line in lines:
+        name = parse_name(line)
+        if name.startswith("numpy") or name in {"torch", "torchvision", "torchaudio", "opencv-python", "opencv-contrib-python", "matplotlib", "scipy", "pandas", "pycolmap", "open3d", "tensorflow"}:
+            rows.append(line)
+    rows.extend([f"PLAN torch_preinstall: {x}" for x in plan.get("torch_preinstall", [])])
+    rows.extend([f"PLAN pyg_wheels: {x}" for x in plan.get("pyg_wheels", [])])
+    rows.extend([f"PLAN deferred: {x}" for x in plan.get("deferred", [])])
+    write_text(numpy_audit_filename(lock_dir), "\n".join(dict.fromkeys(rows)) + "\n")
+
+
+def export_locks(lock_dir: Path, conda_exe: Optional[str] = None, msvc_mode: str = "") -> int:
+    ensure_dir(lock_dir)
+    conda_exe = conda_exe or os.environ.get("CONDA_EXE") or which("conda") or which("conda.bat")
+    platform_tag = current_platform_guess()
+    conda_lock_path: Optional[Path] = None
+
+    print(f"[DEBUG] export_locks using conda executable: {conda_exe}")
+    print(f"[DEBUG] export_locks CONDA_PREFIX={os.environ.get('CONDA_PREFIX')}")
+
+    if conda_exe and os.environ.get("CONDA_PREFIX"):
+        cp = run([conda_exe, "list", "--explicit", "--md5"])
+        explicit = cp.stdout
+        platform_tag = parse_platform_from_explicit(explicit)
+        conda_lock_path = conda_explicit_filename(lock_dir, platform_tag)
+        write_text(conda_lock_path, explicit)
+        cp_json = run([conda_exe, "list", "--json"])
+        write_text(lock_dir / "conda-list.json", cp_json.stdout)
+    else:
+        print("[WARN] Active conda environment not detected; skipping conda explicit export.")
+
+    pip_lines = normalized_current_pip_lines()
+    write_text(pip_lock_filename(lock_dir), "\n".join(pip_lines) + "\n")
+    write_text(replay_pip_filename(lock_dir), "\n".join(compute_replay_lines(pip_lines)) + "\n")
+
+    installer = load_installer_selection(lock_dir)
+    effective_msvc = str(installer.get("preferred_msvc") or msvc_mode or os.environ.get("PREFERRED_MSVC") or "").strip()
+    ctx = build_bootstrap_context(lock_dir, effective_msvc)
+
+    numpy_baseline = detect_numpy_baseline(pip_lines)
+    build_plan = {
+        "numpy_stable": numpy_baseline,
+        "torch_preinstall": detect_torch_lines(pip_lines),
+        "torch_index": TORCH_INDEX,
+        "pyg_wheels": detect_pyg_lines(pip_lines),
+        "pyg_index_template": PYG_INDEX_TEMPLATE,
+        "tinycudann": {
+            "requirement": detect_tcnn_line(pip_lines),
+            "cuda_arch": str(installer.get("cuda_arch") or current_tcnn_arch() or "").strip(),
+        },
+        "pycolmap": {
+            "requirement": PYCOLMAP_GIT,
+        },
+        "deferred": [x for x in pip_lines if any(p.search(x) for p in DEFER_PATTERNS)],
+        "skipped_from_bulk": [x for x in pip_lines if any(p.search(x) for p in SKIP_PATTERNS)],
+        "build_tooling": BUILD_TOOL_PKGS,
+        "preferred_msvc": effective_msvc,
+        "bootstrap_mode": "subprocess-shell-bootstrap",
+        "selected_toolset": (ctx.get("selected") or {}).get("toolset_full", ""),
+        "selected_installation": (ctx.get("selected") or {}).get("installation", ""),
+        "cuda_root": ctx.get("cuda_root", ""),
+    }
+    write_text(build_plan_filename(lock_dir), json.dumps(build_plan, indent=2) + "\n")
+    export_numpy_audit(lock_dir, pip_lines, build_plan)
+    write_msvc_log(lock_dir)
+
+    meta = {
+        "created_utc": datetime.now(timezone.utc).isoformat(),
+        "python_executable": sys.executable,
+        "python_version": sys.version,
+        "platform_guess": platform_tag,
+        "conda_executable": conda_exe,
+        "conda_env": os.environ.get("CONDA_DEFAULT_ENV"),
+        "conda_prefix": os.environ.get("CONDA_PREFIX"),
+        "conda_lock": conda_lock_path.name if conda_lock_path else None,
+        "pip_lock": pip_lock_filename(lock_dir).name,
+        "pip_replay": replay_pip_filename(lock_dir).name,
+        "build_plan": build_plan_filename(lock_dir).name,
+        "numpy_audit": numpy_audit_filename(lock_dir).name,
+        "msvc_log": msvc_log_filename(lock_dir).name,
+        "msvc_selected_log": msvc_selected_filename(lock_dir).name,
+        "installer_selection": installer_selection_filename(lock_dir).name if installer else None,
+    }
+    write_text(meta_filename(lock_dir), json.dumps(meta, indent=2) + "\n")
+
+    print(f"[OK] Wrote pip lock: {pip_lock_filename(lock_dir)}")
+    print(f"[OK] Wrote replay-safe pip lock: {replay_pip_filename(lock_dir)}")
+    if conda_lock_path:
+        print(f"[OK] Wrote conda lock: {conda_lock_path}")
+    print(f"[OK] Wrote build plan: {build_plan_filename(lock_dir)}")
+    print(f"[OK] Wrote metadata: {meta_filename(lock_dir)}")
+    print(f"[OK] Wrote NumPy audit: {numpy_audit_filename(lock_dir)}")
+    print(f"[OK] Wrote MSVC toolset log: {msvc_log_filename(lock_dir)}")
+    print(f"[OK] Wrote MSVC selected log: {msvc_selected_filename(lock_dir)}")
+    return 0
+
+
+def diff_summary(expected: list[str], current: list[str], label: str) -> tuple[bool, str]:
+    if expected == current:
+        return True, f"[OK] {label} matches lock exactly."
+    expected_set = set(expected)
+    current_set = set(current)
+    missing = sorted(expected_set - current_set)
+    extra = sorted(current_set - expected_set)
+    lines = [f"[FAIL] {label} differs from lock."]
+    if missing:
+        lines.append("  Missing/changed (first 10):")
+        lines.extend([f"    - {x}" for x in missing[:10]])
+    if extra:
+        lines.append("  Extra/different (first 10):")
+        lines.extend([f"    + {x}" for x in extra[:10]])
+    return False, "\n".join(lines)
+
+
+def check_locks(lock_dir: Path, conda_exe: Optional[str] = None) -> int:
+    ok = True
+    conda_lock = find_conda_lock(lock_dir)
+    conda_exe = conda_exe or os.environ.get("CONDA_EXE") or which("conda") or which("conda.bat")
+    print(f"[DEBUG] check_locks using conda executable: {conda_exe}")
+    print(f"[DEBUG] check_locks CONDA_PREFIX={os.environ.get('CONDA_PREFIX')}")
+    if conda_lock and conda_exe and os.environ.get("CONDA_PREFIX"):
+        current = run([conda_exe, "list", "--explicit", "--md5"]).stdout
+        good, msg = diff_summary(
+            normalize_lines(read_text(conda_lock), kind="conda"),
+            normalize_lines(current, kind="conda"),
+            "Conda explicit lock",
+        )
+        print(msg)
+        ok &= good
+    elif conda_lock:
+        print("[WARN] Conda lock exists but current shell is not an active conda env; skipping conda check.")
+    else:
+        print("[WARN] No conda lock found.")
+
+    pip_lock = pip_lock_filename(lock_dir)
+    if pip_lock.exists():
+        current = normalized_current_pip_lines()
+        good, msg = diff_summary(
+            [normalize_pkg_line(x) for x in normalize_lines(read_text(pip_lock), kind="pip")],
+            current,
+            "pip freeze lock",
+        )
+        print(msg)
+        ok &= good
+    else:
+        print("[WARN] No pip lock found.")
+    return 0 if ok else 2
+
+
+def get_installed_version(pkg_name: str) -> str:
+    cp = subprocess.run(
+        [sys.executable, "-m", "pip", "show", pkg_name],
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+    )
+    if cp.returncode != 0:
+        return ""
+    for line in cp.stdout.splitlines():
+        if line.lower().startswith("version:"):
+            return line.split(":", 1)[1].strip()
+    return ""
+
+
+def install_packaging_base(lock_dir: Path, msvc_mode: str) -> None:
+    print("[INFO] Installing build/runtime base tooling...")
+    print_run_bootstrapped(
+        lock_dir,
+        [
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            *PIP_VERBOSE_ARGS,
+            "--upgrade",
+            "--force-reinstall",
+            *BUILD_TOOL_PKGS,
+        ],
+        msvc_mode,
+    )
+
+
+def ensure_numpy_stable(lock_dir: Path, msvc_mode: str, numpy_spec: str, state: dict, *, reason: str) -> None:
+    desired = numpy_spec.split("==", 1)[1] if "==" in numpy_spec else ""
+    current = get_installed_version("numpy")
+    if state.get("numpy_version") == desired and current == desired:
+        print(f"[INFO] NumPy already stable at {desired}; skipping reinstall ({reason}).")
+        return
+    print(f"[INFO] Enforcing stable NumPy policy: {numpy_spec} ({reason})")
+    print_run_bootstrapped(
+        lock_dir,
+        [sys.executable, "-m", "pip", "install", *PIP_VERBOSE_ARGS, "--upgrade", "--force-reinstall", numpy_spec],
+        msvc_mode,
+    )
+    state["numpy_version"] = desired or get_installed_version("numpy")
+
+
+def install_torch_preinstall(lock_dir: Path, msvc_mode: str, torch_lines: list[str], numpy_spec: str, state: dict) -> None:
+    if not torch_lines:
+        torch_lines = DEFAULT_TORCH[:]
+    pending_torch, skipped_torch = filter_already_installed_exact_specs(torch_lines)
+    if skipped_torch:
+        print(f"[INFO] Skipping already-installed torch package(s): {', '.join(skipped_torch)}")
+    if not pending_torch:
+        print("[INFO] Torch stack already aligned with requested exact versions; skipping reinstall.")
+        state["numpy_version"] = numpy_spec.split("==", 1)[1] if "==" in numpy_spec else state.get("numpy_version", "")
+        return
+    print(f"[INFO] Installing torch stack first WITH dependencies: {', '.join(pending_torch)}")
+    print_run_bootstrapped(
+        lock_dir,
+        [
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            *PIP_VERBOSE_ARGS,
+            "--upgrade",
+            "--force-reinstall",
+            numpy_spec,
+            *pending_torch,
+            "--index-url",
+            TORCH_INDEX,
+        ],
+        msvc_mode,
+    )
+    state["numpy_version"] = numpy_spec.split("==", 1)[1] if "==" in numpy_spec else state.get("numpy_version", "")
+
+
+def install_pyg_wheels(lock_dir: Path, msvc_mode: str, torch_lines: list[str], pyg_lines: list[str]) -> None:
+    if not pyg_lines:
+        return
+    torch_line = next((x for x in torch_lines if x.lower().startswith("torch==")), DEFAULT_TORCH[0])
+    index_url = PYG_INDEX_TEMPLATE.format(torch_tag=torch_pyg_tag(torch_line))
+    pending_pyg, skipped_pyg = filter_already_installed_exact_specs(pyg_lines)
+    if skipped_pyg:
+        print(f"[INFO] Skipping already-installed PyG wheel(s): {', '.join(skipped_pyg)}")
+    for line in pending_pyg:
+        print(f"[INFO] Installing PyG wheel from prebuilt index: {line}")
+        print_run_bootstrapped(
+            lock_dir,
+            [sys.executable, "-m", "pip", "install", *PIP_VERBOSE_ARGS, line, "-f", index_url],
+            msvc_mode,
+        )
+
+
+def split_pip_lock(lock_text: str, lock_dir: Path) -> tuple[list[str], list[str], str, list[str], list[str], list[str]]:
+    lines = [normalize_pkg_line(x) for x in normalize_lines(lock_text, kind="pip")]
+    plan = load_build_plan(lock_dir)
+    torch_lines = plan.get("torch_preinstall") or detect_torch_lines(lines)
+    pyg_lines = plan.get("pyg_wheels") or detect_pyg_lines(lines)
+    tcnn_line = (plan.get("tinycudann") or {}).get("requirement") or detect_tcnn_line(lines)
+    torch_names = {parse_name(x) for x in torch_lines}
+    pyg_names = {parse_name(x) for x in pyg_lines}
+    bulk, deferred, av_lines = [], [], []
+    for line in lines:
+        name = parse_name(line)
+        if name in torch_names or name in pyg_names or name == "numpy":
+            continue
+        if name in {"tinycudann", "tiny-cuda-nn"}:
+            continue
+        if AV_LINE_RE.match(line):
+            av_lines.append(line)
+            continue
+        if any(p.search(line) for p in DEFER_PATTERNS):
+            deferred.append(line)
+            continue
+        if any(p.search(line) for p in SKIP_PATTERNS):
+            continue
+        bulk.append(line)
+    return torch_lines, pyg_lines, tcnn_line, bulk, deferred, av_lines
+
+
+def install_requirements_file(lock_dir: Path, msvc_mode: str, lines: list[str], tmp_path: Path) -> None:
+    if not lines:
+        return
+    cleaned = [normalize_pkg_line(x) for x in lines]
+    pending, skipped = filter_already_installed_exact_specs(cleaned)
+    if skipped:
+        print(f"[INFO] Skipping already-installed exact requirement(s): {', '.join(skipped[:20])}" + (" ..." if len(skipped) > 20 else ""))
+    if not pending:
+        print(f"[INFO] All requested exact requirements already installed for: {tmp_path.name}")
+        return
+    write_text(tmp_path, "\n".join(pending) + "\n")
+    print_run_bootstrapped(
+        lock_dir,
+        [
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            *PIP_VERBOSE_ARGS,
+            "--upgrade",
+            "--force-reinstall",
+            "--no-deps",
+            "--no-build-isolation",
+            "-r",
+            str(tmp_path),
+        ],
+        msvc_mode,
+    )
+
+
+def install_tcnn(lock_dir: Path, msvc_mode: str, tcnn_line: str, tcnn_arch: str) -> None:
+    if tcnn_runtime_ok(tcnn_arch):
+        print("[INFO] tiny-cuda-nn already importable and working; skipping rebuild.")
+        return
+    if not tcnn_line:
+        return
+    try:
+        import tinycudann as tcnn  # noqa: F401
+        print("[INFO] tinycudann already importable and runtime-usable; skipping rebuild.")
+        return
+    except Exception:
+        pass
+    ensure_build_tooling_for_cpp(lock_dir, msvc_mode)
+
+    try:
+        import pkg_resources  # noqa: F401
+        print("[INFO] pkg_resources available.")
+    except Exception:
+        raise RuntimeError("pkg_resources is still unavailable after setuptools repair.")
+
+    print("[INFO] Installing tiny-cuda-nn torch bindings...")
+    print(f"[INFO] sys.executable={sys.executable}")
+
+    if tcnn_arch:
+        print(f"[INFO] TCNN_CUDA_ARCHITECTURES={tcnn_arch}")
+        print(f"[INFO] TORCH_CUDA_ARCH_LIST={torch_cuda_arch_list_value(tcnn_arch)}")
+
+    ctx = build_bootstrap_context(lock_dir, msvc_mode)
+    selected = ctx.get("selected")
+    if selected:
+        print(f"[INFO] Using bootstrapped MSVC toolset: {selected['toolset_full']}")
+    print(f"[INFO] Bootstrap log: {msvc_selected_filename(lock_dir)}")
+
+    torch_arch_list = torch_cuda_arch_list_value(tcnn_arch)
+    extra_env = {
+        "FORCE_CUDA": "1",
+        "TORCH_CUDA_ARCH_LIST": torch_arch_list,
+        "MAX_JOBS": "1",
+        "CMAKE_BUILD_PARALLEL_LEVEL": "1",
+        "DISTUTILS_USE_SDK": "1",
+        "MSSdk": "1",
+        "ROCM_HOME": "",
+        "ROCM_PATH": "",
+        "HIP_HOME": "",
+        "HIP_PATH": "",
+        "HCC_HOME": "",
+        "HIP_PATH_57": "",
+        "HIP_DEVICE_LIB_PATH": "",
+        "PYTORCH_ROCM_ARCH": "",
+    }
+    if tcnn_arch:
+        extra_env["TCNN_CUDA_ARCHITECTURES"] = tcnn_arch
+
+    print_run_bootstrapped(
+        lock_dir,
+        [
+            sys.executable,
+            "-c",
+            (
+                "import os,sys; "
+                "print('[BOOTSTRAP CHECK] python=', sys.executable); "
+                "print('[BOOTSTRAP CHECK] CUDA_HOME=', os.environ.get('CUDA_HOME')); "
+                "print('[BOOTSTRAP CHECK] CUDA_PATH=', os.environ.get('CUDA_PATH')); "
+                "print('[BOOTSTRAP CHECK] TCNN_CUDA_ARCHITECTURES=', os.environ.get('TCNN_CUDA_ARCHITECTURES')); "
+                "print('[BOOTSTRAP CHECK] TORCH_CUDA_ARCH_LIST=', os.environ.get('TORCH_CUDA_ARCH_LIST'))"
+            ),
+        ],
+        msvc_mode,
+        extra_env=extra_env,
+    )
+
+    print_run_bootstrapped(
+        lock_dir,
+        [
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            *PIP_VERBOSE_ARGS,
+            "--upgrade",
+            "--force-reinstall",
+            "--no-build-isolation",
+            "--no-cache-dir",
+            TCNN_GIT,
+        ],
+        msvc_mode,
+        extra_env=extra_env,
+    )
+
+def tcnn_runtime_ok(expected_arch=""):
+    import tinycudann as tcnn
+    import torch
+    return torch.cuda.is_available()
+
+    
+def install_deferred(lock_dir: Path, msvc_mode: str, lines: list[str]) -> None:
+    leftovers = [x for x in lines if not TCNN_REQ_RE.match(x)]
+    if leftovers:
+        print(f"[INFO] Installing deferred package(s): {', '.join(leftovers)}")
+        install_requirements_file(lock_dir, msvc_mode, leftovers, lock_dir / ".tmp-deferred-install.txt")
+
+
+def install_av(lock_dir: Path, msvc_mode: str, lines: list[str]) -> None:
+    if not lines:
+        return
+    print("[INFO] Installing AV prerequisites, then AV...")
+    print_run_bootstrapped(
+        lock_dir,
+        [
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            *PIP_VERBOSE_ARGS,
+            "--upgrade",
+            "--force-reinstall",
+            "setuptools<81",
+            "wheel",
+            "pip",
+            "Cython",
+            "pkgconfig",
+            "pybind11",
+            "numpy<2",
+        ],
+        msvc_mode,
+    )
+    install_requirements_file(lock_dir, msvc_mode, lines, lock_dir / ".tmp-av-install.txt")
+
+
+def choose_conda_restore_cmd(conda_exe: str, explicit_file: Path) -> list[str]:
+    mamba = which("mamba") or which("mamba.exe")
+    micromamba = which("micromamba") or which("micromamba.exe")
+    if mamba:
+        return [mamba, "install", "--yes", "--verbose", "--file", str(explicit_file)]
+    if micromamba:
+        return [micromamba, "install", "--yes", "--verbose", "--file", str(explicit_file)]
+    return [conda_exe, "install", "--solver=libmamba", "--yes", "--verbose", "--file", str(explicit_file)]
+
+
+
+def _parse_conda_list_versions(lock_dir: Path) -> dict[str, str]:
+    path = lock_dir / "conda-list.json"
+    if not path.exists():
+        return {}
+    data = load_json(path)
+    out: dict[str, str] = {}
+    if isinstance(data, list):
+        for row in data:
+            name = str(row.get("name") or "").strip().lower().replace("_", "-")
+            version = str(row.get("version") or "").strip()
+            channel = str(row.get("channel") or "")
+            if not name or not version:
+                continue
+            if "pypi" in channel.lower() or name not in out:
+                out[name] = version
+    return out
+
+
+def _candidate_line_for_remaining_install(raw_line: str, pypi_versions: dict[str, str]) -> Optional[str]:
+    line = normalize_pkg_line(raw_line)
+    name = parse_name(line)
+    if not name:
+        return None
+    if name in PROTECTED_NAMES:
+        return None
+    if any(p.search(line) for p in SKIP_PATTERNS):
+        return None
+    if any(p.search(line) for p in DEFER_PATTERNS):
+        return None
+    if AV_LINE_RE.match(line):
+        return None
+    if " @ file:///" in line:
+        version = pypi_versions.get(name)
+        if version:
+            return f"{name}=={version}"
+        return None
+    if line.startswith("-e ") or line.startswith("--editable"):
+        return None
+    return line
+
+
+def install_remaining_from_full_lock(lock_dir: Path, msvc_mode: str) -> None:
+    full_lock = pip_lock_filename(lock_dir)
+    if not full_lock.exists():
+        print("[WARN] No full pip lock found; skipping remaining-full install.")
+        return
+
+    current_names = {parse_name(x) for x in normalized_current_pip_lines()}
+    pypi_versions = _parse_conda_list_versions(lock_dir)
+    wanted: list[str] = []
+    skipped: list[str] = []
+
+    for raw in normalize_lines(read_text(full_lock), kind="pip"):
+        cand = _candidate_line_for_remaining_install(raw, pypi_versions)
+        if not cand:
+            skipped.append(normalize_pkg_line(raw))
+            continue
+        name = parse_name(cand)
+        if name in current_names:
+            continue
+        wanted.append(cand)
+
+    wanted = list(dict.fromkeys(wanted))
+    skipped = list(dict.fromkeys(skipped))
+
+    write_text(lock_dir / ".tmp-full-remaining-install.txt", "\n".join(wanted) + ("\n" if wanted else ""))
+    write_text(lock_dir / ".tmp-full-remaining-skipped.txt", "\n".join(skipped) + ("\n" if skipped else ""))
+
+    if not wanted:
+        print("[INFO] No additional remaining pip deps to install from full lock.")
+        return
+
+    print(f"[INFO] Installing {len(wanted)} remaining pip deps from full lock...")
+    install_requirements_file(lock_dir, msvc_mode, wanted, lock_dir / ".tmp-full-remaining-install.txt")
+
+
+def restore_protected_from_lock(lock_dir: Path, msvc_mode: str) -> None:
+    full_lock = pip_lock_filename(lock_dir)
+    if not full_lock.exists():
+        print("[WARN] No full pip lock found; cannot restore protected packages.")
+        return
+
+    locked: dict[str, str] = {}
+    for raw in normalize_lines(read_text(full_lock), kind="pip"):
+        line = normalize_pkg_line(raw)
+        name = parse_name(line)
+        if name in PROTECTED_NAMES:
+            locked[name] = line
+
+    build_plan = load_build_plan(lock_dir)
+    locked["numpy"] = build_plan.get("numpy_stable") or locked.get("numpy") or DEFAULT_NUMPY
+
+    torch_lines = build_plan.get("torch_preinstall") or []
+    for tl in torch_lines:
+        locked[parse_name(tl)] = tl
+
+    current = {parse_name(x): x for x in normalized_current_pip_lines()}
+    current_direct = installed_direct_url_map()
+
+    restore_specs: list[str] = []
+
+    for name, spec in locked.items():
+        cur = current.get(name, "")
+        if spec and cur != spec and " @ file:///" not in spec:
+            restore_specs.append(spec)
+
+    for name, git_spec in PROTECTED_GIT_PACKAGES.items():
+        cur_direct = current_direct.get(name, "")
+        if not git_requirement_matches(cur_direct, git_spec):
+            restore_specs.append(git_spec)
+
+    restore_specs = list(dict.fromkeys(restore_specs))
+
+    if not restore_specs:
+        print("[INFO] Protected packages already aligned with lock.")
+        return
+
+    print(
+        "[INFO] Restoring protected packages to locked versions: "
+        + ", ".join(parse_name(x) for x in restore_specs)
+    )
+
+    torch_specs = [x for x in restore_specs if parse_name(x) in {"torch", "torchvision", "torchaudio"}]
+    other_specs = [x for x in restore_specs if parse_name(x) not in {"torch", "torchvision", "torchaudio"}]
+
+    if torch_specs:
+        print_run_bootstrapped(
+            lock_dir,
+            [
+                sys.executable,
+                "-m",
+                "pip",
+                "install",
+                *PIP_VERBOSE_ARGS,
+                "--upgrade",
+                "--force-reinstall",
+                *torch_specs,
+                "--index-url",
+                TORCH_INDEX,
+            ],
+            msvc_mode,
+        )
+
+    if other_specs:
+        install_requirements_file(lock_dir, msvc_mode, other_specs, lock_dir / ".tmp-protected-restore.txt")
+        
+def print_strict_alignment_status(lock_dir: Path) -> None:
+    plan = load_build_plan(lock_dir)
+    pip_current = normalized_current_pip_lines()
+    pip_set = {parse_name(x): x for x in pip_current}
+    pip_direct = installed_direct_url_map()
+
+    strict_names = [
+        "numpy",
+        "torch",
+        "torchvision",
+        "torchaudio",
+        "torch-scatter",
+        "tinycudann",
+        "tiny-cuda-nn",
+        "nerfstudio",
+        "nerfacc",
+        "gsplat",
+        "viser",
+        "huggingface-hub",
+        "bitsandbytes",
+        "tyro",
+        "pycolmap",
+        "protobuf",
+        "matplotlib",
+    ]
+
+    print("[INFO] Strict alignment status:")
+    print(f"  [TARGET NUMPY] {plan.get('numpy_stable', DEFAULT_NUMPY)}")
+
+    for name in strict_names:
+        if name == "pycolmap":
+            cur = pip_direct.get("pycolmap", "") or pip_set.get("pycolmap", "")
+            if git_requirement_matches(cur, PYCOLMAP_GIT):
+                print(f"  [OK] pycolmap @ {PYCOLMAP_GIT}")
+            elif cur:
+                print(f"  [DRIFT] {cur}")
+            else:
+                print("  [MISS] pycolmap")
+            continue
+
+        if name in {"tinycudann", "tiny-cuda-nn"}:
+            cur = pip_direct.get("tinycudann", "") or pip_direct.get("tiny-cuda-nn", "") or pip_set.get("tinycudann", "")
+            if git_requirement_matches(cur, TCNN_GIT):
+                print(f"  [OK] tinycudann @ {TCNN_GIT}")
+            elif cur:
+                print(f"  [DRIFT] {cur}")
+            else:
+                print(f"  [MISS] {name}")
+            continue
+
+        if name in pip_set:
+            print(f"  [OK] {pip_set[name]}")
+        else:
+            print(f"  [MISS] {name}")
+
+    print(f"  [RUNTIME tinycudann] {'OK' if detect_tcnn_runtime() else 'MISSING'}")
+
+def repin(lock_dir: Path, *, skip_conda: bool = False, force_conda: bool = False, conda_exe: Optional[str] = None, msvc_mode: str = "") -> int:
+    conda_lock = find_conda_lock(lock_dir)
+    if conda_lock and not skip_conda:
+        conda_exe = conda_exe or os.environ.get("CONDA_EXE") or which("conda") or which("conda.bat")
+        print(f"[DEBUG] Using conda executable: {conda_exe}")
+        print(f"[DEBUG] CONDA_PREFIX={os.environ.get('CONDA_PREFIX')}")
+        if force_conda:
+            if conda_exe and os.environ.get("CONDA_PREFIX"):
+                cmd = choose_conda_restore_cmd(conda_exe, conda_lock)
+                print(f"[INFO] Re-applying exact conda lock with verbose restore from: {conda_lock}")
+                print_run(cmd)
+            elif conda_exe:
+                print("[WARN] Conda lock found, but current shell is not an active conda env; skipping conda repin.")
+            else:
+                print("[WARN] Conda lock found, but conda is not on PATH; skipping conda repin.")
+        else:
+            print("[INFO] Existing-env repin defaults to pip-layer replay only.")
+            print("[INFO] Use --force-conda if you explicitly want a full verbose conda restore in-place.")
+    elif skip_conda:
+        print("[INFO] Skipping conda layer by request.")
+
+    replay_lock = replay_pip_filename(lock_dir)
+    pip_lock = replay_lock if replay_lock.exists() else pip_lock_filename(lock_dir)
+    if not pip_lock.exists():
+        print("[WARN] No pip lock found.")
+        return 0
+
+    installer = load_installer_selection(lock_dir)
+    effective_msvc = str(installer.get("preferred_msvc") or msvc_mode or os.environ.get("PREFERRED_MSVC") or "").strip()
+    plan = load_build_plan(lock_dir)
+    numpy_spec = plan.get("numpy_stable") or DEFAULT_NUMPY
+    tcnn_arch = str((plan.get("tinycudann") or {}).get("cuda_arch", "")).strip() or current_tcnn_arch()
+    torch_lines, pyg_lines, tcnn_line, bulk, deferred, av_lines = split_pip_lock(read_text(pip_lock), lock_dir)
+
+    if pip_lock.name == "pip-freeze-replay.txt":
+        print(f"[INFO] Re-applying replay-safe pip lock from: {pip_lock}")
+    else:
+        print(f"[INFO] Re-applying exact pip lock from: {pip_lock}")
+
+    state: dict = {}
+    install_packaging_base(lock_dir, effective_msvc)
+    ensure_numpy_stable(lock_dir, effective_msvc, numpy_spec, state, reason="bootstrap")
+    install_torch_preinstall(lock_dir, effective_msvc, torch_lines, numpy_spec, state)
+    ensure_numpy_stable(lock_dir, effective_msvc, numpy_spec, state, reason="post-torch")
+    install_pyg_wheels(lock_dir, effective_msvc, torch_lines, pyg_lines)
+    install_tcnn(lock_dir, effective_msvc, tcnn_line, tcnn_arch)
+    install_requirements_file(lock_dir, effective_msvc, bulk, lock_dir / ".tmp-bulk-install.txt")
+    ensure_numpy_stable(lock_dir, effective_msvc, numpy_spec, state, reason="post-bulk")
+    install_remaining_from_full_lock(lock_dir, effective_msvc)
+    ensure_numpy_stable(lock_dir, effective_msvc, numpy_spec, state, reason="post-full-remaining")
+    install_deferred(lock_dir, effective_msvc, deferred)
+    ensure_numpy_stable(lock_dir, effective_msvc, numpy_spec, state, reason="post-deferred")
+    install_av(lock_dir, effective_msvc, av_lines)
+    ensure_numpy_stable(lock_dir, effective_msvc, numpy_spec, state, reason="post-av")
+    restore_protected_from_lock(lock_dir, effective_msvc)
+    ensure_numpy_stable(lock_dir, effective_msvc, numpy_spec, state, reason="post-protected-restore")
+    print_strict_alignment_status(lock_dir)
+    return 0
+
+
+def create_env(lock_dir: Path, *, env_name: str, conda_exe: Optional[str] = None, force_repin: bool = True, msvc_mode: str = "") -> int:
+    conda_lock = find_conda_lock(lock_dir)
+    if not conda_lock:
+        print("[ERROR] No conda explicit lock found.")
+        return 1
+    conda_exe = conda_exe or os.environ.get("CONDA_EXE") or which("conda") or which("conda.bat")
+    if not conda_exe:
+        print("[ERROR] Could not locate conda executable.")
+        return 1
+    print(f"[INFO] Creating new env from lock: {env_name}")
+    print_run([conda_exe, "create", "--solver=libmamba", "--yes", "--name", env_name, "--file", str(conda_lock), "--verbose"])
+    if force_repin:
+        print(f"[INFO] Running staged pip replay into env: {env_name}")
+        cmd = [conda_exe, "run", "-n", env_name, "python", str(ROOT / "deps_lock.py"), "--lock-dir", str(lock_dir), "--conda-exe", conda_exe]
+        if msvc_mode:
+            cmd.extend(["--msvc-mode", msvc_mode])
+        cmd.extend(["repin", "--skip-conda"])
+        print_run(cmd)
+    return 0
+
+def apply_extra_patches(root_dir: Path) -> None:
+    patch_root = root_dir / "Extra-Methods-Patches"
+
+    if not patch_root.exists():
+        print("[INFO] No Extra-Methods-Patches directory found; skipping.")
+        return
+
+    print("[INFO] Applying external patch tree...")
+
+    for src in patch_root.rglob("*"):
+        if src.is_dir():
+            continue
+
+        rel = src.relative_to(patch_root)
+        dst = root_dir / rel
+
+        if not dst.exists():
+            print(f"[WARN] Target missing for patch: {dst}")
+            continue
+
+        backup = dst.with_suffix(dst.suffix + ".orig")
+        if not backup.exists():
+            shutil.copy2(dst, backup)
+
+        shutil.copy2(src, dst)
+        print(f"[PATCH] {rel}")
+        
+def install_editable(project_dir: Path, lock_dir: Path, msvc_mode: str) -> int:
+    installer = load_installer_selection(lock_dir)
+    effective_msvc = str(installer.get("preferred_msvc") or msvc_mode or os.environ.get("PREFERRED_MSVC") or "").strip()
+    print(f"[INFO] Installing editable project without dependency mutation: {project_dir}")
+    print_run_bootstrapped(
+        lock_dir,
+        [sys.executable, "-m", "pip", "install", *PIP_VERBOSE_ARGS, "--no-deps", "-e", str(project_dir)],
+        effective_msvc,
+    )
+    return 0
+
+
+def build_parser() -> argparse.ArgumentParser:
+    p = argparse.ArgumentParser(description="Snapshot and restore an exact conda/pip dependency baseline with shell-level MSVC/CUDA bootstrap.")
+    p.add_argument("--lock-dir", default=str(DEFAULT_LOCK_DIR), help="Lock directory")
+    p.add_argument("--conda-exe", default=os.environ.get("CONDA_EXE"), help="Explicit conda executable (portable override)")
+    p.add_argument("--msvc-mode", default="", choices=["", "auto", "14.38", "14", "system"], help="Preferred MSVC toolset mode for builds (optional)")
+    sub = p.add_subparsers(dest="cmd", required=True)
+    sub.add_parser("export", help="Snapshot current active env")
+    sub.add_parser("check", help="Compare current env with lock")
+    rep = sub.add_parser("repin", help="Replay lock into current active env")
+    rep.add_argument("--skip-conda", action="store_true", help="Skip conda explicit lock replay")
+    rep.add_argument("--force-conda", action="store_true", help="Force a full verbose conda in-place restore before staged pip replay")
+    cre = sub.add_parser("create", help="Create a new conda env from explicit lock, then replay pip layer")
+    cre.add_argument("--env-name", required=True, help="Target conda env name")
+    cre.add_argument("--no-repin", action="store_true", help="Create env from conda explicit lock only, skip pip staged replay")
+    ed = sub.add_parser("editable", help="Install repo editable without dependency resolution")
+    ed.add_argument("project_dir", nargs="?", default=".")
+    return p
+
+
+def main(argv: Optional[list[str]] = None) -> int:
+    args = build_parser().parse_args(argv)
+    lock_dir = Path(args.lock_dir).resolve()
+    if getattr(args, "msvc_mode", ""):
+        os.environ["PREFERRED_MSVC"] = args.msvc_mode
+        print(f"[INFO] Preferred MSVC mode: {args.msvc_mode}")
+    try:
+        if args.cmd == "export":
+            return export_locks(lock_dir, conda_exe=args.conda_exe, msvc_mode=args.msvc_mode)
+        if args.cmd == "check":
+            return check_locks(lock_dir, conda_exe=args.conda_exe)
+        if args.cmd == "repin":
+            return repin(lock_dir, skip_conda=args.skip_conda, force_conda=args.force_conda, conda_exe=args.conda_exe, msvc_mode=args.msvc_mode)
+        if args.cmd == "create":
+            return create_env(lock_dir, env_name=args.env_name, conda_exe=args.conda_exe, force_repin=not args.no_repin, msvc_mode=args.msvc_mode)
+        if args.cmd == "editable":
+            return install_editable(Path(args.project_dir).resolve(), lock_dir, args.msvc_mode)
+        raise AssertionError(args.cmd)
+    except subprocess.CalledProcessError as e:
+        cmd = e.cmd if isinstance(e.cmd, str) else " ".join(str(x) for x in e.cmd)
+        print(f"[ERROR] Command failed with exit code {e.returncode}: {cmd}")
+        return e.returncode or 1
+    except RuntimeError as e:
+        print(f"[ERROR] {e}")
+        return 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

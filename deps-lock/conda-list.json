@@ -1,0 +1,4662 @@
+[
+  {
+    "base_url": "https://conda.anaconda.org/conda-forge",
+    "build_number": 20,
+    "build_string": "20_gnu",
+    "channel": "conda-forge",
+    "dist_name": "_openmp_mutex-4.5-20_gnu",
+    "name": "_openmp_mutex",
+    "platform": "win-64",
+    "version": "4.5"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "absl-py-2.2.2-pypi_0",
+    "name": "absl-py",
+    "platform": "pypi",
+    "version": "2.2.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "accelerate-0.19.0-pypi_0",
+    "name": "accelerate",
+    "platform": "pypi",
+    "version": "0.19.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "affine-2.4.0-pypi_0",
+    "name": "affine",
+    "platform": "pypi",
+    "version": "2.4.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "aiohappyeyeballs-2.6.1-pypi_0",
+    "name": "aiohappyeyeballs",
+    "platform": "pypi",
+    "version": "2.6.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "aiohttp-3.13.5-pypi_0",
+    "name": "aiohttp",
+    "platform": "pypi",
+    "version": "3.13.5"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "aiosignal-1.4.0-pypi_0",
+    "name": "aiosignal",
+    "platform": "pypi",
+    "version": "1.4.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "alabaster-1.0.0-pypi_0",
+    "name": "alabaster",
+    "platform": "pypi",
+    "version": "1.0.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "annotated-doc-0.0.4-pypi_0",
+    "name": "annotated-doc",
+    "platform": "pypi",
+    "version": "0.0.4"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "annotated-types-0.7.0-pypi_0",
+    "name": "annotated-types",
+    "platform": "pypi",
+    "version": "0.7.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "antlr4-python3-runtime-4.9.3-pypi_0",
+    "name": "antlr4-python3-runtime",
+    "platform": "pypi",
+    "version": "4.9.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "anyio-4.9.0-pypi_0",
+    "name": "anyio",
+    "platform": "pypi",
+    "version": "4.9.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "appdirs-1.4.4-pypi_0",
+    "name": "appdirs",
+    "platform": "pypi",
+    "version": "1.4.4"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "argon2-cffi-23.1.0-pypi_0",
+    "name": "argon2-cffi",
+    "platform": "pypi",
+    "version": "23.1.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "argon2-cffi-bindings-21.2.0-pypi_0",
+    "name": "argon2-cffi-bindings",
+    "platform": "pypi",
+    "version": "21.2.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "arrow-1.3.0-pypi_0",
+    "name": "arrow",
+    "platform": "pypi",
+    "version": "1.3.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "asttokens-3.0.0-pypi_0",
+    "name": "asttokens",
+    "platform": "pypi",
+    "version": "3.0.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "astunparse-1.6.3-pypi_0",
+    "name": "astunparse",
+    "platform": "pypi",
+    "version": "1.6.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "async-lru-2.0.5-pypi_0",
+    "name": "async-lru",
+    "platform": "pypi",
+    "version": "2.0.5"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "async-timeout-5.0.1-pypi_0",
+    "name": "async-timeout",
+    "platform": "pypi",
+    "version": "5.0.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "atomicwrites-1.4.0-pypi_0",
+    "name": "atomicwrites",
+    "platform": "pypi",
+    "version": "1.4.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "attrs-25.3.0-pypi_0",
+    "name": "attrs",
+    "platform": "pypi",
+    "version": "25.3.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "av-17.0.0-pypi_0",
+    "name": "av",
+    "platform": "pypi",
+    "version": "17.0.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "awscli-1.33.18-pypi_0",
+    "name": "awscli",
+    "platform": "pypi",
+    "version": "1.33.18"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "babel-2.17.0-pypi_0",
+    "name": "babel",
+    "platform": "pypi",
+    "version": "2.17.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "beautifulsoup4-4.13.3-pypi_0",
+    "name": "beautifulsoup4",
+    "platform": "pypi",
+    "version": "4.13.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "bidict-0.23.1-pypi_0",
+    "name": "bidict",
+    "platform": "pypi",
+    "version": "0.23.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "bitsandbytes-0.43.0-pypi_0",
+    "name": "bitsandbytes",
+    "platform": "pypi",
+    "version": "0.43.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "black-26.3.1-pypi_0",
+    "name": "black",
+    "platform": "pypi",
+    "version": "26.3.1"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 1,
+    "build_string": "mkl",
+    "channel": "pkgs/main",
+    "dist_name": "blas-1.0-mkl",
+    "name": "blas",
+    "platform": "win-64",
+    "version": "1.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "bleach-6.2.0-pypi_0",
+    "name": "bleach",
+    "platform": "pypi",
+    "version": "6.2.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "blinker-1.9.0-pypi_0",
+    "name": "blinker",
+    "platform": "pypi",
+    "version": "1.9.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "botocore-1.34.136-pypi_0",
+    "name": "botocore",
+    "platform": "pypi",
+    "version": "1.34.136"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 6,
+    "build_string": "h2bbff1b_6",
+    "channel": "pkgs/main",
+    "dist_name": "bzip2-1.0.8-h2bbff1b_6",
+    "name": "bzip2",
+    "platform": "win-64",
+    "version": "1.0.8"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 0,
+    "build_string": "haa95532_0",
+    "channel": "pkgs/main",
+    "dist_name": "ca-certificates-2026.3.19-haa95532_0",
+    "name": "ca-certificates",
+    "platform": "win-64",
+    "version": "2026.3.19"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "cachetools-5.5.2-pypi_0",
+    "name": "cachetools",
+    "platform": "pypi",
+    "version": "5.5.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "certifi-2026.2.25-pypi_0",
+    "name": "certifi",
+    "platform": "pypi",
+    "version": "2026.2.25"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "cffi-1.17.1-pypi_0",
+    "name": "cffi",
+    "platform": "pypi",
+    "version": "1.17.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "cfgv-3.5.0-pypi_0",
+    "name": "cfgv",
+    "platform": "pypi",
+    "version": "3.5.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "cgal-6.0.1.post202410241521-pypi_0",
+    "name": "cgal",
+    "platform": "pypi",
+    "version": "6.0.1.post202410241521"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "charset-normalizer-2.1.1-pypi_0",
+    "name": "charset-normalizer",
+    "platform": "pypi",
+    "version": "2.1.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "click-8.3.2-pypi_0",
+    "name": "click",
+    "platform": "pypi",
+    "version": "8.3.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "click-plugins-1.1.1.2-pypi_0",
+    "name": "click-plugins",
+    "platform": "pypi",
+    "version": "1.1.1.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "cligj-0.7.2-pypi_0",
+    "name": "cligj",
+    "platform": "pypi",
+    "version": "0.7.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "clip-1.0-pypi_0",
+    "name": "clip",
+    "platform": "pypi",
+    "version": "1.0"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 0,
+    "build_string": "h53b1909_0",
+    "channel": "pkgs/main",
+    "dist_name": "cmake-3.31.2-h53b1909_0",
+    "name": "cmake",
+    "platform": "win-64",
+    "version": "3.31.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "colorama-0.4.6-pypi_0",
+    "name": "colorama",
+    "platform": "pypi",
+    "version": "0.4.6"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "coloredlogs-15.0.1-pypi_0",
+    "name": "coloredlogs",
+    "platform": "pypi",
+    "version": "15.0.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "colorlog-6.9.0-pypi_0",
+    "name": "colorlog",
+    "platform": "pypi",
+    "version": "6.9.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "comet-ml-3.49.7-pypi_0",
+    "name": "comet-ml",
+    "platform": "pypi",
+    "version": "3.49.7"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "comm-0.2.2-pypi_0",
+    "name": "comm",
+    "platform": "pypi",
+    "version": "0.2.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "configargparse-1.7-pypi_0",
+    "name": "configargparse",
+    "platform": "pypi",
+    "version": "1.7"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "configobj-5.0.9-pypi_0",
+    "name": "configobj",
+    "platform": "pypi",
+    "version": "5.0.9"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "contourpy-1.3.1-pypi_0",
+    "name": "contourpy",
+    "platform": "pypi",
+    "version": "1.3.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "cryptography-44.0.2-pypi_0",
+    "name": "cryptography",
+    "platform": "pypi",
+    "version": "44.0.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "cuda-backend-0.0.0-pypi_0",
+    "name": "cuda-backend",
+    "platform": "pypi",
+    "version": "0.0.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-cccl-11.8.89-0",
+    "name": "cuda-cccl",
+    "platform": "win-64",
+    "version": "11.8.89"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-command-line-tools-11.8.0-0",
+    "name": "cuda-command-line-tools",
+    "platform": "win-64",
+    "version": "11.8.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-compiler-11.8.0-0",
+    "name": "cuda-compiler",
+    "platform": "win-64",
+    "version": "11.8.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-cudart-11.8.89-0",
+    "name": "cuda-cudart",
+    "platform": "win-64",
+    "version": "11.8.89"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-cudart-dev-11.8.89-0",
+    "name": "cuda-cudart-dev",
+    "platform": "win-64",
+    "version": "11.8.89"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-cuobjdump-11.8.86-0",
+    "name": "cuda-cuobjdump",
+    "platform": "win-64",
+    "version": "11.8.86"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-cupti-11.8.87-0",
+    "name": "cuda-cupti",
+    "platform": "win-64",
+    "version": "11.8.87"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-cuxxfilt-11.8.86-0",
+    "name": "cuda-cuxxfilt",
+    "platform": "win-64",
+    "version": "11.8.86"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-documentation-11.8.86-0",
+    "name": "cuda-documentation",
+    "platform": "win-64",
+    "version": "11.8.86"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-libraries-11.8.0-0",
+    "name": "cuda-libraries",
+    "platform": "win-64",
+    "version": "11.8.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-libraries-dev-11.8.0-0",
+    "name": "cuda-libraries-dev",
+    "platform": "win-64",
+    "version": "11.8.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-memcheck-11.8.86-0",
+    "name": "cuda-memcheck",
+    "platform": "win-64",
+    "version": "11.8.86"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-nsight-compute-11.8.0-0",
+    "name": "cuda-nsight-compute",
+    "platform": "win-64",
+    "version": "11.8.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-nvcc-11.8.89-0",
+    "name": "cuda-nvcc",
+    "platform": "win-64",
+    "version": "11.8.89"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-nvdisasm-11.8.86-0",
+    "name": "cuda-nvdisasm",
+    "platform": "win-64",
+    "version": "11.8.86"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-nvml-dev-11.8.86-0",
+    "name": "cuda-nvml-dev",
+    "platform": "win-64",
+    "version": "11.8.86"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-nvprof-11.8.87-0",
+    "name": "cuda-nvprof",
+    "platform": "win-64",
+    "version": "11.8.87"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-nvprune-11.8.86-0",
+    "name": "cuda-nvprune",
+    "platform": "win-64",
+    "version": "11.8.86"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-nvrtc-11.8.89-0",
+    "name": "cuda-nvrtc",
+    "platform": "win-64",
+    "version": "11.8.89"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-nvrtc-dev-11.8.89-0",
+    "name": "cuda-nvrtc-dev",
+    "platform": "win-64",
+    "version": "11.8.89"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-nvtx-11.8.86-0",
+    "name": "cuda-nvtx",
+    "platform": "win-64",
+    "version": "11.8.86"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-nvvp-11.8.87-0",
+    "name": "cuda-nvvp",
+    "platform": "win-64",
+    "version": "11.8.87"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-profiler-api-11.8.86-0",
+    "name": "cuda-profiler-api",
+    "platform": "win-64",
+    "version": "11.8.86"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-sanitizer-api-11.8.86-0",
+    "name": "cuda-sanitizer-api",
+    "platform": "win-64",
+    "version": "11.8.86"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-toolkit-11.8.0-0",
+    "name": "cuda-toolkit",
+    "platform": "win-64",
+    "version": "11.8.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-tools-11.8.0-0",
+    "name": "cuda-tools",
+    "platform": "win-64",
+    "version": "11.8.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "cuda-visual-tools-11.8.0-0",
+    "name": "cuda-visual-tools",
+    "platform": "win-64",
+    "version": "11.8.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "cycler-0.12.1-pypi_0",
+    "name": "cycler",
+    "platform": "pypi",
+    "version": "0.12.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "cython-3.2.4-pypi_0",
+    "name": "cython",
+    "platform": "pypi",
+    "version": "3.2.4"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "dash-3.0.2-pypi_0",
+    "name": "dash",
+    "platform": "pypi",
+    "version": "3.0.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "debugpy-1.8.14-pypi_0",
+    "name": "debugpy",
+    "platform": "pypi",
+    "version": "1.8.14"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "decorator-5.2.1-pypi_0",
+    "name": "decorator",
+    "platform": "pypi",
+    "version": "5.2.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "defusedxml-0.7.1-pypi_0",
+    "name": "defusedxml",
+    "platform": "pypi",
+    "version": "0.7.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "descartes-1.1.0-pypi_0",
+    "name": "descartes",
+    "platform": "pypi",
+    "version": "1.1.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "diffusers-0.16.1-pypi_0",
+    "name": "diffusers",
+    "platform": "pypi",
+    "version": "0.16.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "dill-0.3.9-pypi_0",
+    "name": "dill",
+    "platform": "pypi",
+    "version": "0.3.9"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "distlib-0.4.0-pypi_0",
+    "name": "distlib",
+    "platform": "pypi",
+    "version": "0.4.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "docker-pycreds-0.4.0-pypi_0",
+    "name": "docker-pycreds",
+    "platform": "pypi",
+    "version": "0.4.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "docstring-parser-0.16-pypi_0",
+    "name": "docstring-parser",
+    "platform": "pypi",
+    "version": "0.16"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "docutils-0.16-pypi_0",
+    "name": "docutils",
+    "platform": "pypi",
+    "version": "0.16"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "dotmap-1.3.30-pypi_0",
+    "name": "dotmap",
+    "platform": "pypi",
+    "version": "1.3.30"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 0,
+    "build_string": "h5da7b33_0",
+    "channel": "pkgs/main",
+    "dist_name": "double-conversion-3.3.1-h5da7b33_0",
+    "name": "double-conversion",
+    "platform": "win-64",
+    "version": "3.3.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "dulwich-0.22.8-pypi_0",
+    "name": "dulwich",
+    "platform": "pypi",
+    "version": "0.22.8"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "einops-0.8.2-pypi_0",
+    "name": "einops",
+    "platform": "pypi",
+    "version": "0.8.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "everett-3.1.0-pypi_0",
+    "name": "everett",
+    "platform": "pypi",
+    "version": "3.1.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "exceptiongroup-1.2.2-pypi_0",
+    "name": "exceptiongroup",
+    "platform": "pypi",
+    "version": "1.2.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "execnet-2.1.2-pypi_0",
+    "name": "execnet",
+    "platform": "pypi",
+    "version": "2.1.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "executing-2.2.0-pypi_0",
+    "name": "executing",
+    "platform": "pypi",
+    "version": "2.2.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "fastjsonschema-2.21.1-pypi_0",
+    "name": "fastjsonschema",
+    "platform": "pypi",
+    "version": "2.21.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "feature-splatting-0.0.3-pypi_0",
+    "name": "feature-splatting",
+    "platform": "pypi",
+    "version": "0.0.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "filelock-3.25.2-pypi_0",
+    "name": "filelock",
+    "platform": "pypi",
+    "version": "3.25.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "fire-0.7.0-pypi_0",
+    "name": "fire",
+    "platform": "pypi",
+    "version": "0.7.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "flask-3.0.3-pypi_0",
+    "name": "flask",
+    "platform": "pypi",
+    "version": "3.0.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "flatbuffers-25.12.19-pypi_0",
+    "name": "flatbuffers",
+    "platform": "pypi",
+    "version": "25.12.19"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "fonttools-4.57.0-pypi_0",
+    "name": "fonttools",
+    "platform": "pypi",
+    "version": "4.57.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "fpsample-0.3.3-pypi_0",
+    "name": "fpsample",
+    "platform": "pypi",
+    "version": "0.3.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "fqdn-1.5.1-pypi_0",
+    "name": "fqdn",
+    "platform": "pypi",
+    "version": "1.5.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "freetype-py-2.5.1-pypi_0",
+    "name": "freetype-py",
+    "platform": "pypi",
+    "version": "2.5.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "frozenlist-1.8.0-pypi_0",
+    "name": "frozenlist",
+    "platform": "pypi",
+    "version": "1.8.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "fsspec-2026.2.0-pypi_0",
+    "name": "fsspec",
+    "platform": "pypi",
+    "version": "2026.2.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "ftfy-6.3.1-pypi_0",
+    "name": "ftfy",
+    "platform": "pypi",
+    "version": "6.3.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "gast-0.7.0-pypi_0",
+    "name": "gast",
+    "platform": "pypi",
+    "version": "0.7.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "gdown-5.2.0-pypi_0",
+    "name": "gdown",
+    "platform": "pypi",
+    "version": "5.2.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "gin-config-0.5.0-pypi_0",
+    "name": "gin-config",
+    "platform": "pypi",
+    "version": "0.5.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "gitdb-4.0.12-pypi_0",
+    "name": "gitdb",
+    "platform": "pypi",
+    "version": "4.0.12"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "gitpython-3.1.44-pypi_0",
+    "name": "gitpython",
+    "platform": "pypi",
+    "version": "3.1.44"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/conda-forge",
+    "build_number": 2,
+    "build_string": "hfeafd45_2",
+    "channel": "conda-forge",
+    "dist_name": "gmp-6.3.0-hfeafd45_2",
+    "name": "gmp",
+    "platform": "win-64",
+    "version": "6.3.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "google-pasta-0.2.0-pypi_0",
+    "name": "google-pasta",
+    "platform": "pypi",
+    "version": "0.2.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "gputil-1.4.0-pypi_0",
+    "name": "gputil",
+    "platform": "pypi",
+    "version": "1.4.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "grpcio-1.71.0-pypi_0",
+    "name": "grpcio",
+    "platform": "pypi",
+    "version": "1.71.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "gsplat-1.4.0+pt21cu118-pypi_0",
+    "name": "gsplat",
+    "platform": "pypi",
+    "version": "1.4.0+pt21cu118"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "h11-0.14.0-pypi_0",
+    "name": "h11",
+    "platform": "pypi",
+    "version": "0.14.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "h5py-3.13.0-pypi_0",
+    "name": "h5py",
+    "platform": "pypi",
+    "version": "3.13.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "hf-xet-1.4.3-pypi_0",
+    "name": "hf-xet",
+    "platform": "pypi",
+    "version": "1.4.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "httpcore-1.0.8-pypi_0",
+    "name": "httpcore",
+    "platform": "pypi",
+    "version": "1.0.8"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "httpx-0.28.1-pypi_0",
+    "name": "httpx",
+    "platform": "pypi",
+    "version": "0.28.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "huggingface-hub-0.25.2-pypi_0",
+    "name": "huggingface-hub",
+    "platform": "pypi",
+    "version": "0.25.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "humanfriendly-10.0-pypi_0",
+    "name": "humanfriendly",
+    "platform": "pypi",
+    "version": "10.0"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 2,
+    "build_string": "h6049295_2",
+    "channel": "pkgs/main",
+    "dist_name": "icc_rt-2022.1.0-h6049295_2",
+    "name": "icc_rt",
+    "platform": "win-64",
+    "version": "2022.1.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "identify-2.6.18-pypi_0",
+    "name": "identify",
+    "platform": "pypi",
+    "version": "2.6.18"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "idna-3.4-pypi_0",
+    "name": "idna",
+    "platform": "pypi",
+    "version": "3.4"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "igs2gs-0.1.0-pypi_0",
+    "name": "igs2gs",
+    "platform": "pypi",
+    "version": "0.1.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "imageio-2.37.0-pypi_0",
+    "name": "imageio",
+    "platform": "pypi",
+    "version": "2.37.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "imageio-ffmpeg-0.6.0-pypi_0",
+    "name": "imageio-ffmpeg",
+    "platform": "pypi",
+    "version": "0.6.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "imagesize-2.0.0-pypi_0",
+    "name": "imagesize",
+    "platform": "pypi",
+    "version": "2.0.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "importlib-metadata-8.6.1-pypi_0",
+    "name": "importlib-metadata",
+    "platform": "pypi",
+    "version": "8.6.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "iniconfig-2.3.0-pypi_0",
+    "name": "iniconfig",
+    "platform": "pypi",
+    "version": "2.3.0"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 46320,
+    "build_string": "h59b6b97_46320",
+    "channel": "pkgs/main",
+    "dist_name": "intel-openmp-2023.1.0-h59b6b97_46320",
+    "name": "intel-openmp",
+    "platform": "win-64",
+    "version": "2023.1.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "ipdb-0.13.13-pypi_0",
+    "name": "ipdb",
+    "platform": "pypi",
+    "version": "0.13.13"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "ipykernel-6.29.5-pypi_0",
+    "name": "ipykernel",
+    "platform": "pypi",
+    "version": "6.29.5"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "ipython-8.35.0-pypi_0",
+    "name": "ipython",
+    "platform": "pypi",
+    "version": "8.35.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "ipywidgets-8.1.6-pypi_0",
+    "name": "ipywidgets",
+    "platform": "pypi",
+    "version": "8.1.6"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "isoduration-20.11.0-pypi_0",
+    "name": "isoduration",
+    "platform": "pypi",
+    "version": "20.11.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "itsdangerous-2.2.0-pypi_0",
+    "name": "itsdangerous",
+    "platform": "pypi",
+    "version": "2.2.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "jax-0.6.2-pypi_0",
+    "name": "jax",
+    "platform": "pypi",
+    "version": "0.6.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "jaxlib-0.6.2-pypi_0",
+    "name": "jaxlib",
+    "platform": "pypi",
+    "version": "0.6.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "jaxtyping-0.3.1-pypi_0",
+    "name": "jaxtyping",
+    "platform": "pypi",
+    "version": "0.3.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "jedi-0.19.2-pypi_0",
+    "name": "jedi",
+    "platform": "pypi",
+    "version": "0.19.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "jinja2-3.1.6-pypi_0",
+    "name": "jinja2",
+    "platform": "pypi",
+    "version": "3.1.6"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "jmespath-1.1.0-pypi_0",
+    "name": "jmespath",
+    "platform": "pypi",
+    "version": "1.1.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "joblib-1.4.2-pypi_0",
+    "name": "joblib",
+    "platform": "pypi",
+    "version": "1.4.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "json5-0.12.0-pypi_0",
+    "name": "json5",
+    "platform": "pypi",
+    "version": "0.12.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "jsonpointer-2.1-pypi_0",
+    "name": "jsonpointer",
+    "platform": "pypi",
+    "version": "2.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "jsonschema-4.23.0-pypi_0",
+    "name": "jsonschema",
+    "platform": "pypi",
+    "version": "4.23.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "jsonschema-specifications-2024.10.1-pypi_0",
+    "name": "jsonschema-specifications",
+    "platform": "pypi",
+    "version": "2024.10.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "jupyter-1.1.1-pypi_0",
+    "name": "jupyter",
+    "platform": "pypi",
+    "version": "1.1.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "jupyter-client-8.6.3-pypi_0",
+    "name": "jupyter-client",
+    "platform": "pypi",
+    "version": "8.6.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "jupyter-console-6.6.3-pypi_0",
+    "name": "jupyter-console",
+    "platform": "pypi",
+    "version": "6.6.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "jupyter-core-5.7.2-pypi_0",
+    "name": "jupyter-core",
+    "platform": "pypi",
+    "version": "5.7.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "jupyter-events-0.12.0-pypi_0",
+    "name": "jupyter-events",
+    "platform": "pypi",
+    "version": "0.12.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "jupyter-lsp-2.2.5-pypi_0",
+    "name": "jupyter-lsp",
+    "platform": "pypi",
+    "version": "2.2.5"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "jupyter-server-2.15.0-pypi_0",
+    "name": "jupyter-server",
+    "platform": "pypi",
+    "version": "2.15.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "jupyter-server-terminals-0.5.3-pypi_0",
+    "name": "jupyter-server-terminals",
+    "platform": "pypi",
+    "version": "0.5.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "jupyterlab-4.4.0-pypi_0",
+    "name": "jupyterlab",
+    "platform": "pypi",
+    "version": "4.4.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "jupyterlab-pygments-0.3.0-pypi_0",
+    "name": "jupyterlab-pygments",
+    "platform": "pypi",
+    "version": "0.3.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "jupyterlab-server-2.27.3-pypi_0",
+    "name": "jupyterlab-server",
+    "platform": "pypi",
+    "version": "2.27.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "jupyterlab-widgets-3.0.14-pypi_0",
+    "name": "jupyterlab-widgets",
+    "platform": "pypi",
+    "version": "3.0.14"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "keras-3.12.1-pypi_0",
+    "name": "keras",
+    "platform": "pypi",
+    "version": "3.12.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "kiwisolver-1.4.8-pypi_0",
+    "name": "kiwisolver",
+    "platform": "pypi",
+    "version": "1.4.8"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "lark-1.3.1-pypi_0",
+    "name": "lark",
+    "platform": "pypi",
+    "version": "1.3.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "latexcodec-3.0.1-pypi_0",
+    "name": "latexcodec",
+    "platform": "pypi",
+    "version": "3.0.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "lazy-loader-0.4-pypi_0",
+    "name": "lazy-loader",
+    "platform": "pypi",
+    "version": "0.4"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "lerf-0.1.1-pypi_0",
+    "name": "lerf",
+    "platform": "pypi",
+    "version": "0.1.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "libclang-18.1.1-pypi_0",
+    "name": "libclang",
+    "platform": "pypi",
+    "version": "18.1.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "libcublas-11.11.3.6-0",
+    "name": "libcublas",
+    "platform": "win-64",
+    "version": "11.11.3.6"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "libcublas-dev-11.11.3.6-0",
+    "name": "libcublas-dev",
+    "platform": "win-64",
+    "version": "11.11.3.6"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "libcufft-10.9.0.58-0",
+    "name": "libcufft",
+    "platform": "win-64",
+    "version": "10.9.0.58"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "libcufft-dev-10.9.0.58-0",
+    "name": "libcufft-dev",
+    "platform": "win-64",
+    "version": "10.9.0.58"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "libcurand-10.3.0.86-0",
+    "name": "libcurand",
+    "platform": "win-64",
+    "version": "10.3.0.86"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "libcurand-dev-10.3.0.86-0",
+    "name": "libcurand-dev",
+    "platform": "win-64",
+    "version": "10.3.0.86"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "libcusolver-11.4.1.48-0",
+    "name": "libcusolver",
+    "platform": "win-64",
+    "version": "11.4.1.48"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "libcusolver-dev-11.4.1.48-0",
+    "name": "libcusolver-dev",
+    "platform": "win-64",
+    "version": "11.4.1.48"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "libcusparse-11.7.5.86-0",
+    "name": "libcusparse",
+    "platform": "win-64",
+    "version": "11.7.5.86"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "libcusparse-dev-11.7.5.86-0",
+    "name": "libcusparse-dev",
+    "platform": "win-64",
+    "version": "11.7.5.86"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 1,
+    "build_string": "hd77b12b_1",
+    "channel": "pkgs/main",
+    "dist_name": "libffi-3.4.4-hd77b12b_1",
+    "name": "libffi",
+    "platform": "win-64",
+    "version": "3.4.4"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/conda-forge",
+    "build_number": 18,
+    "build_string": "h8ee18e1_18",
+    "channel": "conda-forge",
+    "dist_name": "libgcc-15.2.0-h8ee18e1_18",
+    "name": "libgcc",
+    "platform": "win-64",
+    "version": "15.2.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/conda-forge",
+    "build_number": 18,
+    "build_string": "h8ee18e1_18",
+    "channel": "conda-forge",
+    "dist_name": "libgomp-15.2.0-h8ee18e1_18",
+    "name": "libgomp",
+    "platform": "win-64",
+    "version": "15.2.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "libnpp-11.8.0.86-0",
+    "name": "libnpp",
+    "platform": "win-64",
+    "version": "11.8.0.86"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "libnpp-dev-11.8.0.86-0",
+    "name": "libnpp-dev",
+    "platform": "win-64",
+    "version": "11.8.0.86"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "libnvjpeg-11.9.0.86-0",
+    "name": "libnvjpeg",
+    "platform": "win-64",
+    "version": "11.9.0.86"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "libnvjpeg-dev-11.9.0.86-0",
+    "name": "libnvjpeg-dev",
+    "platform": "win-64",
+    "version": "11.9.0.86"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 0,
+    "build_string": "h827c3e9_0",
+    "channel": "pkgs/main",
+    "dist_name": "libuv-1.48.0-h827c3e9_0",
+    "name": "libuv",
+    "platform": "win-64",
+    "version": "1.48.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/conda-forge",
+    "build_number": 10,
+    "build_string": "h57928b3_10",
+    "channel": "conda-forge",
+    "dist_name": "libwinpthread-12.0.0.r4.gg4f2fc60ca-h57928b3_10",
+    "name": "libwinpthread",
+    "platform": "win-64",
+    "version": "12.0.0.r4.gg4f2fc60ca"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "lightning-utilities-0.14.3-pypi_0",
+    "name": "lightning-utilities",
+    "platform": "pypi",
+    "version": "0.14.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "livescene-0.1.0-pypi_0",
+    "name": "livescene",
+    "platform": "pypi",
+    "version": "0.1.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "loguru-0.7.3-pypi_0",
+    "name": "loguru",
+    "platform": "pypi",
+    "version": "0.7.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "lxml-5.2.1-pypi_0",
+    "name": "lxml",
+    "platform": "pypi",
+    "version": "5.2.1"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 1,
+    "build_string": "h2bbff1b_1",
+    "channel": "pkgs/main",
+    "dist_name": "lz4-c-1.9.4-h2bbff1b_1",
+    "name": "lz4-c",
+    "platform": "win-64",
+    "version": "1.9.4"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "manifold3d-3.0.1-pypi_0",
+    "name": "manifold3d",
+    "platform": "pypi",
+    "version": "3.0.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "mapbox-earcut-1.0.3-pypi_0",
+    "name": "mapbox-earcut",
+    "platform": "pypi",
+    "version": "1.0.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "markdown-3.8-pypi_0",
+    "name": "markdown",
+    "platform": "pypi",
+    "version": "3.8"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "markdown-it-py-3.0.0-pypi_0",
+    "name": "markdown-it-py",
+    "platform": "pypi",
+    "version": "3.0.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "markupsafe-3.0.3-pypi_0",
+    "name": "markupsafe",
+    "platform": "pypi",
+    "version": "3.0.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "maskclip-onnx-1.0-pypi_0",
+    "name": "maskclip-onnx",
+    "platform": "pypi",
+    "version": "1.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "matplotlib-3.9.2-pypi_0",
+    "name": "matplotlib",
+    "platform": "pypi",
+    "version": "3.9.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "matplotlib-inline-0.1.7-pypi_0",
+    "name": "matplotlib-inline",
+    "platform": "pypi",
+    "version": "0.1.7"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "mdurl-0.1.2-pypi_0",
+    "name": "mdurl",
+    "platform": "pypi",
+    "version": "0.1.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "mediapy-1.2.2-pypi_0",
+    "name": "mediapy",
+    "platform": "pypi",
+    "version": "1.2.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "mistune-3.1.3-pypi_0",
+    "name": "mistune",
+    "platform": "pypi",
+    "version": "3.1.3"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 46358,
+    "build_string": "h6b88ed4_46358",
+    "channel": "pkgs/main",
+    "dist_name": "mkl-2023.1.0-h6b88ed4_46358",
+    "name": "mkl",
+    "platform": "win-64",
+    "version": "2023.1.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "mkl-service-2.4.0-pypi_0",
+    "name": "mkl-service",
+    "platform": "pypi",
+    "version": "2.4.0"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 0,
+    "build_string": "py310h827c3e9_0",
+    "channel": "pkgs/main",
+    "dist_name": "mkl_fft-1.3.11-py310h827c3e9_0",
+    "name": "mkl_fft",
+    "platform": "win-64",
+    "version": "1.3.11"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 0,
+    "build_string": "py310hc64d2fc_0",
+    "channel": "pkgs/main",
+    "dist_name": "mkl_random-1.2.8-py310hc64d2fc_0",
+    "name": "mkl_random",
+    "platform": "win-64",
+    "version": "1.2.8"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "ml-dtypes-0.5.4-pypi_0",
+    "name": "ml-dtypes",
+    "platform": "pypi",
+    "version": "0.5.4"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 0,
+    "build_string": "py310h094160a_0",
+    "channel": "pkgs/main",
+    "dist_name": "ml_dtypes-0.5.1-py310h094160a_0",
+    "name": "ml_dtypes",
+    "platform": "win-64",
+    "version": "0.5.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "mobilesamv2-1.0-pypi_0",
+    "name": "mobilesamv2",
+    "platform": "pypi",
+    "version": "1.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "mpmath-1.3.0-pypi_0",
+    "name": "mpmath",
+    "platform": "pypi",
+    "version": "1.3.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "msgpack-1.1.0-pypi_0",
+    "name": "msgpack",
+    "platform": "pypi",
+    "version": "1.1.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "msgpack-numpy-0.4.8-pypi_0",
+    "name": "msgpack-numpy",
+    "platform": "pypi",
+    "version": "0.4.8"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "msgspec-0.19.0-pypi_0",
+    "name": "msgspec",
+    "platform": "pypi",
+    "version": "0.19.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "msvc-runtime-14.42.34433-pypi_0",
+    "name": "msvc-runtime",
+    "platform": "pypi",
+    "version": "14.42.34433"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "multidict-6.7.1-pypi_0",
+    "name": "multidict",
+    "platform": "pypi",
+    "version": "6.7.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "multimethod-2.0.2-pypi_0",
+    "name": "multimethod",
+    "platform": "pypi",
+    "version": "2.0.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "multiprocess-0.70.17-pypi_0",
+    "name": "multiprocess",
+    "platform": "pypi",
+    "version": "0.70.17"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "mypy-extensions-1.1.0-pypi_0",
+    "name": "mypy-extensions",
+    "platform": "pypi",
+    "version": "1.1.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "namex-0.1.0-pypi_0",
+    "name": "namex",
+    "platform": "pypi",
+    "version": "0.1.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "narwhals-1.34.1-pypi_0",
+    "name": "narwhals",
+    "platform": "pypi",
+    "version": "1.34.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "nbclient-0.10.2-pypi_0",
+    "name": "nbclient",
+    "platform": "pypi",
+    "version": "0.10.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "nbconvert-7.16.6-pypi_0",
+    "name": "nbconvert",
+    "platform": "pypi",
+    "version": "7.16.6"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "nbformat-5.10.4-pypi_0",
+    "name": "nbformat",
+    "platform": "pypi",
+    "version": "5.10.4"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "nerfacc-0.5.2-pypi_0",
+    "name": "nerfacc",
+    "platform": "pypi",
+    "version": "0.5.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "nerfplayer-0.0.2-pypi_0",
+    "name": "nerfplayer",
+    "platform": "pypi",
+    "version": "0.0.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "nerfstudio-1.1.5-pypi_0",
+    "name": "nerfstudio",
+    "platform": "pypi",
+    "version": "1.1.5"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "nest-asyncio-1.6.0-pypi_0",
+    "name": "nest-asyncio",
+    "platform": "pypi",
+    "version": "1.6.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "networkx-3.4.2-pypi_0",
+    "name": "networkx",
+    "platform": "pypi",
+    "version": "3.4.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "ninja-1.11.1.4-pypi_0",
+    "name": "ninja",
+    "platform": "pypi",
+    "version": "1.11.1.4"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "nodeenv-1.9.1-pypi_0",
+    "name": "nodeenv",
+    "platform": "pypi",
+    "version": "1.9.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "notebook-7.4.0-pypi_0",
+    "name": "notebook",
+    "platform": "pypi",
+    "version": "7.4.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "notebook-shim-0.2.4-pypi_0",
+    "name": "notebook-shim",
+    "platform": "pypi",
+    "version": "0.2.4"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/nvidia/label/cuda-11.8.0",
+    "build_number": 0,
+    "build_string": "0",
+    "channel": "nvidia/label/cuda-11.8.0",
+    "dist_name": "nsight-compute-2022.3.0.22-0",
+    "name": "nsight-compute",
+    "platform": "win-64",
+    "version": "2022.3.0.22"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 0,
+    "build_string": "py310h055cbcc_0",
+    "channel": "pkgs/main",
+    "dist_name": "numpy-1.26.4-py310h055cbcc_0",
+    "name": "numpy",
+    "platform": "win-64",
+    "version": "1.26.4"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 0,
+    "build_string": "py310h65a83cf_0",
+    "channel": "pkgs/main",
+    "dist_name": "numpy-base-1.26.4-py310h65a83cf_0",
+    "name": "numpy-base",
+    "platform": "win-64",
+    "version": "1.26.4"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "nuscenes-devkit-1.1.9-pypi_0",
+    "name": "nuscenes-devkit",
+    "platform": "pypi",
+    "version": "1.1.9"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "omegaconf-2.3.0-pypi_0",
+    "name": "omegaconf",
+    "platform": "pypi",
+    "version": "2.3.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "onnx-1.17.0-pypi_0",
+    "name": "onnx",
+    "platform": "pypi",
+    "version": "1.17.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "onnxruntime-1.23.2-pypi_0",
+    "name": "onnxruntime",
+    "platform": "pypi",
+    "version": "1.23.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "onnxsim-0.6.2-pypi_0",
+    "name": "onnxsim",
+    "platform": "pypi",
+    "version": "0.6.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "open-clip-torch-2.32.0-pypi_0",
+    "name": "open-clip-torch",
+    "platform": "pypi",
+    "version": "2.32.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "open3d-0.19.0-pypi_0",
+    "name": "open3d",
+    "platform": "pypi",
+    "version": "0.19.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "opencv-contrib-python-4.11.0.86-pypi_0",
+    "name": "opencv-contrib-python",
+    "platform": "pypi",
+    "version": "4.11.0.86"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "opencv-python-4.11.0.86-pypi_0",
+    "name": "opencv-python",
+    "platform": "pypi",
+    "version": "4.11.0.86"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "opencv-python-headless-4.10.0.84-pypi_0",
+    "name": "opencv-python-headless",
+    "platform": "pypi",
+    "version": "4.10.0.84"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "opencv-stubs-0.0.7-pypi_0",
+    "name": "opencv-stubs",
+    "platform": "pypi",
+    "version": "0.0.7"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "opennerf-0.1.0-pypi_0",
+    "name": "opennerf",
+    "platform": "pypi",
+    "version": "0.1.0"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 0,
+    "build_string": "h3f729d1_0",
+    "channel": "pkgs/main",
+    "dist_name": "openssl-3.0.16-h3f729d1_0",
+    "name": "openssl",
+    "platform": "win-64",
+    "version": "3.0.16"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "opt-einsum-3.4.0-pypi_0",
+    "name": "opt-einsum",
+    "platform": "pypi",
+    "version": "3.4.0"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 1,
+    "build_string": "pyhd3eb1b0_1",
+    "channel": "pkgs/main",
+    "dist_name": "opt_einsum-3.3.0-pyhd3eb1b0_1",
+    "name": "opt_einsum",
+    "platform": "noarch",
+    "version": "3.3.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "optix-0.2.3-pypi_0",
+    "name": "optix",
+    "platform": "pypi",
+    "version": "0.2.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "optree-0.19.0-pypi_0",
+    "name": "optree",
+    "platform": "pypi",
+    "version": "0.19.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "overrides-7.7.0-pypi_0",
+    "name": "overrides",
+    "platform": "pypi",
+    "version": "7.7.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "packaging-26.0-pypi_0",
+    "name": "packaging",
+    "platform": "pypi",
+    "version": "26.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pandas-2.2.3-pypi_0",
+    "name": "pandas",
+    "platform": "pypi",
+    "version": "2.2.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pandocfilters-1.5.1-pypi_0",
+    "name": "pandocfilters",
+    "platform": "pypi",
+    "version": "1.5.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "parameterized-0.9.0-pypi_0",
+    "name": "parameterized",
+    "platform": "pypi",
+    "version": "0.9.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "parso-0.8.4-pypi_0",
+    "name": "parso",
+    "platform": "pypi",
+    "version": "0.8.4"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pathos-0.3.3-pypi_0",
+    "name": "pathos",
+    "platform": "pypi",
+    "version": "0.3.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pathspec-1.0.4-pypi_0",
+    "name": "pathspec",
+    "platform": "pypi",
+    "version": "1.0.4"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pillow-12.1.1-pypi_0",
+    "name": "pillow",
+    "platform": "pypi",
+    "version": "12.1.1"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 0,
+    "build_string": "pyhc872135_0",
+    "channel": "pkgs/main",
+    "dist_name": "pip-26.0.1-pyhc872135_0",
+    "name": "pip",
+    "platform": "noarch",
+    "version": "26.0.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pkgconfig-1.6.0-pypi_0",
+    "name": "pkgconfig",
+    "platform": "pypi",
+    "version": "1.6.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "platformdirs-4.3.7-pypi_0",
+    "name": "platformdirs",
+    "platform": "pypi",
+    "version": "4.3.7"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "plotly-6.0.1-pypi_0",
+    "name": "plotly",
+    "platform": "pypi",
+    "version": "6.0.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pluggy-1.6.0-pypi_0",
+    "name": "pluggy",
+    "platform": "pypi",
+    "version": "1.6.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "plyfile-1.1-pypi_0",
+    "name": "plyfile",
+    "platform": "pypi",
+    "version": "1.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pox-0.3.5-pypi_0",
+    "name": "pox",
+    "platform": "pypi",
+    "version": "0.3.5"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "ppft-1.7.6.9-pypi_0",
+    "name": "ppft",
+    "platform": "pypi",
+    "version": "1.7.6.9"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pre-commit-3.3.2-pypi_0",
+    "name": "pre-commit",
+    "platform": "pypi",
+    "version": "3.3.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "prometheus-client-0.21.1-pypi_0",
+    "name": "prometheus-client",
+    "platform": "pypi",
+    "version": "0.21.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "prompt-toolkit-3.0.50-pypi_0",
+    "name": "prompt-toolkit",
+    "platform": "pypi",
+    "version": "3.0.50"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "propcache-0.4.1-pypi_0",
+    "name": "propcache",
+    "platform": "pypi",
+    "version": "0.4.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "protobuf-3.20.3-pypi_0",
+    "name": "protobuf",
+    "platform": "pypi",
+    "version": "3.20.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "psutil-7.0.0-pypi_0",
+    "name": "psutil",
+    "platform": "pypi",
+    "version": "7.0.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pure-eval-0.2.3-pypi_0",
+    "name": "pure-eval",
+    "platform": "pypi",
+    "version": "0.2.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "py-1.11.0-pypi_0",
+    "name": "py",
+    "platform": "pypi",
+    "version": "1.11.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pyasn1-0.6.3-pypi_0",
+    "name": "pyasn1",
+    "platform": "pypi",
+    "version": "0.6.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pyasn1-modules-0.2.8-pypi_0",
+    "name": "pyasn1-modules",
+    "platform": "pypi",
+    "version": "0.2.8"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pybind11-3.0.3-pypi_0",
+    "name": "pybind11",
+    "platform": "pypi",
+    "version": "3.0.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pybtex-0.26.1-pypi_0",
+    "name": "pybtex",
+    "platform": "pypi",
+    "version": "0.26.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pybtex-docutils-1.0.3-pypi_0",
+    "name": "pybtex-docutils",
+    "platform": "pypi",
+    "version": "1.0.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pycocotools-2.0.8-pypi_0",
+    "name": "pycocotools",
+    "platform": "pypi",
+    "version": "2.0.8"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pycollada-0.9-pypi_0",
+    "name": "pycollada",
+    "platform": "pypi",
+    "version": "0.9"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pycolmap-0.0.1-pypi_0",
+    "name": "pycolmap",
+    "platform": "pypi",
+    "version": "0.0.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pycparser-2.22-pypi_0",
+    "name": "pycparser",
+    "platform": "pypi",
+    "version": "2.22"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pydantic-2.11.3-pypi_0",
+    "name": "pydantic",
+    "platform": "pypi",
+    "version": "2.11.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pydantic-core-2.33.1-pypi_0",
+    "name": "pydantic-core",
+    "platform": "pypi",
+    "version": "2.33.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pyglet-2.1.13-pypi_0",
+    "name": "pyglet",
+    "platform": "pypi",
+    "version": "2.1.13"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pygments-2.19.1-pypi_0",
+    "name": "pygments",
+    "platform": "pypi",
+    "version": "2.19.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pyliblzfse-0.4.1-pypi_0",
+    "name": "pyliblzfse",
+    "platform": "pypi",
+    "version": "0.4.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pyls-spyder-0.4.0-pypi_0",
+    "name": "pyls-spyder",
+    "platform": "pypi",
+    "version": "0.4.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pymeshlab-2023.12.post1-pypi_0",
+    "name": "pymeshlab",
+    "platform": "pypi",
+    "version": "2023.12.post1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pynerf-0.1.0-pypi_0",
+    "name": "pynerf",
+    "platform": "pypi",
+    "version": "0.1.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pyngrok-7.2.3-pypi_0",
+    "name": "pyngrok",
+    "platform": "pypi",
+    "version": "7.2.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pyopengl-3.1.0-pypi_0",
+    "name": "pyopengl",
+    "platform": "pypi",
+    "version": "3.1.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pyparsing-3.2.3-pypi_0",
+    "name": "pyparsing",
+    "platform": "pypi",
+    "version": "3.2.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pyqt5-5.15.10-pypi_0",
+    "name": "pyqt5",
+    "platform": "pypi",
+    "version": "5.15.10"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pyqtwebengine-5.15.6-pypi_0",
+    "name": "pyqtwebengine",
+    "platform": "pypi",
+    "version": "5.15.6"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pyquaternion-0.9.9-pypi_0",
+    "name": "pyquaternion",
+    "platform": "pypi",
+    "version": "0.9.9"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pyreadline3-3.5.4-pypi_0",
+    "name": "pyreadline3",
+    "platform": "pypi",
+    "version": "3.5.4"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pyrender-0.1.45-pypi_0",
+    "name": "pyrender",
+    "platform": "pypi",
+    "version": "0.1.45"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pyright-1.1.331-pypi_0",
+    "name": "pyright",
+    "platform": "pypi",
+    "version": "1.1.331"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pysdf-0.1.9-pypi_0",
+    "name": "pysdf",
+    "platform": "pypi",
+    "version": "0.1.9"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pysocks-1.7.1-pypi_0",
+    "name": "pysocks",
+    "platform": "pypi",
+    "version": "1.7.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pytest-7.1.2-pypi_0",
+    "name": "pytest",
+    "platform": "pypi",
+    "version": "7.1.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pytest-forked-1.6.0-pypi_0",
+    "name": "pytest-forked",
+    "platform": "pypi",
+    "version": "1.6.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pytest-xdist-2.5.0-pypi_0",
+    "name": "pytest-xdist",
+    "platform": "pypi",
+    "version": "2.5.0"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 1,
+    "build_string": "h4607a30_1",
+    "channel": "pkgs/main",
+    "dist_name": "python-3.10.16-h4607a30_1",
+    "name": "python",
+    "platform": "win-64",
+    "version": "3.10.16"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "python-box-6.1.0-pypi_0",
+    "name": "python-box",
+    "platform": "pypi",
+    "version": "6.1.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "python-dateutil-2.9.0.post0-pypi_0",
+    "name": "python-dateutil",
+    "platform": "pypi",
+    "version": "2.9.0.post0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "python-discovery-1.2.1-pypi_0",
+    "name": "python-discovery",
+    "platform": "pypi",
+    "version": "1.2.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "python-engineio-4.11.2-pypi_0",
+    "name": "python-engineio",
+    "platform": "pypi",
+    "version": "4.11.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "python-json-logger-3.3.0-pypi_0",
+    "name": "python-json-logger",
+    "platform": "pypi",
+    "version": "3.3.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "python-socketio-5.12.1-pypi_0",
+    "name": "python-socketio",
+    "platform": "pypi",
+    "version": "5.12.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pytokens-0.4.1-pypi_0",
+    "name": "pytokens",
+    "platform": "pypi",
+    "version": "0.4.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pytorch-lightning-1.8.6-pypi_0",
+    "name": "pytorch-lightning",
+    "platform": "pypi",
+    "version": "1.8.6"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pytorch-msssim-1.0.0-pypi_0",
+    "name": "pytorch-msssim",
+    "platform": "pypi",
+    "version": "1.0.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pytz-2025.2-pypi_0",
+    "name": "pytz",
+    "platform": "pypi",
+    "version": "2025.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pyviz3d-0.5.1-pypi_0",
+    "name": "pyviz3d",
+    "platform": "pypi",
+    "version": "0.5.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pywin32-305-pypi_0",
+    "name": "pywin32",
+    "platform": "pypi",
+    "version": "305"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pywinpty-2.0.15-pypi_0",
+    "name": "pywinpty",
+    "platform": "pypi",
+    "version": "2.0.15"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pyyaml-6.0.2-pypi_0",
+    "name": "pyyaml",
+    "platform": "pypi",
+    "version": "6.0.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "pyzmq-26.4.0-pypi_0",
+    "name": "pyzmq",
+    "platform": "pypi",
+    "version": "26.4.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "rasterio-1.4.4-pypi_0",
+    "name": "rasterio",
+    "platform": "pypi",
+    "version": "1.4.4"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "rawpy-0.24.0-pypi_0",
+    "name": "rawpy",
+    "platform": "pypi",
+    "version": "0.24.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "referencing-0.36.2-pypi_0",
+    "name": "referencing",
+    "platform": "pypi",
+    "version": "0.36.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "regex-2024.11.6-pypi_0",
+    "name": "regex",
+    "platform": "pypi",
+    "version": "2024.11.6"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "requests-2.33.1-pypi_0",
+    "name": "requests",
+    "platform": "pypi",
+    "version": "2.33.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "requests-toolbelt-1.0.0-pypi_0",
+    "name": "requests-toolbelt",
+    "platform": "pypi",
+    "version": "1.0.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "retrying-1.3.4-pypi_0",
+    "name": "retrying",
+    "platform": "pypi",
+    "version": "1.3.4"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "rfc3339-validator-0.1.4-pypi_0",
+    "name": "rfc3339-validator",
+    "platform": "pypi",
+    "version": "0.1.4"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "rfc3986-validator-0.1.1-pypi_0",
+    "name": "rfc3986-validator",
+    "platform": "pypi",
+    "version": "0.1.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "rfc3987-syntax-1.1.0-pypi_0",
+    "name": "rfc3987-syntax",
+    "platform": "pypi",
+    "version": "1.1.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "rich-14.0.0-pypi_0",
+    "name": "rich",
+    "platform": "pypi",
+    "version": "14.0.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "rpds-py-0.24.0-pypi_0",
+    "name": "rpds-py",
+    "platform": "pypi",
+    "version": "0.24.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "rsa-4.7.2-pypi_0",
+    "name": "rsa",
+    "platform": "pypi",
+    "version": "4.7.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "rtree-1.4.0-pypi_0",
+    "name": "rtree",
+    "platform": "pypi",
+    "version": "1.4.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "ruff-0.12.2-pypi_0",
+    "name": "ruff",
+    "platform": "pypi",
+    "version": "0.12.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "s3transfer-0.10.4-pypi_0",
+    "name": "s3transfer",
+    "platform": "pypi",
+    "version": "0.10.4"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "safetensors-0.7.0-pypi_0",
+    "name": "safetensors",
+    "platform": "pypi",
+    "version": "0.7.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "scikit-image-0.25.2-pypi_0",
+    "name": "scikit-image",
+    "platform": "pypi",
+    "version": "0.25.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "scikit-learn-1.6.1-pypi_0",
+    "name": "scikit-learn",
+    "platform": "pypi",
+    "version": "1.6.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "scipy-1.15.2-pypi_0",
+    "name": "scipy",
+    "platform": "pypi",
+    "version": "1.15.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "segment-anything-1.0-pypi_0",
+    "name": "segment-anything",
+    "platform": "pypi",
+    "version": "1.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "semantic-version-2.10.0-pypi_0",
+    "name": "semantic-version",
+    "platform": "pypi",
+    "version": "2.10.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "send2trash-1.8.3-pypi_0",
+    "name": "send2trash",
+    "platform": "pypi",
+    "version": "1.8.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "sentencepiece-0.1.99-pypi_0",
+    "name": "sentencepiece",
+    "platform": "pypi",
+    "version": "0.1.99"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "sentry-sdk-2.25.1-pypi_0",
+    "name": "sentry-sdk",
+    "platform": "pypi",
+    "version": "2.25.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "setproctitle-1.3.5-pypi_0",
+    "name": "setproctitle",
+    "platform": "pypi",
+    "version": "1.3.5"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "setuptools-75.8.2-pypi_0",
+    "name": "setuptools",
+    "platform": "pypi",
+    "version": "75.8.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "shapely-2.1.0-pypi_0",
+    "name": "shapely",
+    "platform": "pypi",
+    "version": "2.1.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "shellingham-1.5.4-pypi_0",
+    "name": "shellingham",
+    "platform": "pypi",
+    "version": "1.5.4"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "shtab-1.7.1-pypi_0",
+    "name": "shtab",
+    "platform": "pypi",
+    "version": "1.7.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "simple-websocket-1.1.0-pypi_0",
+    "name": "simple-websocket",
+    "platform": "pypi",
+    "version": "1.1.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "simplejson-3.20.1-pypi_0",
+    "name": "simplejson",
+    "platform": "pypi",
+    "version": "3.20.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "six-1.17.0-pypi_0",
+    "name": "six",
+    "platform": "pypi",
+    "version": "1.17.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "smmap-5.0.2-pypi_0",
+    "name": "smmap",
+    "platform": "pypi",
+    "version": "5.0.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "sniffio-1.3.1-pypi_0",
+    "name": "sniffio",
+    "platform": "pypi",
+    "version": "1.3.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "snowballstemmer-3.0.1-pypi_0",
+    "name": "snowballstemmer",
+    "platform": "pypi",
+    "version": "3.0.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "soupsieve-2.6-pypi_0",
+    "name": "soupsieve",
+    "platform": "pypi",
+    "version": "2.6"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "sphinx-8.1.3-pypi_0",
+    "name": "sphinx",
+    "platform": "pypi",
+    "version": "8.1.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "sphinx-rtd-theme-3.1.0-pypi_0",
+    "name": "sphinx-rtd-theme",
+    "platform": "pypi",
+    "version": "3.1.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "sphinxcontrib-applehelp-2.0.0-pypi_0",
+    "name": "sphinxcontrib-applehelp",
+    "platform": "pypi",
+    "version": "2.0.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "sphinxcontrib-bibtex-2.6.5-pypi_0",
+    "name": "sphinxcontrib-bibtex",
+    "platform": "pypi",
+    "version": "2.6.5"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "sphinxcontrib-devhelp-2.0.0-pypi_0",
+    "name": "sphinxcontrib-devhelp",
+    "platform": "pypi",
+    "version": "2.0.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "sphinxcontrib-htmlhelp-2.1.0-pypi_0",
+    "name": "sphinxcontrib-htmlhelp",
+    "platform": "pypi",
+    "version": "2.1.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "sphinxcontrib-jquery-4.1-pypi_0",
+    "name": "sphinxcontrib-jquery",
+    "platform": "pypi",
+    "version": "4.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "sphinxcontrib-jsmath-1.0.1-pypi_0",
+    "name": "sphinxcontrib-jsmath",
+    "platform": "pypi",
+    "version": "1.0.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "sphinxcontrib-qthelp-2.0.0-pypi_0",
+    "name": "sphinxcontrib-qthelp",
+    "platform": "pypi",
+    "version": "2.0.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "sphinxcontrib-serializinghtml-2.0.0-pypi_0",
+    "name": "sphinxcontrib-serializinghtml",
+    "platform": "pypi",
+    "version": "2.0.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "sphinxcontrib-video-0.4.2-pypi_0",
+    "name": "sphinxcontrib-video",
+    "platform": "pypi",
+    "version": "0.4.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "splatfacto-w-0.1.6-pypi_0",
+    "name": "splatfacto-w",
+    "platform": "pypi",
+    "version": "0.1.6"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "splines-0.3.0-pypi_0",
+    "name": "splines",
+    "platform": "pypi",
+    "version": "0.3.0"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 0,
+    "build_string": "h2bbff1b_0",
+    "channel": "pkgs/main",
+    "dist_name": "sqlite-3.45.3-h2bbff1b_0",
+    "name": "sqlite",
+    "platform": "win-64",
+    "version": "3.45.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "sshconf-0.2.5-pypi_0",
+    "name": "sshconf",
+    "platform": "pypi",
+    "version": "0.2.5"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "stack-data-0.6.3-pypi_0",
+    "name": "stack-data",
+    "platform": "pypi",
+    "version": "0.6.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "svg-path-6.3-pypi_0",
+    "name": "svg-path",
+    "platform": "pypi",
+    "version": "6.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "sympy-1.14.0-pypi_0",
+    "name": "sympy",
+    "platform": "pypi",
+    "version": "1.14.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "tabulate-0.10.0-pypi_0",
+    "name": "tabulate",
+    "platform": "pypi",
+    "version": "0.10.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "taichi-1.7.4-pypi_0",
+    "name": "taichi",
+    "platform": "pypi",
+    "version": "1.7.4"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 0,
+    "build_string": "h59b6b97_0",
+    "channel": "pkgs/main",
+    "dist_name": "tbb-2021.8.0-h59b6b97_0",
+    "name": "tbb",
+    "platform": "win-64",
+    "version": "2021.8.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "tensorboard-2.19.0-pypi_0",
+    "name": "tensorboard",
+    "platform": "pypi",
+    "version": "2.19.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "tensorboard-data-server-0.7.2-pypi_0",
+    "name": "tensorboard-data-server",
+    "platform": "pypi",
+    "version": "0.7.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "tensorboardx-2.6.2.2-pypi_0",
+    "name": "tensorboardx",
+    "platform": "pypi",
+    "version": "2.6.2.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "tensorflow-2.19.1-pypi_0",
+    "name": "tensorflow",
+    "platform": "pypi",
+    "version": "2.19.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "tensorflow-io-gcs-filesystem-0.31.0-pypi_0",
+    "name": "tensorflow-io-gcs-filesystem",
+    "platform": "pypi",
+    "version": "0.31.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "tensorly-0.9.0-pypi_0",
+    "name": "tensorly",
+    "platform": "pypi",
+    "version": "0.9.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "tensorpack-0.11-pypi_0",
+    "name": "tensorpack",
+    "platform": "pypi",
+    "version": "0.11"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "termcolor-3.0.1-pypi_0",
+    "name": "termcolor",
+    "platform": "pypi",
+    "version": "3.0.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "terminado-0.18.1-pypi_0",
+    "name": "terminado",
+    "platform": "pypi",
+    "version": "0.18.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "tetra-nerf-0.1.1-pypi_0",
+    "name": "tetra-nerf",
+    "platform": "pypi",
+    "version": "0.1.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "threadpoolctl-3.6.0-pypi_0",
+    "name": "threadpoolctl",
+    "platform": "pypi",
+    "version": "3.6.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "tifffile-2025.3.30-pypi_0",
+    "name": "tifffile",
+    "platform": "pypi",
+    "version": "2025.3.30"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "timm-0.6.7-pypi_0",
+    "name": "timm",
+    "platform": "pypi",
+    "version": "0.6.7"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "tinycss2-1.4.0-pypi_0",
+    "name": "tinycss2",
+    "platform": "pypi",
+    "version": "1.4.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "tinycudann-2.0-pypi_0",
+    "name": "tinycudann",
+    "platform": "pypi",
+    "version": "2.0"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 0,
+    "build_string": "h0416ee5_0",
+    "channel": "pkgs/main",
+    "dist_name": "tk-8.6.14-h0416ee5_0",
+    "name": "tk",
+    "platform": "win-64",
+    "version": "8.6.14"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "tokenizers-0.13.3-pypi_0",
+    "name": "tokenizers",
+    "platform": "pypi",
+    "version": "0.13.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "toml-0.10.2-pypi_0",
+    "name": "toml",
+    "platform": "pypi",
+    "version": "0.10.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "tomli-2.2.1-pypi_0",
+    "name": "tomli",
+    "platform": "pypi",
+    "version": "2.2.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "torch-2.1.2+cu118-pypi_0",
+    "name": "torch",
+    "platform": "pypi",
+    "version": "2.1.2+cu118"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "torch-fidelity-0.3.0-pypi_0",
+    "name": "torch-fidelity",
+    "platform": "pypi",
+    "version": "0.3.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "torch-scatter-2.1.2+pt21cu118-pypi_0",
+    "name": "torch-scatter",
+    "platform": "pypi",
+    "version": "2.1.2+pt21cu118"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "torchaudio-2.1.2+cu118-pypi_0",
+    "name": "torchaudio",
+    "platform": "pypi",
+    "version": "2.1.2+cu118"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "torchmetrics-1.7.1-pypi_0",
+    "name": "torchmetrics",
+    "platform": "pypi",
+    "version": "1.7.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "torchpack-0.3.1-pypi_0",
+    "name": "torchpack",
+    "platform": "pypi",
+    "version": "0.3.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "torchtyping-0.1.5-pypi_0",
+    "name": "torchtyping",
+    "platform": "pypi",
+    "version": "0.1.5"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "torchvision-0.16.2+cu118-pypi_0",
+    "name": "torchvision",
+    "platform": "pypi",
+    "version": "0.16.2+cu118"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "tornado-6.4.2-pypi_0",
+    "name": "tornado",
+    "platform": "pypi",
+    "version": "6.4.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "tqdm-4.67.1-pypi_0",
+    "name": "tqdm",
+    "platform": "pypi",
+    "version": "4.67.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "traitlets-5.14.3-pypi_0",
+    "name": "traitlets",
+    "platform": "pypi",
+    "version": "5.14.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "transformers-4.29.2-pypi_0",
+    "name": "transformers",
+    "platform": "pypi",
+    "version": "4.29.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "trimesh-4.6.6-pypi_0",
+    "name": "trimesh",
+    "platform": "pypi",
+    "version": "4.6.6"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "typeguard-4.5.1-pypi_0",
+    "name": "typeguard",
+    "platform": "pypi",
+    "version": "4.5.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "typer-0.24.1-pypi_0",
+    "name": "typer",
+    "platform": "pypi",
+    "version": "0.24.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "types-python-dateutil-2.9.0.20241206-pypi_0",
+    "name": "types-python-dateutil",
+    "platform": "pypi",
+    "version": "2.9.0.20241206"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "typing-extensions-4.15.0-pypi_0",
+    "name": "typing-extensions",
+    "platform": "pypi",
+    "version": "4.15.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "typing-inspection-0.4.0-pypi_0",
+    "name": "typing-inspection",
+    "platform": "pypi",
+    "version": "0.4.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "tyro-0.9.8-pypi_0",
+    "name": "tyro",
+    "platform": "pypi",
+    "version": "0.9.8"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "tzdata-2025.2-pypi_0",
+    "name": "tzdata",
+    "platform": "pypi",
+    "version": "2025.2"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 0,
+    "build_string": "haa95532_0",
+    "channel": "pkgs/main",
+    "dist_name": "ucrt-10.0.22621.0-haa95532_0",
+    "name": "ucrt",
+    "platform": "win-64",
+    "version": "10.0.22621.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "uri-template-1.3.0-pypi_0",
+    "name": "uri-template",
+    "platform": "pypi",
+    "version": "1.3.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "urllib3-1.26.13-pypi_0",
+    "name": "urllib3",
+    "platform": "pypi",
+    "version": "1.26.13"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 4,
+    "build_string": "haa95532_4",
+    "channel": "pkgs/main",
+    "dist_name": "vc-14.42-haa95532_4",
+    "name": "vc",
+    "platform": "win-64",
+    "version": "14.42"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "vhacdx-0.0.8.post2-pypi_0",
+    "name": "vhacdx",
+    "platform": "pypi",
+    "version": "0.0.8.post2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "virtualenv-21.2.0-pypi_0",
+    "name": "virtualenv",
+    "platform": "pypi",
+    "version": "21.2.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "viser-1.0.0-pypi_0",
+    "name": "viser",
+    "platform": "pypi",
+    "version": "1.0.0"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 4,
+    "build_string": "he0abc0d_4",
+    "channel": "pkgs/main",
+    "dist_name": "vs2015_runtime-14.42.34433-he0abc0d_4",
+    "name": "vs2015_runtime",
+    "platform": "win-64",
+    "version": "14.42.34433"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "wadler-lindig-0.1.4-pypi_0",
+    "name": "wadler-lindig",
+    "platform": "pypi",
+    "version": "0.1.4"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "wandb-0.19.9-pypi_0",
+    "name": "wandb",
+    "platform": "pypi",
+    "version": "0.19.9"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "wcwidth-0.2.13-pypi_0",
+    "name": "wcwidth",
+    "platform": "pypi",
+    "version": "0.2.13"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "webcolors-24.11.1-pypi_0",
+    "name": "webcolors",
+    "platform": "pypi",
+    "version": "24.11.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "webencodings-0.5.1-pypi_0",
+    "name": "webencodings",
+    "platform": "pypi",
+    "version": "0.5.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "websocket-client-1.8.0-pypi_0",
+    "name": "websocket-client",
+    "platform": "pypi",
+    "version": "1.8.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "websockets-15.0.1-pypi_0",
+    "name": "websockets",
+    "platform": "pypi",
+    "version": "15.0.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "werkzeug-3.0.6-pypi_0",
+    "name": "werkzeug",
+    "platform": "pypi",
+    "version": "3.0.6"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "wheel-0.46.3-pypi_0",
+    "name": "wheel",
+    "platform": "pypi",
+    "version": "0.46.3"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "widgetsnbextension-4.0.14-pypi_0",
+    "name": "widgetsnbextension",
+    "platform": "pypi",
+    "version": "4.0.14"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "win32-setctime-1.2.0-pypi_0",
+    "name": "win32-setctime",
+    "platform": "pypi",
+    "version": "1.2.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "wrapt-1.17.2-pypi_0",
+    "name": "wrapt",
+    "platform": "pypi",
+    "version": "1.17.2"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "wsproto-1.2.0-pypi_0",
+    "name": "wsproto",
+    "platform": "pypi",
+    "version": "1.2.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "wurlitzer-3.1.1-pypi_0",
+    "name": "wurlitzer",
+    "platform": "pypi",
+    "version": "3.1.1"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "xatlas-0.0.10-pypi_0",
+    "name": "xatlas",
+    "platform": "pypi",
+    "version": "0.0.10"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "xxhash-3.5.0-pypi_0",
+    "name": "xxhash",
+    "platform": "pypi",
+    "version": "3.5.0"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 1,
+    "build_string": "h4754444_1",
+    "channel": "pkgs/main",
+    "dist_name": "xz-5.6.4-h4754444_1",
+    "name": "xz",
+    "platform": "win-64",
+    "version": "5.6.4"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "yarl-1.23.0-pypi_0",
+    "name": "yarl",
+    "platform": "pypi",
+    "version": "1.23.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "yourdfpy-0.0.57-pypi_0",
+    "name": "yourdfpy",
+    "platform": "pypi",
+    "version": "0.0.57"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "zipnerf-0.1.0-pypi_0",
+    "name": "zipnerf",
+    "platform": "pypi",
+    "version": "0.1.0"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "zipp-3.21.0-pypi_0",
+    "name": "zipp",
+    "platform": "pypi",
+    "version": "3.21.0"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 1,
+    "build_string": "h8cc25b3_1",
+    "channel": "pkgs/main",
+    "dist_name": "zlib-1.2.13-h8cc25b3_1",
+    "name": "zlib",
+    "platform": "win-64",
+    "version": "1.2.13"
+  },
+  {
+    "base_url": "https://conda.anaconda.org/pypi",
+    "build_number": 0,
+    "build_string": "pypi_0",
+    "channel": "pypi",
+    "dist_name": "zstandard-0.25.0-pypi_0",
+    "name": "zstandard",
+    "platform": "pypi",
+    "version": "0.25.0"
+  },
+  {
+    "base_url": "https://repo.anaconda.com/pkgs/main",
+    "build_number": 0,
+    "build_string": "h8880b57_0",
+    "channel": "pkgs/main",
+    "dist_name": "zstd-1.5.6-h8880b57_0",
+    "name": "zstd",
+    "platform": "win-64",
+    "version": "1.5.6"
+  }
+]

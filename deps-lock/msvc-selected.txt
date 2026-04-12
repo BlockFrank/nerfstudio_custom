@@ -1,0 +1,16 @@
+requested=14.38
+cuda_mode=vanilla
+cuda_root=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8
+git_dirs=C:\Program Files\Git\cmd;C:\Program Files\Git\bin
+runtime_path_entries=C:\Users\crist\Documenti\nerfstudio_custom\.conda\envs\nerfstudio-portable\Scripts;C:\Users\crist\Documenti\nerfstudio_custom\.conda\envs\nerfstudio-portable;C:\Users\crist\Documenti\nerfstudio_custom\.conda\envs\nerfstudio-portable\Library\bin;C:\Users\crist\Documenti\nerfstudio_custom\.conda\envs\nerfstudio-portable\Library\usr\bin;C:\Users\crist\Documenti\nerfstudio_custom\.conda\envs\nerfstudio-portable\bin;C:\Users\crist\Documents\nerfstudio_custom\.conda\envs\nerfstudio-portable;C:\Program Files\Git\cmd;C:\Program Files\Git\bin
+include=C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Tools\MSVC\14.38.33130\include;C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\VS\include;C:\Program Files (x86)\Windows Kits\10\include\10.0.26100.0\ucrt;C:\Program Files (x86)\Windows Kits\10\include\10.0.26100.0\um;C:\Program Files (x86)\Windows Kits\10\include\10.0.26100.0\shared;C:\Program Files (x86)\Windows Kits\10\include\10.0.26100.0\winrt;C:\Program Files (x86)\Windows Kits\10\include\10.0.26100.0\cppwinrt;C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um
+lib=C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Tools\MSVC\14.38.33130\lib\x64;C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\lib\um\x64;C:\Program Files (x86)\Windows Kits\10\lib\10.0.26100.0\ucrt\x64;C:\Program Files (x86)\Windows Kits\10\lib\10.0.26100.0\um\x64
+libpath=C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Tools\MSVC\14.38.33130\lib\x64;C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Tools\MSVC\14.38.33130\lib\x86\store\references;C:\Program Files (x86)\Windows Kits\10\UnionMetadata\10.0.26100.0;C:\Program Files (x86)\Windows Kits\10\References\10.0.26100.0;C:\WINDOWS\Microsoft.NET\Framework64\v4.0.30319
+winsdk=C:\Program Files (x86)\Windows Kits\10
+ucrt=C:\Program Files (x86)\Windows Kits\10
+selected_toolset=14.38.33130
+selected_short=14.38
+selected_install=C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools
+selected_cl=C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Tools\MSVC\14.38.33130\bin\Hostx64\x64\cl.exe
+selected_vcvarsall=C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvarsall.bat
+mode=subprocess-shell-bootstrap

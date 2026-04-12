@@ -16,64 +16,68 @@
 Module that keeps all registered plugins and allows for plugin discovery.
 """
 
-import importlib
-import os
-import sys
-import typing as t
+from __future__ import annotations
 
-from nerfstudio.engine.trainer import TrainerConfig
+from typing import Dict, Tuple
+
+from rich.console import Console
+
 from nerfstudio.plugins.types import MethodSpecification
-from nerfstudio.utils.rich_utils import CONSOLE
 
-if sys.version_info < (3, 10):
-    from importlib_metadata import entry_points
-else:
+CONSOLE = Console(width=120)
+
+try:
     from importlib.metadata import entry_points
+except ImportError:
+    from importlib_metadata import entry_points
 
 
-def discover_methods() -> t.Tuple[t.Dict[str, TrainerConfig], t.Dict[str, str]]:
+def discover_methods() -> Tuple[Dict[str, MethodSpecification], Dict[str, str]]:
     """
-    Discovers all methods registered using the `nerfstudio.method_configs` entrypoint.
-    And also methods in the NERFSTUDIO_METHOD_CONFIGS environment variable.
+    Discover external nerfstudio methods via entry points.
+
+    IMPORTANT:
+    This loader is intentionally resilient:
+    - broken external methods are skipped
+    - import/load errors do not crash nerfstudio CLI
     """
-    methods = {}
-    descriptions = {}
+    methods: Dict[str, MethodSpecification] = {}
+    descriptions: Dict[str, str] = {}
+
     discovered_entry_points = entry_points(group="nerfstudio.method_configs")
-    for name in discovered_entry_points.names:
-        spec = discovered_entry_points[name].load()
-        if not isinstance(spec, MethodSpecification):
+
+    # Compat for different importlib.metadata return types
+    try:
+        names = discovered_entry_points.names
+        get_ep = lambda name: discovered_entry_points[name]
+    except AttributeError:
+        eps_by_name = {ep.name: ep for ep in discovered_entry_points}
+        names = eps_by_name.keys()
+        get_ep = lambda name: eps_by_name[name]
+
+    for name in names:
+        ep = get_ep(name)
+
+        try:
+            spec = ep.load()
+        except Exception as exc:
             CONSOLE.print(
-                f"[bold yellow]Warning: Could not entry point {spec} as it is not an instance of MethodSpecification"
+                f"[bold yellow]Warning:[/bold yellow] Skipping external method "
+                f"[cyan]{name}[/cyan] because it failed to import/load.\n"
+                f"  Entry point: {ep.value}\n"
+                f"  Error: {type(exc).__name__}: {exc}"
             )
             continue
-        spec = t.cast(MethodSpecification, spec)
-        methods[spec.config.method_name] = spec.config
-        descriptions[spec.config.method_name] = spec.description
 
-    if "NERFSTUDIO_METHOD_CONFIGS" in os.environ:
-        try:
-            strings = os.environ["NERFSTUDIO_METHOD_CONFIGS"].split(",")
-            for definition in strings:
-                if not definition:
-                    continue
-                name, path = definition.split("=")
-                CONSOLE.print(f"[bold green]Info: Loading method {name} from environment variable")
-                module, config_name = path.split(":")
-                method_config = getattr(importlib.import_module(module), config_name)
+        if not isinstance(spec, MethodSpecification):
+            CONSOLE.print(
+                f"[bold yellow]Warning:[/bold yellow] Skipping external method "
+                f"[cyan]{name}[/cyan] because loaded object is not a MethodSpecification.\n"
+                f"  Loaded object type: {type(spec).__name__}"
+            )
+            continue
 
-                # method_config specified as function or class -> instance
-                if callable(method_config):
-                    method_config = method_config()
-
-                # check for valid instance type
-                if not isinstance(method_config, MethodSpecification):
-                    raise TypeError("Method is not an instance of MethodSpecification")
-
-                # save to methods
-                methods[name] = method_config.config
-                descriptions[name] = method_config.description
-        except Exception:
-            CONSOLE.print_exception()
-            CONSOLE.print("[bold red]Error: Could not load methods from environment variable NERFSTUDIO_METHOD_CONFIGS")
+        methods[name] = spec
+        descriptions[name] = spec.description
 
     return methods, descriptions

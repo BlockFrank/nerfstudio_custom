@@ -1,0 +1,165 @@
+{
+  "numpy_stable": "numpy==1.26.4",
+  "torch_preinstall": [
+    "torch==2.1.2+cu118",
+    "torchvision==0.16.2+cu118"
+  ],
+  "torch_index": "https://download.pytorch.org/whl/cu118",
+  "pyg_wheels": [],
+  "pyg_index_template": "https://data.pyg.org/whl/{torch_tag}.html",
+  "tinycudann": {
+    "requirement": "tinycudann @ git+https://github.com/NVlabs/tiny-cuda-nn/@6ee3546bda615f51abe684ce9edefeb414689135#subdirectory=bindings/torch",
+    "cuda_arch": "86"
+  },
+  "pycolmap": {
+    "requirement": "git+https://github.com/rmbrualla/pycolmap.git"
+  },
+  "deferred": [
+    "tinycudann @ git+https://github.com/NVlabs/tiny-cuda-nn/@6ee3546bda615f51abe684ce9edefeb414689135#subdirectory=bindings/torch"
+  ],
+  "nerfstudio_methods_protected": {
+    "feature-splatting": {
+      "pip_names": [
+        "feature-splatting",
+        "feature_splatting"
+      ],
+      "install_ref": "git+https://github.com/vuer-ai/feature-splatting",
+      "patch_rel": "feature-splatting",
+      "category": "method"
+    },
+    "igs2gs": {
+      "pip_names": [
+        "igs2gs"
+      ],
+      "install_ref": "git+https://github.com/cvachha/instruct-gs2gs",
+      "patch_rel": "igs2gs",
+      "category": "method"
+    },
+    "lerf": {
+      "pip_names": [
+        "lerf"
+      ],
+      "install_ref": "git+https://github.com/kerrj/lerf",
+      "patch_rel": "lerf",
+      "category": "method"
+    },
+    "livescene": {
+      "pip_names": [
+        "livescene"
+      ],
+      "install_ref": "git+https://github.com/Tavish9/livescene",
+      "patch_rel": "livescene",
+      "category": "method"
+    },
+    "nerfplayer": {
+      "pip_names": [
+        "nerfplayer"
+      ],
+      "install_ref": "git+https://github.com/lsongx/nerfplayer-nerfstudio.git",
+      "patch_rel": "nerfplayer",
+      "category": "method"
+    },
+    "opennerf": {
+      "pip_names": [
+        "opennerf"
+      ],
+      "install_ref": "git+https://github.com/opennerf/opennerf",
+      "patch_rel": "opennerf",
+      "category": "method"
+    },
+    "pynerf": {
+      "pip_names": [
+        "pynerf"
+      ],
+      "install_ref": "git+https://github.com/hturki/pynerf",
+      "patch_rel": "pynerf",
+      "category": "method"
+    },
+    "splatfacto-w": {
+      "pip_names": [
+        "splatfacto-w",
+        "splatfactow"
+      ],
+      "install_ref": "git+https://github.com/KevinXu02/splatfacto-w",
+      "patch_rel": "splatfacto-w",
+      "category": "method"
+    },
+    "tetra-nerf": {
+      "pip_names": [
+        "tetra-nerf",
+        "tetra_nerf"
+      ],
+      "install_ref": "git+https://github.com/jkulhanek/tetra-nerf",
+      "patch_rel": "tetra-nerf",
+      "category": "method"
+    },
+    "zipnerf-pytorch": {
+      "pip_names": [
+        "zipnerf",
+        "zipnerf-pytorch"
+      ],
+      "install_ref": "git+https://github.com/SuLvXiangXin/zipnerf-pytorch.git",
+      "patch_rel": "zipnerf-pytorch",
+      "category": "method"
+    }
+  },
+  "nerfstudio_core_overrides": {
+    "pycolmap": {
+      "pip_names": [
+        "pycolmap"
+      ],
+      "install_ref": "git+https://github.com/rmbrualla/pycolmap.git",
+      "patch_rel": null,
+      "category": "core_dependency",
+      "enforce_as_standard": true
+    }
+  },
+  "skipped_from_bulk": [
+    "anaconda-anon-usage @ file:///C:/b/abs_e8r_zga7xy/croot/anaconda-anon-usage_1732732454901/work",
+    "archspec @ file:///croot/archspec_1709217642129/work",
+    "boltons @ file:///C:/b/abs_707eo7c09t/croot/boltons_1677628723117/work",
+    "Brotli @ file:///C:/b/abs_3d36mno480/croot/brotli-split_1714483178642/work",
+    "cffi @ file:///C:/b/abs_90yq4lmu83/croot/cffi_1726856448345/work",
+    "colorama @ file:///C:/b/abs_a9ozq0l032/croot/colorama_1672387194846/work",
+    "conda @ file:///C:/b/abs_3bs4tei4e9/croot/conda_1733841834375/work",
+    "conda-anaconda-telemetry @ file:///C:/b/abs_b5wbfhyt0i/croot/conda-anaconda-telemetry_1733260551861/work",
+    "conda-content-trust @ file:///C:/b/abs_bdfatn_wzf/croot/conda-content-trust_1714483201909/work",
+    "conda-libmamba-solver @ file:///croot/conda-libmamba-solver_1727775630457/work/src",
+    "conda-package-handling @ file:///C:/b/abs_7fz3aferfv/croot/conda-package-handling_1731369038903/work",
+    "conda_package_streaming @ file:///C:/b/abs_bdz9vbvbh2/croot/conda-package-streaming_1731366449946/work",
+    "cryptography @ file:///C:/b/abs_e2lzchf4i6/croot/cryptography_1732130411942/work",
+    "distro @ file:///C:/b/abs_71xr36ua5r/croot/distro_1714488282676/work",
+    "frozendict @ file:///C:/b/abs_2alamqss6p/croot/frozendict_1713194885124/work",
+    "jsonpatch @ file:///C:/b/abs_4fdm88t7zi/croot/jsonpatch_1714483974578/work",
+    "libmambapy @ file:///C:/b/abs_7fjjcok9fe/croot/mamba-split_1732896315069/work/libmambapy",
+    "menuinst @ file:///C:/b/abs_cabvzz4p7a/croot/menuinst_1731364936347/work",
+    "numpy==1.26.4",
+    "platformdirs @ file:///C:/b/abs_b6z_yqw_ii/croot/platformdirs_1692205479426/work",
+    "pluggy @ file:///C:/b/abs_dfec_m79vo/croot/pluggy_1733170145382/work",
+    "pycolmap @ git+https://github.com/rmbrualla/pycolmap.git@cc7ea4b7301720ac29287dbe450952511b32125e",
+    "pycosat @ file:///C:/b/abs_5csdern___/croot/pycosat_1714513102923/work",
+    "pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work",
+    "PySocks @ file:///C:/ci_310/pysocks_1642089375450/work",
+    "ruamel.yaml @ file:///C:/b/abs_0cunwx_ww6/croot/ruamel.yaml_1727980181547/work",
+    "ruamel.yaml.clib @ file:///C:/b/abs_5fk8zi6n09/croot/ruamel.yaml.clib_1727769837359/work",
+    "torch==2.1.2+cu118",
+    "torchvision==0.16.2+cu118",
+    "tqdm @ file:///C:/b/abs_77wju137gk/croot/tqdm_1724853945787/work",
+    "truststore @ file:///C:/b/abs_55z7b3r045/croot/truststore_1695245455435/work",
+    "win-inet-pton @ file:///C:/ci_310/win_inet_pton_1642658466512/work",
+    "zstandard @ file:///C:/b/abs_31t8xmrv_h/croot/zstandard_1731356578015/work"
+  ],
+  "build_tooling": [
+    "pip",
+    "setuptools",
+    "wheel",
+    "Cython",
+    "pkgconfig",
+    "pybind11"
+  ],
+  "preferred_msvc": "14.38",
+  "bootstrap_mode": "subprocess-shell-bootstrap",
+  "selected_toolset": "14.38.33130",
+  "selected_installation": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools",
+  "cuda_root": "C:\\PROGRA~1\\NVIDIA~2\\CUDA\\v11.8"
+}

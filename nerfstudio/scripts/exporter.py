@@ -137,10 +137,12 @@ class ExportPointCloud(Exporter):
         validate_pipeline(self.normal_method, self.normal_output_name, pipeline)
 
         # Increase the batchsize to speed up the evaluation.
-        assert isinstance(
-            pipeline.datamanager,
-            (VanillaDataManager, ParallelDataManager),
-        )
+        # Relaxed datamanager check for custom pipelines (e.g. splatfacto-w)
+        if not isinstance(pipeline.datamanager, (VanillaDataManager, ParallelDataManager)):
+            CONSOLE.print(
+                "[yellow]Warning: Non-standard datamanager detected. "
+                "Attempting export with best-effort compatibility."
+            )
         if isinstance(pipeline.datamanager, VanillaDataManager):
             assert pipeline.datamanager.train_pixel_sampler is not None
             pipeline.datamanager.train_pixel_sampler.num_rays_per_batch = self.num_rays_per_batch
@@ -320,10 +322,12 @@ class ExportPoissonMesh(Exporter):
         validate_pipeline(self.normal_method, self.normal_output_name, pipeline)
 
         # Increase the batchsize to speed up the evaluation.
-        assert isinstance(
-            pipeline.datamanager,
-            (VanillaDataManager, ParallelDataManager),
-        )
+        # Relaxed datamanager check for custom pipelines (e.g. splatfacto-w)
+        if not isinstance(pipeline.datamanager, (VanillaDataManager, ParallelDataManager)):
+            CONSOLE.print(
+                "[yellow]Warning: Non-standard datamanager detected. "
+                "Attempting export with best-effort compatibility."
+            )
         if isinstance(pipeline.datamanager, VanillaDataManager):
             assert pipeline.datamanager.train_pixel_sampler is not None
             pipeline.datamanager.train_pixel_sampler.num_rays_per_batch = self.num_rays_per_batch
@@ -560,9 +564,13 @@ class ExportGaussianSplat(Exporter):
 
         _, pipeline, _, _ = eval_setup(self.load_config, test_mode="inference")
 
-        assert isinstance(pipeline.model, SplatfactoModel)
+        # Accept splatfacto and compatible models
+        if not isinstance(pipeline.model, SplatfactoModel):
+            # fallback: detect splat-like models
+            if not (hasattr(pipeline.model, "means") and hasattr(pipeline.model, "opacities")):
+                raise AssertionError("Model is not a Gaussian Splatting-compatible model.")
 
-        model: SplatfactoModel = pipeline.model
+        model = pipeline.model  # allow custom splatfacto variants
 
         filename = self.output_dir / self.output_filename
 

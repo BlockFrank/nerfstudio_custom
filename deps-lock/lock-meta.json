@@ -1,0 +1,19 @@
+{
+  "created_utc": "2026-04-08T19:21:59.082644+00:00",
+  "python_executable": "C:\\Users\\crist\\Documenti\\nerfstudio_custom\\.conda\\python.exe",
+  "python_version": "3.10.16 | packaged by Anaconda, Inc. | (main, Dec 11 2024, 16:19:12) [MSC v.1929 64 bit (AMD64)]",
+  "platform_guess": "win-64",
+  "conda_executable": "C:\\Users\\crist\\Documenti\\nerfstudio_custom\\.conda\\Scripts\\conda.exe",
+  "conda_env": "nerfstudio-portable",
+  "conda_prefix": "C:\\Users\\crist\\Documenti\\nerfstudio_custom\\.conda\\envs\\nerfstudio-portable",
+  "conda_lock": "conda-explicit-win-64.txt",
+  "pip_lock": "pip-freeze-all.txt",
+  "pip_replay": "pip-freeze-replay.txt",
+  "build_plan": "build-plan.json",
+  "numpy_audit": "numpy-compat-audit.txt",
+  "nerfstudio_methods_protected": "nerfstudio-methods-protected.json",
+  "nerfstudio_core_overrides": "nerfstudio-core-overrides.json",
+  "msvc_log": "msvc-toolsets.txt",
+  "msvc_selected_log": "msvc-selected.txt",
+  "installer_selection": "installer-selection.json"
+}
