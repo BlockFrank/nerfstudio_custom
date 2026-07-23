@@ -1,3 +1,77 @@
+<!-- BEGIN NERFSTUDIO_CUSTOM_NS_INSTALLER_STATUS -->
+## Nerfstudio Custom: Windows-first installer and method orchestration
+
+> **Status:** the FR-NSI-001 modularization and legacy-compatibility milestone is validated. The new package layout is canonical; legacy imports remain available through thin facades.
+
+This fork is evolving Nerfstudio into a reproducible, Windows-first development and installation environment for CUDA-heavy NeRF and Gaussian Splatting workflows. The immediate focus is a maintainable installer that can diagnose the machine, replay pinned environments, install optional methods, protect critical packages, and expose the same capabilities through CLI and GUI surfaces.
+
+### What we are trying to achieve
+
+- **Reproducible Windows installations** with explicit CUDA, MSVC, Python, Torch and package-lock handling.
+- **One canonical installer core** shared by command-line, GUI and future automation/API entrypoints.
+- **Method-aware orchestration** for built-in and external Nerfstudio methods, including native build and patch requirements.
+- **Safe repair and replay** instead of ad-hoc environment mutation.
+- **Portable, evidence-bound development** using repository-local ForgeRail analysis and external immutable run receipts.
+- **Progressive cross-platform support** without weakening the validated Windows path.
+
+### Stable and achieved
+
+| Area | Stable result |
+|---|---|
+| Package architecture | Installer implementation is split into `ns_installer.core`, `ns_installer.cli`, and `ns_installer.gui`. |
+| Canonical entrypoint | `ns-install` resolves to `ns_installer.cli:main`. |
+| Core workflows | Installation, lock handling, bootstrap/build helpers, methods, patching and protection are organized under `ns_installer.core`. |
+| Legacy compatibility | Historical imports such as `ns_installer.bootstrap`, `ns_installer.build`, `ns_installer.doctor`, and `ns_installer.patches` delegate to canonical modules. |
+| Safe core exports | Exact-parity helpers `diff_summary` and `normalized_current_pip_lines` remain available from `ns_installer.core`. |
+| Regression coverage | Compatibility tests assert that legacy symbols resolve to the same canonical objects. |
+| Evidence lifecycle | The bounded patch was derived by AST comparison, validated in isolation, applied under an evidence-bound Git promotion cycle, and revalidated after integration. |
+
+### Architecture
+
+```text
+ns_installer/
+├── cli/                 # argparse application and bounded command handlers
+├── core/                # canonical installer implementation
+│   ├── bootstrap.py     # CUDA/MSVC/environment discovery and execution
+│   ├── build.py         # dependency installation and native builds
+│   ├── doctor.py        # diagnostics
+│   ├── install.py       # high-level install/repin workflows
+│   ├── locks.py         # lock replay, diffing and export
+│   ├── methods.py       # method discovery and installation
+│   ├── patches.py       # repository and extra patch application
+│   └── protection.py    # protected-package policies
+├── gui/                 # Gradio-based training and installer UI
+├── bootstrap.py         # backward-compatible facade
+├── build.py             # backward-compatible facade
+├── doctor.py            # backward-compatible facade
+└── patches.py           # backward-compatible facade
+```
+
+### Compatibility policy
+
+New code should import from `ns_installer.core.*`, `ns_installer.cli.*`, or `ns_installer.gui.*`. Flat legacy modules are compatibility facades only: they contain no duplicated implementation and may be retired only through a separately versioned deprecation cycle. The historical `ns_installer.core.main` function is intentionally not restored; the supported entrypoint is `ns_installer.cli:main`.
+
+### Quick checks
+
+```powershell
+python -m compileall -q ns_installer tests/ns_installer
+python -m pytest -q -o addopts= tests/ns_installer
+python -c "from ns_installer.cli.app import build_parser; build_parser().parse_args(['doctor', '--json'])"
+```
+
+### What remains
+
+- Broader end-to-end installer tests across supported CUDA/MSVC combinations.
+- Completion and hardening of GUI panels and long-running process control.
+- More explicit method contracts, dependency graphs and native-build receipts.
+- A portable installation layout and later cross-platform abstraction.
+- Release-by-release removal criteria for compatibility facades, after downstream callers migrate.
+
+Detailed milestone notes are in [`docs/ns-installer/FR-NSI-001.md`](docs/ns-installer/FR-NSI-001.md).
+<!-- END NERFSTUDIO_CUSTOM_NS_INSTALLER_STATUS -->
+
+---
+
 <p align="center">
     <!-- community badges -->
     <a href="https://discord.gg/uMbNqcraFc"><img src="https://dcbadge.vercel.app/api/server/uMbNqcraFc?style=plastic"/></a>
