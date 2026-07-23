@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 from ns_installer import DEFAULT_LOCK_DIR
-from ns_installer.bootstrap import print_run_bootstrapped, run, which
+from ns_installer.core.bootstrap import print_run_bootstrapped, run, which
 from ns_installer.locks import (
     DEFAULT_NUMPY,
     DEFAULT_TORCH,
@@ -20,7 +20,7 @@ from ns_installer.locks import (
     read_text,
     write_text,
 )
-from ns_installer.protected import (
+from ns_installer.core.protection import (
     NERFSTUDIO_CORE_OVERRIDES,
     PROTECTED_GIT_PACKAGES,
     TCNN_GIT,

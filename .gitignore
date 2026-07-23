@@ -175,3 +175,8 @@ nerfstudio/**/__pycache__/
 ns_installer/**/__pycache__/
 Extra-Methods-Patches/**/__pycache__/
 tests/**/__pycache__/
+# ForgeRail local runtime and evidence
+.forgerail/
+.forgerail/**
+*.forgerail.zip
+*.forgerail.receipt.json

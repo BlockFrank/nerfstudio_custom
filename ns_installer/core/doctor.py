@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 from ns_installer import DEFAULT_LOCK_DIR
-from ns_installer.bootstrap import (
+from ns_installer.core.bootstrap import (
     build_bootstrap_context,
     build_bootstrap_env,
     find_header_in_include,
